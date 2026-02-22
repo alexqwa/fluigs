@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: hsl(0 0% 6%);
+  --muted: hsl(0 0% 10%);
+  --border: hsl(0 0% 15%);
+  --primary: hsl(0 0% 85%);
+  --secondary: hsl(0 0% 12%);
+  --card-foreground: hsl(0 0% 95%);
+  --muted-foreground: hsl(0, 0%, 60%);
+  --primary-foreground: hsl(0 0% 10%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-googleSans: var(--font-googleSans);
+  --color-card: var(--card);
+  --color-ring: var(--ring);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --radial-dots: radialGradient
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Google Sans', sans-serif;
+  box-sizing: border-box;
+}
