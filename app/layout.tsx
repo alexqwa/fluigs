@@ -10,7 +10,7 @@ const googleSans = Google_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Controle de Fluigs',
+  title: 'Controle de Fluigs - Dia a Dia',
   description: 'App deselvolvido para melhor controle de fluigs.',
 }
 

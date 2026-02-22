@@ -1,0 +1,61 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '../ui/breadcrumb'
+
+import { useIsMobile } from '@/hooks/use-mobile'
+import { Separator } from '@/components/ui/separator'
+import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
+
+import data from '@/hooks/data.json'
+
+export function SiteHeader({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const isMobile = useIsMobile()
+  const pathname = usePathname()
+
+  const pageTitle = data.navMain.find((item) => item.url === pathname)
+
+  return (
+    <SidebarInset>
+      <header className="border-border flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        {isMobile && (
+          <>
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+          </>
+        )}
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem className="md:block">
+              <Link
+                href="/dashboard"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Principal
+              </Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator className="md:block" />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{pageTitle?.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
+      <div className="inset-0 flex flex-1 flex-col bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[20px_20px] p-10">
+        {children}
+      </div>
+    </SidebarInset>
+  )
+}
