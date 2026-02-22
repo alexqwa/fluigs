@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 
 :root {
   --background: #0a0a0a;
@@ -26,8 +27,6 @@
   --color-card-foreground: var(--card-foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-primary-foreground: var(--primary-foreground);
-
-  --radial-dots: radialGradient
 }
 
 body {

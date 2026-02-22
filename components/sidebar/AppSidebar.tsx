@@ -15,17 +15,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <div className="bg-muted flex items-center gap-2 rounded-lg p-2">
-          <div className="bg-background flex size-8 items-center justify-center rounded-lg">
-            <FilePenLine size={18} className="text-foreground" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-foreground text-xs font-semibold">
-              Luís Eduardo Magalhães
-            </span>
-            <span className="text-muted-foreground text-xs">
-              Controle de Fluigs
-            </span>
+        <div className="p-0">
+          <div className="bg-muted flex items-center gap-2 rounded-lg px-2 py-1.5 text-left">
+            <div className="bg-card flex size-8 items-center justify-center rounded-lg">
+              <FilePenLine size={18} className="text-foreground" />
+            </div>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="text-foreground truncate text-xs font-medium">
+                1040 - Gurupi
+              </span>
+              <span className="text-muted-foreground truncate text-xs">
+                Controle de Fluigs
+              </span>
+            </div>
           </div>
         </div>
       </SidebarHeader>

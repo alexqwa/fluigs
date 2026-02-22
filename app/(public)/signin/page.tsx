@@ -23,9 +23,9 @@ import data from './data.json'
 
 export default function SignIn() {
   return (
-    <div className="bg-background absolute inset-0 h-full w-full bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
+    <div className="absolute inset-0 h-full w-full bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
       <div className="flex h-svh flex-1 items-center justify-center px-4 md:px-0">
-        <div className="bg-card border-border relative w-full max-w-120 overflow-hidden rounded-3xl border p-6 md:p-12">
+        <div className="bg-card border-border relative w-full max-w-120 overflow-hidden rounded-lg border p-6 md:p-10">
           <div className="z-10 flex flex-col">
             <h1 className="mb-10 text-3xl font-bold">Autenticação</h1>
             <Select>
