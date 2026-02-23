@@ -27,7 +27,7 @@ export default function Dashboard() {
         />
         <AnalyticsCard
           title="Custo Médio"
-          value="R$ 4,34"
+          value="R$ 423,34"
           indicator="+34.5% Este Mês"
           prospect="Aumento no custo médio"
           discover="Comparativo mensal com tendência de crescimento"
