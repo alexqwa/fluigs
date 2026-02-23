@@ -1,38 +1,4 @@
 {
-  "analytics": [
-    {
-      "id": 0,
-      "title": "R$ 13.250,00",
-      "description": "Receita total",
-      "action": "+12.5%",
-      "prospect": "Em alta neste mês",
-      "discover": "Visitantes nos últimos 6 meses"
-    },
-    {
-      "id": 1,
-      "title": "1.434",
-      "description": "Novos clientes",
-      "action": "-20.5%",
-      "prospect": "Queda de 20% neste período",
-      "discover": "A aquisição requer atenção"
-    },
-    {
-      "id": 2,
-      "title": "45.678",
-      "description": "Contas ativas",
-      "action": "+12.5%",
-      "prospect": "Forte retenção de usuários",
-      "discover": "O engajamento superou as metas"
-    },
-    {
-      "id": 3,
-      "title": "4.5%",
-      "description": "Taxa de crescimento",
-      "action": "+4.5%",
-      "prospect": "Aumento no desempenho",
-      "discover": "Atende às projeções de crescimento"
-    }
-  ],
   "products": [
     {
       "id": 1,
