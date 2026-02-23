@@ -1,3 +1,4 @@
+'use client'
 import * as React from 'react'
 import { addDays, format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
@@ -13,14 +14,15 @@ import {
 } from '@/components/ui/popover'
 
 export function DatePicker() {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(new Date().getFullYear(), 0, 20),
-    to: addDays(new Date(new Date().getFullYear(), 0, 20), 20),
-  })
+  const [date, setDate] = React.useState<DateRange | undefined>(undefined)
 
   React.useEffect(() => {
-    console.log(date)
-  }, [date])
+    const today = new Date()
+    setDate({
+      from: new Date(today.getFullYear(), 0, 20),
+      to: addDays(new Date(today.getFullYear(), 0, 20), 20),
+    })
+  }, [])
 
   return (
     <Popover>

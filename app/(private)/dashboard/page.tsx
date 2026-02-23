@@ -1,3 +1,5 @@
+'use client'
+
 import { DataTable } from '@/components/DataTable'
 import { AnalyticsCard } from '@/components/card/AnalyticsCard'
 
