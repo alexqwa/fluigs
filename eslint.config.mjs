@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     'next-env.d.ts',
     'app/(public)/**',
     'app/(private)/**',
+    'components/ui/**',
   ]),
 ])
 

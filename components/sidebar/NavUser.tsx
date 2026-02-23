@@ -1,4 +1,6 @@
 'use client'
+
+import Link from 'next/link'
 import {
   BadgeCheck,
   Bell,
@@ -49,7 +51,7 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">AF</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="text-muted-foreground truncate text-sm font-medium">
+                <span className="text-foreground truncate text-sm font-medium">
                   {user.name}
                 </span>
                 <span className="text-muted-foreground truncate text-xs">
@@ -61,7 +63,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="bg-card border-border/50 w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded"
-            side={isMobile ? 'bottom' : 'right'}
+            side="bottom"
             align="end"
             sideOffset={4}
           >
@@ -75,7 +77,7 @@ export function NavUser({
                   <span className="text-foreground truncate text-sm font-medium">
                     {user.name}
                   </span>
-                  <span className="text-foreground truncate text-xs">
+                  <span className="text-muted-foreground truncate text-xs">
                     {user.email}
                   </span>
                 </div>
@@ -97,10 +99,13 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-muted cursor-pointer">
+            <Link
+              href="/signin"
+              className="hover:bg-muted relative flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+            >
               <LogOut />
               Sair
-            </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

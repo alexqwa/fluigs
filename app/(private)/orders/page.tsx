@@ -1,4 +1,4 @@
-export default function Reports() {
+export default function Orders() {
   return (
     <div className="space-y-1">
       <h1 className="text-foreground text-xl font-bold md:text-3xl">

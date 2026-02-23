@@ -26,7 +26,7 @@ export function SiteHeader({
 
   return (
     <SidebarInset>
-      <header className="border-border flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <header className="border-border bg-card fixed flex h-16 w-full shrink-0 items-center gap-2 border-b px-4">
         {isMobile && (
           <>
             <SidebarTrigger className="-ml-1" />
@@ -53,7 +53,7 @@ export function SiteHeader({
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <div className="inset-0 flex flex-1 flex-col bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[20px_20px] p-6 md:p-10">
+      <div className="inset-0 flex flex-1 flex-col bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[20px_20px] px-6 pt-24 pb-10 md:px-10">
         {children}
       </div>
     </SidebarInset>
