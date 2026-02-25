@@ -5,9 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { DatePicker } from '@/components/DatePicker'
 import { FieldGroup, Field, FieldLabel } from './ui/field'
-import { EditableFluigDialog } from '@/components/EditableFluigDialog'
 import {
   flexRender,
   useReactTable,
@@ -56,6 +54,9 @@ import {
   TableBody,
   TableHeader,
 } from '@/components/ui/table'
+
+import { DatePicker } from '@/components/DatePicker'
+import { EditableFluigDialog } from '@/components/EditableFluigDialog'
 
 interface DataItem {
   id: number

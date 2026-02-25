@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Separator } from '@/components/ui/separator'
+import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,11 +12,8 @@ import {
   BreadcrumbSeparator,
 } from './ui/breadcrumb'
 
-import { useIsMobile } from '@/hooks/use-mobile'
-import { Separator } from '@/components/ui/separator'
-import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
-
 import data from '@/hooks/data.json'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 export function SiteHeader({
   children,

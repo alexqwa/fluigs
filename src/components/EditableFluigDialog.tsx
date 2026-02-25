@@ -2,7 +2,6 @@ import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Button } from './ui/button'
 import { FieldGroup, Field } from './ui/field'
-import { useIsMobile } from '@/hooks/use-mobile'
 import {
   Dialog,
   DialogClose,
@@ -29,6 +28,8 @@ import {
   DrawerTrigger,
   DrawerDescription,
 } from './ui/drawer'
+
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface DataItem {
   id: number
