@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 import { betterAuth } from 'better-auth'
 import { emailOTP } from 'better-auth/plugins'
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
+const resend = new Resend('re_TbH67Gb7_GCgamrvEZbBc5yqhiKjbEnu1')
 
 export const auth = betterAuth({
   baseURL: 'http://localhost:3000/',
