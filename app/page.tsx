@@ -21,34 +21,12 @@ import {
 } from '@/components/ui/input-otp'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 
-import data from './data.json'
+import data from '@/hooks/data.json'
 
 export default function Home() {
   const [otp, setOtp] = useState('')
   const [selectedEmail, setSelectedEmail] = useState('')
   const [selectedFilial, setSelectedFilial] = useState<number>()
-
-  async function sendVerificationCode() {
-    await fetch('/api/auth/email-otp/send-verification-otp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: selectedEmail, type: 'sign-in' }),
-    })
-  }
-
-  async function checkVerificationCode() {
-    await fetch('/api/auth/sign-in/email-otp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: selectedEmail,
-        otp,
-        session: {
-          filialId: selectedFilial,
-        },
-      }),
-    })
-  }
 
   return (
     <div className="absolute inset-0 h-full w-full bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
@@ -58,7 +36,9 @@ export default function Home() {
             <h1 className="mb-10 text-3xl font-bold">Autenticação</h1>
             <Select
               onValueChange={(value) => {
-                const filial = data.find((item) => item.email === value)
+                const filial = data.branches.find(
+                  (item) => item.email === value
+                )
                 setSelectedEmail(value)
                 setSelectedFilial(filial?.id)
               }}
@@ -69,7 +49,7 @@ export default function Home() {
               <SelectContent className="bg-card border-border border">
                 <SelectGroup>
                   <SelectLabel>Selecionar Filial</SelectLabel>
-                  {data
+                  {data.branches
                     .sort((a, b) => a.id - b.id)
                     .map((item) => {
                       const formatSubsidiary = (subsidiary: string) => {
@@ -101,10 +81,7 @@ export default function Home() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <button
-              onClick={sendVerificationCode}
-              className="bg-muted border-border mt-6 mb-6 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border transition-all hover:brightness-125"
-            >
+            <button className="bg-muted border-border mt-6 mb-6 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border transition-all hover:brightness-125">
               <Mail size={24} className="text-foreground" />
               <span className="text-foreground text-sm font-semibold">
                 Enviar código para o e-mail
@@ -134,10 +111,7 @@ export default function Home() {
                 </InputOTPGroup>
               </InputOTP>
             </div>
-            <button
-              onClick={checkVerificationCode}
-              className="group/button bg-foreground group text-background relative mt-6 inline-flex h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
-            >
+            <button className="group/button bg-foreground group text-background relative mt-6 inline-flex h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit">
               <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
                 Entrar
               </span>

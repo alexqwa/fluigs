@@ -8,7 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../ui/breadcrumb'
+} from './ui/breadcrumb'
 
 import { useIsMobile } from '@/hooks/use-mobile'
 import { Separator } from '@/components/ui/separator'

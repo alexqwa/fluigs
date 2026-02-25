@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/sidebar'
 
 import data from '@/hooks/data.json'
-import { NavMain } from '@/components/sidebar/NavMain'
-import { NavUser } from '@/components/sidebar/NavUser'
+import { NavMain } from '@/components/NavMain'
+import { NavUser } from '@/components/NavUser'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
