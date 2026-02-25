@@ -1,6 +1,6 @@
 'use client'
 
-import { DataTable } from '@/components/DataTable'
+import { DataTable } from '@/components/dashboard/DataTable'
 import { AnalyticsCard } from '@/components/card/AnalyticsCard'
 
 import data from './data.json'

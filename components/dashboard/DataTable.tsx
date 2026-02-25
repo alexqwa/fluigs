@@ -54,9 +54,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DatePicker } from './DatePicker'
-import { FieldGroup, Field, FieldLabel } from './ui/field'
+import { FieldGroup, Field, FieldLabel } from '../ui/field'
 
-import { EditableFluigDialog } from './dashboard/EditableFluigDialog'
+import { EditableFluigDialog } from './EditableFluigDialog'
 
 interface DataItem {
   id: number
@@ -238,14 +238,6 @@ export function DataTable({ data: initialData }: { data: DataItem[] }) {
             onChange={(event) =>
               table.getColumn('code')?.setFilterValue(event.target.value)
             }
-          />
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="fieldgroup-fluig">Nº Fluig</FieldLabel>
-          <Input
-            id="fieldgroup-fluig"
-            placeholder="Digite o número do fluig"
-            className="border-border bg-card border"
           />
         </Field>
         <Field>
