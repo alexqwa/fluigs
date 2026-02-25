@@ -1,9 +1,9 @@
 'use client'
 
-import { DataTable } from '@/components/dashboard/DataTable'
-import { AnalyticsCard } from '@/components/card/AnalyticsCard'
+import { DataTable } from '@/components/DataTable'
+import { AnalyticsCard } from '@/components/AnalyticsCard'
 
-import data from './data.json'
+import data from '@/hooks/data.json'
 
 export default function Dashboard() {
   return (

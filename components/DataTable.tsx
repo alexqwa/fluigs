@@ -1,62 +1,61 @@
 'use client'
 
 import * as React from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import { DatePicker } from '@/components/DatePicker'
+import { FieldGroup, Field, FieldLabel } from './ui/field'
+import { EditableFluigDialog } from '@/components/EditableFluigDialog'
 import {
-  type ColumnDef,
-  type ColumnFiltersState,
   flexRender,
+  useReactTable,
+  type ColumnDef,
   getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   type SortingState,
-  useReactTable,
+  getFacetedRowModel,
+  getFilteredRowModel,
   type VisibilityState,
+  getPaginationRowModel,
+  getFacetedUniqueValues,
+  type ColumnFiltersState,
 } from '@tanstack/react-table'
 import {
+  IconLoader,
+  IconTrashX,
+  IconHeartSpark,
+  IconPencilMinus,
   IconChevronLeft,
+  IconDotsVertical,
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
   IconCircleCheckFilled,
-  IconDotsVertical,
-  IconLoader,
-  IconHeartSpark,
-  IconPencilMinus,
-  IconTrashX,
 } from '@tabler/icons-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import {
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
+  SelectTrigger,
+  SelectContent,
 } from '@/components/ui/select'
 import {
   Table,
-  TableBody,
+  TableRow,
   TableCell,
   TableHead,
+  TableBody,
   TableHeader,
-  TableRow,
 } from '@/components/ui/table'
-import { DatePicker } from './DatePicker'
-import { FieldGroup, Field, FieldLabel } from '../ui/field'
-
-import { EditableFluigDialog } from './EditableFluigDialog'
 
 interface DataItem {
   id: number

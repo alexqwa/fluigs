@@ -1,7 +1,7 @@
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
-import { Button } from '../ui/button'
-import { FieldGroup, Field } from '../ui/field'
+import { Input } from './ui/input'
+import { Label } from './ui/label'
+import { Button } from './ui/button'
+import { FieldGroup, Field } from './ui/field'
 import { useIsMobile } from '@/hooks/use-mobile'
 import {
   Dialog,
@@ -11,14 +11,14 @@ import {
   DialogTrigger,
   DialogContent,
   DialogDescription,
-} from '../ui/dialog'
+} from './ui/dialog'
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from '../ui/select'
+} from './ui/select'
 import {
   Drawer,
   DrawerTitle,
@@ -28,7 +28,7 @@ import {
   DrawerContent,
   DrawerTrigger,
   DrawerDescription,
-} from '../ui/drawer'
+} from './ui/drawer'
 
 interface DataItem {
   id: number
@@ -51,7 +51,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
           <DrawerTrigger asChild>
             <Button
               variant="link"
-              className="text-foreground w-fit px-0 text-left"
+              className="text-foreground w-fit px-0 text-left underline"
             >
               {item.product}
             </Button>
@@ -168,7 +168,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
             <DialogTrigger asChild>
               <Button
                 variant="link"
-                className="text-foreground w-fit px-0 text-left"
+                className="text-foreground w-fit cursor-pointer px-0 text-left hover:underline"
               >
                 {item.product}
               </Button>
