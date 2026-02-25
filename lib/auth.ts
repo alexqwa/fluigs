@@ -6,6 +6,7 @@ import { emailOTP } from 'better-auth/plugins'
 const resend = new Resend('re_TbH67Gb7_GCgamrvEZbBc5yqhiKjbEnu1')
 
 export const auth = betterAuth({
+  secret: 'cjld2cjxh0000qzrmn831i7rn',
   emailAndPassword: {
     enabled: false,
   },
