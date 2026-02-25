@@ -1,9 +1,8 @@
 'use client'
 
+import 'dotenv/config'
 import Link from 'next/link'
 import { useState } from 'react'
-import { auth } from '@/lib/auth'
-import { authClient } from '@/lib/auth-client'
 import { Mail, ChevronRight } from 'lucide-react'
 import {
   Select,
