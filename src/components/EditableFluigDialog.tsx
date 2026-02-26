@@ -10,6 +10,7 @@ import {
   DialogTrigger,
   DialogContent,
   DialogDescription,
+  DialogFooter,
 } from './ui/dialog'
 import {
   Select,
@@ -52,7 +53,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
           <DrawerTrigger asChild>
             <Button
               variant="link"
-              className="text-foreground w-fit px-0 text-left underline"
+              className="text-foreground w-fit px-0 text-left"
             >
               {item.product}
             </Button>
@@ -167,119 +168,106 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
         <Dialog>
           <form>
             <DialogTrigger asChild>
-              <Button
-                variant="link"
-                className="text-foreground w-fit cursor-pointer px-0 text-left hover:underline"
-              >
-                {item.product}
-              </Button>
+              <Button variant="link">{item.product}</Button>
             </DialogTrigger>
-            <DialogContent className="bg-card border-border w-full border sm:max-w-sm lg:max-w-xl">
-              <DialogHeader>
-                <DialogTitle>Detalhes do Fluig</DialogTitle>
-                <DialogDescription>
-                  Mostrando os detalhes do fluig, faça alterações caso
-                  necessário
-                </DialogDescription>
-              </DialogHeader>
-              <FieldGroup className="mt-4">
-                <Field>
-                  <Label htmlFor="fieldgroup-code">Código</Label>
-                  <Input
-                    id="fieldgroup-code"
-                    defaultValue={item.code}
-                    className="border-border bg-muted border"
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="fieldgroup-product">Produto</Label>
-                  <Input
-                    id="fieldgroup-product"
-                    defaultValue={item.product}
-                    className="border-border bg-muted truncate border"
-                    disabled
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="fieldgroup-quantity">Quantidade</Label>
-                  <Input
-                    id="fieldgroup-quantity"
-                    defaultValue={item.quantity}
-                    className="border-border bg-muted border"
-                  />
-                </Field>
-              </FieldGroup>
-              <FieldGroup>
-                <Field>
-                  <Label htmlFor="fieldgroup-fluig">N Fluig</Label>
-                  <Input
-                    id="fieldgroup-fluig"
-                    defaultValue={item.nFluig}
-                    className="border-border bg-muted border"
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="fieldgroup-date">Data</Label>
-                  <Input
-                    id="fieldgroup-date"
-                    defaultValue={item.date}
-                    className="border-border bg-muted border"
-                  />
-                </Field>
-                <Field>
-                  <Label htmlFor="fieldgroup-status">Status</Label>
-                  <Select defaultValue={item.status}>
-                    <SelectTrigger
-                      id="status"
-                      className="bg-muted border-border h-9 w-full cursor-pointer border"
-                    >
-                      <SelectValue placeholder="Selecione o status" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border border">
-                      <SelectItem
-                        value="Aprovado"
-                        className="hover:bg-muted cursor-pointer text-sm"
+            <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
+              <div className="p-6">
+                <DialogHeader>
+                  <DialogTitle>Detalhes do Fluig</DialogTitle>
+                  <DialogDescription>
+                    Mostrando os detalhes do fluig, faça alterações caso
+                    necessário
+                  </DialogDescription>
+                </DialogHeader>
+                <FieldGroup className="mt-6">
+                  <Field>
+                    <Label htmlFor="code">Código</Label>
+                    <Input
+                      id="code"
+                      defaultValue={item.code}
+                      className="border-border bg-muted border"
+                    />
+                  </Field>
+                  <Field>
+                    <Label htmlFor="product">Produto</Label>
+                    <Input
+                      id="product"
+                      defaultValue={item.product}
+                      className="border-border bg-muted trucate border"
+                      disabled
+                    />
+                  </Field>
+                </FieldGroup>
+                <FieldGroup className="mt-6">
+                  <Field>
+                    <Label htmlFor="quantity">Quantidade</Label>
+                    <Input
+                      id="quantity"
+                      defaultValue={item.quantity}
+                      className="border-border bg-muted border"
+                    />
+                  </Field>
+                  <Field>
+                    <Label htmlFor="nfluig">N Fluig</Label>
+                    <Input
+                      id="nfluig"
+                      defaultValue={item.nFluig}
+                      className="border-border bg-muted border"
+                    />
+                  </Field>
+                </FieldGroup>
+                <FieldGroup className="mt-6">
+                  <Field>
+                    <Label htmlFor="date">Data</Label>
+                    <Input
+                      id="date"
+                      defaultValue={item.date}
+                      className="border-border bg-muted border"
+                    />
+                  </Field>
+                  <Field>
+                    <Label htmlFor="status">Status</Label>
+                    <Select defaultValue={item.status}>
+                      <SelectTrigger
+                        id="status"
+                        className="bg-muted border-border h-9 w-full cursor-pointer border"
                       >
-                        Aprovado
-                      </SelectItem>
-                      <SelectItem
-                        value="Aguardando"
-                        className="hover:bg-muted cursor-pointer text-sm"
-                      >
-                        Aguardando
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FieldGroup>
-              <FieldGroup className="flex items-end">
-                <Field>
-                  <Label htmlFor="fieldgroup-cost">Custo Total</Label>
-                  <Input
-                    id="fieldgroup-cost"
-                    defaultValue={item.cost}
-                    className="border-border bg-muted border"
-                  />
-                </Field>
-                <Field>
-                  <DialogClose asChild>
-                    <Button
-                      variant="outline"
-                      className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
-                    >
-                      Cancelar
-                    </Button>
-                  </DialogClose>
-                </Field>
-                <Field>
+                        <SelectValue placeholder="Selecione o status" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border border">
+                        <SelectItem
+                          value="Aprovado"
+                          className="hover:bg-muted cursor-pointer text-sm"
+                        >
+                          Aprovado
+                        </SelectItem>
+                        <SelectItem
+                          value="Aguardando"
+                          className="hover:bg-muted cursor-pointer text-sm"
+                        >
+                          Aguardando
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </FieldGroup>
+              </div>
+              <DialogFooter className="bg-muted p-4">
+                <DialogClose asChild>
                   <Button
-                    type="submit"
-                    className="cursor-pointer transition-all hover:brightness-125"
+                    variant="outline"
+                    className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
                   >
-                    Salvar alterações
+                    Cancelar
                   </Button>
-                </Field>
-              </FieldGroup>
+                </DialogClose>
+                <Button
+                  type="submit"
+                  className="cursor-pointer transition-all hover:brightness-125"
+                >
+                  Salvar alterações
+                </Button>
+              </DialogFooter>
             </DialogContent>
           </form>
         </Dialog>
