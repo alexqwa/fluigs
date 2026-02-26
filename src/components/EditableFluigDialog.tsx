@@ -88,7 +88,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex flex-col gap-3">
-                    <Label htmlFor="quantity">Quantidade (KG)</Label>
+                    <Label htmlFor="quantity">Quantidade</Label>
                     <Input
                       id="quantity"
                       defaultValue={item.quantity}
