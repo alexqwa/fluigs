@@ -8,6 +8,8 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: false,
   },
+  baseURL: process.env.BETTER_AUTH_URL,
+  trustedOrigins: ['http://localhost:3000/*', 'https://fluigs.vercel.app/*'],
   plugins: [
     emailOTP({
       async sendVerificationOTP({ email, otp }) {
