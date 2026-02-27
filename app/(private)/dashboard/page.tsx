@@ -1,10 +1,15 @@
-'use client'
+// import { auth } from '@/lib/auth'
+// import { headers } from 'next/headers'
 
 import data from '@/hooks/data.json'
 import { DataTable } from '@/components/DataTable'
 import { AnalyticsCard } from '@/components/AnalyticsCard'
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  // const session = await auth.api.getSession({
+  //   headers: await headers(),
+  // })
+
   return (
     <>
       <div className="space-y-1">
