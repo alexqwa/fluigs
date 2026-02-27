@@ -1,7 +1,6 @@
 'use client'
 
 import 'dotenv/config'
-import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -34,6 +33,7 @@ export default function Home() {
   const [codeHasSend, setCodeHasSend] = useState(false)
   const [selectedEmail, setSelectedEmail] = useState('')
   const [selectedFilial, setSelectedFilial] = useState<number>()
+  const [selectedSubsidiary, setSelectedSubsidiary] = useState('')
 
   function resetFields() {
     setOtp('')
@@ -59,17 +59,16 @@ export default function Home() {
       email: selectedEmail,
       otp: otp,
     })
-
     if (response.data) {
-      resetFields()
       router.push('/dashboard')
+      resetFields()
     } else {
       alert('Código inválido.')
     }
   }
 
   return (
-    <div className="absolute inset-0 h-full w-full bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
+    <div className="bg-card absolute inset-0 h-full w-full bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
       <div className="flex h-svh flex-1 items-center justify-center px-4 md:px-0">
         <div className="bg-card border-border relative w-full max-w-120 overflow-hidden rounded-lg border p-6 md:p-10">
           <div className="z-10 flex flex-col">
@@ -83,6 +82,7 @@ export default function Home() {
                 )
                 setSelectedEmail(value)
                 setSelectedFilial(filial?.id)
+                setSelectedSubsidiary(filial?.subsidiary!)
               }}
             >
               <SelectTrigger className="bg-muted border-border w-full cursor-pointer border">
@@ -93,33 +93,15 @@ export default function Home() {
                   <SelectLabel>Selecionar Filial</SelectLabel>
                   {data.branches
                     .sort((a, b) => a.id - b.id)
-                    .map((item) => {
-                      const formatSubsidiary = (subsidiary: string) => {
-                        return subsidiary
-                          .toLowerCase()
-                          .split(' ')
-                          .map((word) => {
-                            if (word.length === 2 && isNaN(Number(word))) {
-                              return word.toUpperCase()
-                            }
-                            if (!isNaN(Number(word))) {
-                              return word
-                            }
-                            return word.charAt(0).toUpperCase() + word.slice(1)
-                          })
-                          .join(' ')
-                      }
-
-                      return (
-                        <SelectItem
-                          key={item.id}
-                          value={item.email}
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
-                          Filial {item.id} - {formatSubsidiary(item.subsidiary)}
-                        </SelectItem>
-                      )
-                    })}
+                    .map((item) => (
+                      <SelectItem
+                        key={item.id}
+                        value={item.email}
+                        className="hover:bg-muted cursor-pointer text-sm"
+                      >
+                        Filial {item.id} - {item.subsidiary}
+                      </SelectItem>
+                    ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

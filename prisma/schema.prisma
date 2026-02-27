@@ -13,16 +13,48 @@ datasource db {
   provider = "postgresql"
 }
 
+model Enterprise {
+  id       String @id @default(cuid())
+  filialId String
+  name     String
+  email    String
+
+  fluigs Fluig[]
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+}
+
+model Fluig {
+  id        String   @id @default(cuid())
+  status    String
+  product   String
+  code      Int
+  nFluig    Int
+  quantity  Int
+  costTotal Int
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  enterpriseId String
+  enterprise   Enterprise @relation(fields: [enterpriseId], references: [id], onDelete: Cascade)
+
+  @@index([code])
+  @@index([date])
+}
+
 model User {
-  id            String    @id
+  id            String   @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean  @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions   Session[]
+  accounts   Account[]
+  enterprise Enterprise?
 
   @@unique([email])
   @@map("user")
