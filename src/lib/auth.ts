@@ -10,7 +10,7 @@ export const auth = betterAuth({
   },
   basePath: '/api/auth',
   baseURL: process.env.BETTER_AUTH_URL,
-  trustedOrigins: ['http://localhost:3000', 'https://fluigs.vercel.app'],
+  trustedOrigins: ['http://localhost:3000/**', 'https://fluigs.vercel.app/**'],
   plugins: [
     emailOTP({
       async sendVerificationOTP({ email, otp }) {
