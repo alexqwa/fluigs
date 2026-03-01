@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { DataTable } from '@/components/DataTable'
 import { AnalyticsCard } from '@/components/AnalyticsCard'
 
@@ -5,7 +7,7 @@ import data from '@/hooks/data.json'
 
 export default async function Dashboard() {
   return (
-    <>
+    <Suspense fallback="Carregando o Dashboard">
       <div className="space-y-1">
         <h1 className="text-foreground text-xl font-bold md:text-3xl">
           Dashboard
@@ -49,6 +51,6 @@ export default async function Dashboard() {
         />
       </div>
       <DataTable data={data.products} />
-    </>
+    </Suspense>
   )
 }
