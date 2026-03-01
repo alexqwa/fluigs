@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { FieldGroup, Field, FieldLabel } from './ui/field'
+import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
 import {
   flexRender,
   useReactTable,
@@ -168,10 +168,6 @@ const columns: ColumnDef<DataItem>[] = [
               <IconPencilMinus className="text-muted-foreground" />
               <span className="text-foreground text-sm">Editar</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-              <IconHeartSpark className="text-muted-foreground" />
-              <span className="text-foreground text-sm">Favoritar</span>
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="hover:bg-muted cursor-pointer"
@@ -241,7 +237,7 @@ export function DataTable({ data: initialData }: { data: DataItem[] }) {
           />
         </Field>
         <Field>
-          <FieldLabel htmlFor="fieldgroup-date">Data</FieldLabel>
+          <FieldLabel htmlFor="fieldgroup-date">Período</FieldLabel>
           <DatePicker />
         </Field>
       </FieldGroup>
