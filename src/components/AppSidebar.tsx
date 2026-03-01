@@ -1,5 +1,9 @@
-'use client'
+import React, { ReactNode } from 'react'
+import { User } from 'better-auth'
 import { FilePenLine } from 'lucide-react'
+import { unauthorized } from 'next/navigation'
+import { getServerSession } from '@/lib/get-session'
+
 import {
   Sidebar,
   SidebarFooter,
@@ -8,10 +12,15 @@ import {
 } from '@/components/ui/sidebar'
 
 import data from '@/hooks/data.json'
+
 import { NavMain } from '@/components/NavMain'
 import { NavUser } from '@/components/NavUser'
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  user: User
+}
+
+export async function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -22,7 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="text-foreground truncate text-xs font-medium">
-                1040 - Gurupi
+                {user.name}
               </span>
               <span className="text-muted-foreground truncate text-xs">
                 Controle de Fluigs
@@ -35,7 +44,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   )

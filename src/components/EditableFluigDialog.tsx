@@ -62,7 +62,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
             <DrawerHeader className="gap-1">
               <DrawerTitle>Detalhes do Fluig</DrawerTitle>
               <DrawerDescription>
-                Mostrando os detalhes do fluig, faça alterações caso necessário
+                Mostrando os detalhes do Fluig
               </DrawerDescription>
             </DrawerHeader>
             <div className="overflow-y-auto px-4 text-sm">
@@ -113,7 +113,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                       className="border-border bg-muted border text-sm"
                     />
                   </div>
-                  <div className="flex flex-col gap-3">
+                  <div className="mb-4 flex flex-col gap-3">
                     <Label htmlFor="status">Status</Label>
                     <Select defaultValue={item.status}>
                       <SelectTrigger
@@ -139,17 +139,9 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                     </Select>
                   </div>
                 </div>
-                <div className="flex flex-col gap-3">
-                  <Label htmlFor="cost">Custo</Label>
-                  <Input
-                    id="cost"
-                    defaultValue={item.cost}
-                    className="border-border bg-muted border text-sm"
-                  />
-                </div>
               </form>
             </div>
-            <DrawerFooter>
+            <DrawerFooter className="bg-muted">
               <Button className="cursor-pointer text-sm font-medium hover:brightness-125">
                 Salvar alterações
               </Button>
@@ -175,8 +167,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                 <DialogHeader>
                   <DialogTitle>Detalhes do Fluig</DialogTitle>
                   <DialogDescription>
-                    Mostrando os detalhes do fluig, faça alterações caso
-                    necessário
+                    Mostrando os detalhes do Fluig
                   </DialogDescription>
                 </DialogHeader>
                 <FieldGroup className="mt-6">

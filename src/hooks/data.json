@@ -21,177 +21,181 @@
       "icon": "shopping-basket"
     }
   ],
-  "branches": [
+  "stores": [
     {
-      "id": 1015,
+      "value": "1015",
       "email": "gerencia.gynbal@atacadaodiaadia.com.br",
-      "subsidiary": "Balneário"
+      "label": "Balneário"
     },
     {
-      "id": 1052,
+      "value": "1052",
       "email": "gerencia.rfo1@atacadaodiaadia.com.br",
-      "subsidiary": "Riacho Fundo 01"
+      "label": "Riacho Fundo 01"
     },
     {
-      "id": 1016,
+      "value": "1016",
       "email": "gerencia.sad@atacadaodiaadia.com.br",
-      "subsidiary": "Santo Antônio"
+      "label": "Santo Antônio"
     },
     {
-      "id": 1055,
+      "value": "1055",
       "email": "gerencia.rde@atacadaodiaadia.com.br",
-      "subsidiary": "Recanto Das Emas"
+      "label": "Recanto Das Emas"
     },
     {
-      "id": 1026,
+      "value": "1026",
       "email": "gerencia.gynnov@atacadaodiaadia.com.br",
-      "subsidiary": "César Lattes"
+      "label": "César Lattes"
     },
     {
-      "id": 1058,
+      "value": "1058",
       "email": "gerencia.eptg@atacadaodiaadia.com.br",
-      "subsidiary": "Eptg"
+      "label": "Eptg"
     },
     {
-      "id": 1012,
+      "value": "1012",
       "email": "gerencia.gama@atacadaodiaadia.com.br",
-      "subsidiary": "Gama"
+      "label": "Gama"
     },
     {
-      "id": 1039,
+      "value": "1039",
       "email": "gerencia.gon@atacadaodiaadia.com.br",
-      "subsidiary": "Goianésia"
+      "label": "Goianésia"
     },
     {
-      "id": 1021,
+      "value": "1021",
       "email": "gerencia.qnn30@atacadaodiaadia.com.br",
-      "subsidiary": "Ceilândia Sul"
+      "label": "Ceilândia Sul"
     },
     {
-      "id": 1008,
+      "value": "1008",
       "email": "gerencia.tag@atacadaodiaadia.com.br",
-      "subsidiary": "Taguatinga"
+      "label": "Taguatinga"
     },
     {
-      "id": 1063,
+      "value": "1063",
       "email": "gerencia.fsa@atacadaodiaadia.com.br",
-      "subsidiary": "Formosa"
+      "label": "Formosa"
     },
     {
-      "id": 1047,
+      "value": "1047",
       "email": "gerencia.aps@atacadaodiaadia.com.br",
-      "subsidiary": "Aparecida GO"
+      "label": "Aparecida GO"
     },
     {
-      "id": 1042,
+      "value": "1042",
       "email": "gerencia.smdb@atacadaodiaadia.com.br",
-      "subsidiary": "Jardim Botânico"
+      "label": "Jardim Botânico"
     },
     {
-      "id": 1050,
+      "value": "1050",
       "email": "gerencia.mda@atacadaodiaadia.com.br",
-      "subsidiary": "M. D'armas"
+      "label": "M. D'armas"
     },
     {
-      "id": 1018,
+      "value": "1018",
       "email": "gerencia.agl@atacadaodiaadia.com.br",
-      "subsidiary": "Águas Lindas"
+      "label": "Águas Lindas"
     },
     {
-      "id": 1007,
+      "value": "1007",
       "email": "gerencia.sia@atacadaodiaadia.com.br",
-      "subsidiary": "Sia"
+      "label": "Sia"
     },
     {
-      "id": 1001,
+      "value": "1001",
       "email": "gerencia.br070@atacadaodiaadia.com.br",
-      "subsidiary": "Ceilândia BR 070"
+      "label": "Ceilândia BR 070"
     },
     {
-      "id": 1029,
+      "value": "1029",
       "email": "gerencia.guara@atacadaodiaadia.com.br",
-      "subsidiary": "Guará"
+      "label": "Guará"
     },
     {
-      "id": 1037,
+      "value": "1037",
       "email": "gerencia.vcp@atacadaodiaadia.com.br",
-      "subsidiary": "Vicente Rua 12"
+      "label": "Vicente Rua 12"
     },
     {
-      "id": 1032,
+      "value": "1032",
       "email": "gerencia.qnm11@atacadaodiaadia.com.br",
-      "subsidiary": "Ceilândia Centro"
+      "label": "Ceilândia Centro"
     },
     {
-      "id": 1019,
+      "value": "1019",
       "email": "gerencia.cdn@atacadaodiaadia.com.br",
-      "subsidiary": "Caldas Novas"
+      "label": "Caldas Novas"
     },
     {
-      "id": 1053,
+      "value": "1053",
       "email": "gerencia.rvd@atacadaodiaadia.com.br",
-      "subsidiary": "Rio Verde"
+      "label": "Rio Verde"
     },
     {
-      "id": 1060,
+      "value": "1060",
       "email": "gerencia.smb2@atacadaodiaadia.com.br",
-      "subsidiary": "Furnas"
+      "label": "Furnas"
     },
     {
-      "id": 1025,
+      "value": "1025",
       "email": "gerencia.novogama@atacadaodiaadia.com.br",
-      "subsidiary": "Novo Gama"
+      "label": "Novo Gama"
     },
     {
-      "id": 1033,
+      "value": "1033",
       "email": "gerencia.pdf@atacadaodiaadia.com.br",
-      "subsidiary": "Planaltina DF"
+      "label": "Planaltina DF"
     },
     {
-      "id": 1028,
+      "value": "1028",
       "email": "gerencia.agc@atacadaodiaadia.com.br",
-      "subsidiary": "Águas Claras"
+      "label": "Águas Claras"
     },
     {
-      "id": 1064,
+      "value": "1064",
       "email": "gerencia.itb@atacadaodiaadia.com.br",
-      "subsidiary": "Itumbiara"
+      "label": "Itumbiara"
     },
     {
-      "id": 1038,
+      "value": "1038",
       "email": "gerencia.vcp2@atacadaodiaadia.com.br",
-      "subsidiary": "Vicente Rua 04"
+      "label": "Vicente Rua 04"
     },
     {
-      "id": 1004,
+      "value": "1004",
       "email": "gerencia.sob@atacadaodiaadia.com.br",
-      "subsidiary": "Sobradinho"
+      "label": "Sobradinho"
     },
     {
-      "id": 1027,
+      "value": "1027",
       "email": "gerencia.pgo@atacadaodiaadia.com.br",
-      "subsidiary": "Planaltina GO"
+      "label": "Planaltina GO"
     },
     {
-      "id": 1034,
+      "value": "1034",
       "email": "gerencia.smb@atacadaodiaadia.com.br",
-      "subsidiary": "Samambaia"
+      "label": "Samambaia"
     },
     {
-      "id": 1030,
-      "email": "gerencia.lem@atacadaodiaadia.com.br",
-      "subsidiary": "Luís Eduardo Magalhães"
+      "value": "1030",
+      "email": "delivered@resend.dev",
+      "label": "Luís Eduardo Magalhães"
     },
-    { "id": 1040, "email": "delivered@resend.dev", "subsidiary": "Gurupi" },
     {
-      "id": 1062,
+      "value": "1040",
+      "email": "gerencia.grp0@atacadaodiaadia.com.br",
+      "label": "Gurupi"
+    },
+    {
+      "value": "1062",
       "email": "gerencia.luz2@atacadaodiaadia.com.br",
-      "subsidiary": "Luziânia 2"
+      "label": "Luziânia 2"
     },
     {
-      "id": 1013,
-      "email": "gerencia.luz@atacadaodiaadia.com.br",
-      "subsidiary": "Luziânia"
+      "value": "1013",
+      "label": "Luziânia",
+      "email": "gerencia.luz@atacadaodiaadia.com.br"
     }
   ],
   "products": [

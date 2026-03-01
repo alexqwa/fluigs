@@ -25,7 +25,7 @@ export function SiteHeader({
 
   return (
     <SidebarInset>
-      <header className="border-border bg-card fixed z-9998 flex h-16 w-full shrink-0 items-center gap-2 border-b px-4">
+      <header className="border-border bg-card fixed z-30 flex h-16 w-full shrink-0 items-center gap-2 border-b px-4">
         {isMobile && (
           <>
             <SidebarTrigger className="-ml-1" />

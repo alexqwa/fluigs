@@ -1,41 +1,49 @@
 'use client'
 
-import Link from 'next/link'
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-} from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { authClient } from '@/lib/auth-client'
+import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from 'lucide-react'
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuGroup,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+  SidebarMenuButton,
 } from '@/components/ui/sidebar'
+import { toast } from 'sonner'
+import { User } from 'better-auth'
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
+interface NavUserProps {
+  user: User
+}
+
+export function NavUser({ user }: NavUserProps) {
+  const router = useRouter()
+
+  async function handleSignOut() {
+    try {
+      const { error } = await authClient.signOut()
+
+      if (error) {
+        toast.error(error.message || 'Algo deu errado.')
+        return
+      }
+
+      toast.success('Sessão finalizada com sucesso!')
+      router.push('/')
+    } catch (error) {
+      console.error(error)
+    }
   }
-}) {
-  const { isMobile } = useSidebar()
 
   return (
     <SidebarMenu>
@@ -46,9 +54,9 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-muted ring-offset-background focus-visible:ring-ring hover:bg-muted cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">AF</AvatarFallback>
+              <Avatar className="h-8 w-10 rounded-lg">
+                <AvatarImage src={user?.image!} alt={user.name} />
+                <AvatarFallback className="rounded-lg">GRP</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="text-foreground truncate text-sm font-medium">
@@ -69,9 +77,9 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <Avatar className="h-8 w-10 rounded-lg">
+                  <AvatarImage src={user?.image!} alt={user.name} />
+                  <AvatarFallback className="rounded-lg">GRP</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="text-foreground truncate text-sm font-medium">
@@ -90,22 +98,18 @@ export function NavUser({
                 Conta
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-                <CreditCard />
-                Pagamento
-              </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-muted cursor-pointer">
                 <Bell />
                 Notificações
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <Link
-              href="/"
-              className="hover:bg-muted relative flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+            <DropdownMenuItem
+              onClick={handleSignOut}
+              className="hover:bg-muted cursor-pointer"
             >
               <LogOut />
               Sair
-            </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

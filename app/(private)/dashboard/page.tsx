@@ -1,15 +1,9 @@
-// import { auth } from '@/lib/auth'
-// import { headers } from 'next/headers'
-
-import data from '@/hooks/data.json'
 import { DataTable } from '@/components/DataTable'
 import { AnalyticsCard } from '@/components/AnalyticsCard'
 
-export default async function Dashboard() {
-  // const session = await auth.api.getSession({
-  //   headers: await headers(),
-  // })
+import data from '@/hooks/data.json'
 
+export default async function Dashboard() {
   return (
     <>
       <div className="space-y-1">
@@ -26,7 +20,7 @@ export default async function Dashboard() {
           value="1.455 Kg"
           indicator="12 Fluigs"
           prospect="Em alta neste mês"
-          discover="Total consolidado de produtos ativos"
+          discover="Total consolidado de produtos"
           icon="trending-up"
         />
         <AnalyticsCard
