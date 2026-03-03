@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { FluigProps } from '../../app/actions/get-fluigs'
 
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -32,6 +31,17 @@ import {
   DrawerTrigger,
   DrawerDescription,
 } from './ui/drawer'
+
+interface FluigProps {
+  code: number
+  nFluig: number
+  status: string
+  product: string
+  quantity: number
+  costTotal: number
+  createdAt: Date
+  date: Date
+}
 
 export function EditableFluigDialog({ item }: { item: FluigProps }) {
   const isMobile = useIsMobile()
