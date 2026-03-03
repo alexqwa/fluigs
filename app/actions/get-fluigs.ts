@@ -1,23 +1,21 @@
 'use server'
-import { cacheLife, cacheTag } from 'next/cache'
 
-export interface FluigProps {
-  code: number
-  nFluig: number
-  status: string
-  product: string
-  quantity: number
-  costTotal: number
-  createdAt: Date
-  date: Date
-}
+import { prisma } from '@/lib/prisma'
+import { getServerSession } from './get-session'
 
 export async function getFluigs() {
-  'use cache'
-  cacheLife('seconds')
-  cacheTag('fluigs')
+  const session = await getServerSession()
 
-  const response = await fetch(`${process.env.BETTER_AUTH_URL}/api/fluigs`)
-  const data: FluigProps[] = await response.json()
-  return data
+  if (!session?.user) {
+    return []
+  }
+
+  return await prisma.fluig.findMany({
+    where: {
+      userId: session.user.id,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 }

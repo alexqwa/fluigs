@@ -55,8 +55,18 @@ import {
 } from '@/components/ui/table'
 
 import { DatePicker } from '@/components/DatePicker'
-import { FluigProps } from '../../app/actions/get-fluigs'
 import { EditableFluigDialog } from '@/components/EditableFluigDialog'
+
+interface FluigProps {
+  code: number
+  nFluig: number
+  status: string
+  product: string
+  quantity: number
+  costTotal: number
+  createdAt: Date
+  date: Date
+}
 
 const columns: ColumnDef<FluigProps>[] = [
   {
