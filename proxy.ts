@@ -12,7 +12,6 @@ const publicRoutes: readonly PublicRoute[] = [
   { path: '/dashboard', whenAuthenticated: 'next' },
   { path: '/reports', whenAuthenticated: 'next' },
   { path: '/orders', whenAuthenticated: 'next' },
-  { path: '/account', whenAuthenticated: 'next' },
 ] as const
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'
