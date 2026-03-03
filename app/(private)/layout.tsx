@@ -1,25 +1,30 @@
 import { Suspense } from 'react'
-import { Loader2 } from 'lucide-react'
+import { unauthorized } from 'next/navigation'
+import { getServerSession } from '../../app/actions/get-session'
 
-import AuthLayout from '@/components/auth-layout'
+import { SiteHeader } from '@/components/SiteHeader'
+import { AppSidebar } from '@/components/AppSidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { SidebarSkeleton } from '@/components/sidebar-skeleton'
 
-export default function PrivateLayout({
+async function Sidebar() {
+  const session = await getServerSession()
+  const user = session?.user
+
+  if (!user) return unauthorized()
+
+  return <AppSidebar user={user} />
+}
+
+export default async function PrivateLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <Suspense fallback={<PrivateLayoutSkeleton />}>
-      <AuthLayout>{children}</AuthLayout>
-    </Suspense>
-  )
-}
-
-function PrivateLayoutSkeleton() {
-  return (
-    <div className="flex min-h-svh w-full items-center justify-center bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
-      <div className="text-muted-foreground flex items-center gap-3 text-sm">
-        <Loader2 className="text-muted-foreground animate-spin" />
-        Carregando...
-      </div>
-    </div>
+    <SidebarProvider>
+      <Suspense fallback={<SidebarSkeleton />}>
+        <Sidebar />
+      </Suspense>
+      <SiteHeader>{children}</SiteHeader>
+    </SidebarProvider>
   )
 }

@@ -9,12 +9,12 @@ export default function Unauthorized() {
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold">401 - Não Autorizado</h1>
           <p className="text-muted-foreground">
-            Por favor autentique-se para continuar.
+            Por favor faça autenticação para continuar
           </p>
         </div>
         <div>
           <Button asChild>
-            <Link href="/">Voltar para página de login</Link>
+            <Link href="/">Voltar para o login</Link>
           </Button>
         </div>
       </div>

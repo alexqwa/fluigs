@@ -1,13 +1,19 @@
 import { Suspense } from 'react'
+import { getFluigs } from '../../actions/get-fluigs'
 
 import { DataTable } from '@/components/DataTable'
 import { AnalyticsCard } from '@/components/AnalyticsCard'
+import { DataTableSkeleton } from '@/components/datatable-skeleton'
 
-import data from '@/hooks/data.json'
+async function FluigTable() {
+  const fluigs = await getFluigs()
+
+  return <DataTable data={fluigs} />
+}
 
 export default async function Dashboard() {
   return (
-    <Suspense fallback="Carregando o Dashboard">
+    <>
       <div className="space-y-1">
         <h1 className="text-foreground text-xl font-bold md:text-3xl">
           Dashboard
@@ -20,7 +26,7 @@ export default async function Dashboard() {
         <AnalyticsCard
           title="Quantidade Total"
           value="1.455 Kg"
-          indicator="12 Fluigs"
+          indicator="3 Fluigs"
           prospect="Em alta neste mês"
           discover="Total consolidado de produtos"
           icon="trending-up"
@@ -35,7 +41,7 @@ export default async function Dashboard() {
         />
         <AnalyticsCard
           title="Fluigs Pendentes"
-          value="4 Fluigs"
+          value="8 Fluigs"
           indicator="57% Processados"
           prospect="Solicitações com lentidão neste período"
           discover="As solicitações requer atenção"
@@ -50,7 +56,9 @@ export default async function Dashboard() {
           icon="trending-up"
         />
       </div>
-      <DataTable data={data.products} />
-    </Suspense>
+      <Suspense fallback={<DataTableSkeleton />}>
+        <FluigTable />
+      </Suspense>
+    </>
   )
 }

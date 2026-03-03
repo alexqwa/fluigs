@@ -12,8 +12,26 @@ import {
   BreadcrumbSeparator,
 } from './ui/breadcrumb'
 
-import data from '@/hooks/data.json'
 import { useIsMobile } from '@/hooks/use-mobile'
+
+const data = [
+  {
+    title: 'Dashboard',
+    url: '/dashboard',
+  },
+  {
+    title: 'Relatórios',
+    url: '/reports',
+  },
+  {
+    title: 'Meus pedidos',
+    url: '/orders',
+  },
+  {
+    title: 'Minha conta',
+    url: '/account',
+  },
+]
 
 export function SiteHeader({
   children,
@@ -21,7 +39,7 @@ export function SiteHeader({
   const isMobile = useIsMobile()
   const pathname = usePathname()
 
-  const pageTitle = data.navMain.find((item) => item.url === pathname)
+  const pageTitle = data.find((item) => item.url === pathname)
 
   return (
     <SidebarInset>

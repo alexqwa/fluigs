@@ -1,5 +1,5 @@
 'use client'
-
+import dayjs from 'dayjs'
 import * as React from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -23,7 +23,6 @@ import {
 import {
   IconLoader,
   IconTrashX,
-  IconHeartSpark,
   IconPencilMinus,
   IconChevronLeft,
   IconDotsVertical,
@@ -56,27 +55,17 @@ import {
 } from '@/components/ui/table'
 
 import { DatePicker } from '@/components/DatePicker'
+import { FluigProps } from '../../app/actions/get-fluigs'
 import { EditableFluigDialog } from '@/components/EditableFluigDialog'
 
-interface DataItem {
-  id: number
-  code: string
-  product: string
-  quantity: string
-  nFluig: string
-  date: string
-  status: string
-  cost: string
-}
-
-const columns: ColumnDef<DataItem>[] = [
+const columns: ColumnDef<FluigProps>[] = [
   {
     accessorKey: 'code',
     header: 'Código',
     cell: ({ row }) => (
       <div className="w-24 md:w-fit">
         <span className="text-muted-foreground pr-8 text-sm">
-          {row.original.code}
+          {row.original.code.toString()}
         </span>
       </div>
     ),
@@ -84,9 +73,12 @@ const columns: ColumnDef<DataItem>[] = [
   {
     accessorKey: 'product',
     header: 'Produto',
-    cell: ({ row }) => {
-      return <EditableFluigDialog item={row.original} />
-    },
+    cell: ({ row }) => (
+      <div className="w-32 md:w-fit">
+        <EditableFluigDialog item={row.original} />
+      </div>
+    ),
+
     enableHiding: false,
   },
   {
@@ -115,7 +107,9 @@ const columns: ColumnDef<DataItem>[] = [
     accessorKey: 'date',
     header: 'Data',
     cell: ({ row }) => (
-      <span className="text-muted-foreground text-sm">{row.original.date}</span>
+      <span className="text-muted-foreground text-sm">
+        {dayjs(row.original.date).format('DD/MM/YYYY')}
+      </span>
     ),
   },
   {
@@ -124,10 +118,10 @@ const columns: ColumnDef<DataItem>[] = [
     cell: ({ row }) => (
       <div className="w-32 md:w-fit">
         <Badge variant="outline" className="text-muted-foreground px-1.5">
-          {row.original.status === 'Aprovado' ? (
+          {row.original.status === 'Approved' ? (
             <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
           ) : (
-            <IconLoader />
+            <IconLoader className="animate-spin" />
           )}
           {row.original.status}
         </Badge>
@@ -135,12 +129,12 @@ const columns: ColumnDef<DataItem>[] = [
     ),
   },
   {
-    accessorKey: 'cost',
+    accessorKey: 'costTotal',
     header: 'Custo Total',
     cell: ({ row }) => (
       <div className="w-28 md:w-fit">
         <span className="text-muted-foreground text-sm">
-          {row.original.cost}
+          {row.original.costTotal}
         </span>
       </div>
     ),
@@ -183,7 +177,7 @@ const columns: ColumnDef<DataItem>[] = [
   },
 ]
 
-export function DataTable({ data: initialData }: { data: DataItem[] }) {
+export function DataTable({ data: initialData }: { data: FluigProps[] }) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -206,7 +200,7 @@ export function DataTable({ data: initialData }: { data: DataItem[] }) {
       columnFilters,
       pagination,
     },
-    getRowId: (row) => row.id.toString(),
+    getRowId: (row) => row.code.toString(),
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -223,24 +217,26 @@ export function DataTable({ data: initialData }: { data: DataItem[] }) {
 
   return (
     <div className="relative flex flex-1 flex-col gap-4 overflow-auto">
-      <FieldGroup className="mt-8">
-        <Field>
-          <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
-          <Input
-            id="fieldgroup-code"
-            placeholder="Buscar pelo código"
-            className="border-border bg-card border"
-            value={(table.getColumn('code')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('code')?.setFilterValue(event.target.value)
-            }
-          />
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="fieldgroup-date">Período</FieldLabel>
-          <DatePicker />
-        </Field>
-      </FieldGroup>
+      <div className="mt-8 mb-4 flex flex-col items-end md:flex-row md:justify-between">
+        <FieldGroup className="w-full">
+          <Field orientation="vertical">
+            <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
+            <Input
+              id="fieldgroup-code"
+              placeholder="Buscar pelo código"
+              className="border-border bg-card border"
+            />
+          </Field>
+          <Field orientation="vertical">
+            <FieldLabel htmlFor="fieldgroup-date">Período</FieldLabel>
+            <DatePicker />
+          </Field>
+        </FieldGroup>
+        <Button className="mt-4 w-full cursor-pointer text-sm font-medium transition-all hover:brightness-125 md:mt-0 md:w-fit">
+          Adicionar Fluig
+        </Button>
+      </div>
+
       <div className="border-border overflow-hidden rounded-lg border">
         <Table>
           <TableHeader className="bg-muted border-border sticky top-0 z-10 border-b">

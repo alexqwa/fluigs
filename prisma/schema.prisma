@@ -7,8 +7,34 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Status {
+  Approved     @map("approved")
+  Not_Approved @map("not_approved")
+  Pending      @map("pending")
+}
+
+model Fluig {
+  id        String   @id @default(cuid())
+  status    Status   @default(Pending)
+  product   String
+  code      Int
+  nFluig    Int
+  quantity  Int
+  costTotal Int
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([code])
+  @@index([date])
+  @@index([userId])
+  @@map("fluig")
+}
+
 model User {
-  id            String    @id
+  id            String    @id @default(cuid())
   name          String
   email         String    @unique
   emailVerified Boolean   @default(false)
@@ -17,6 +43,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+
+  fluigs Fluig[]
 
   @@map("user")
 }

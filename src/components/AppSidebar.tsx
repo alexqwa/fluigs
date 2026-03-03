@@ -1,8 +1,6 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { User } from 'better-auth'
 import { FilePenLine } from 'lucide-react'
-import { unauthorized } from 'next/navigation'
-import { getServerSession } from '@/lib/get-session'
 
 import {
   Sidebar,

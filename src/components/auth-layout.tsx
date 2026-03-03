@@ -1,5 +1,5 @@
 import { unauthorized } from 'next/navigation'
-import { getServerSession } from '@/lib/get-session'
+import { getServerSession } from '../../app/actions/get-session'
 
 import { SiteHeader } from '@/components/SiteHeader'
 import { AppSidebar } from '@/components/AppSidebar'
