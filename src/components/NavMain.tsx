@@ -27,7 +27,7 @@ export function NavMain({
       <SidebarGroupLabel className="text-muted-foreground text-xs">
         Principal
       </SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarMenu className="group/side-item">
         {items.map((item, i) => {
           const isActive = location === item.url
 
@@ -35,9 +35,12 @@ export function NavMain({
             <SidebarMenuItem key={i}>
               <SidebarMenuButton
                 asChild
-                className={clsx('hover:bg-muted', {
-                  ['bg-muted']: isActive,
-                })}
+                className={clsx(
+                  'hover:bg-muted last:group-[side-item]:hidden',
+                  {
+                    ['bg-muted']: isActive,
+                  }
+                )}
               >
                 <Link href={item.url}>
                   <DynamicIcon

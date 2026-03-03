@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Fluig: 'Fluig',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -71,6 +72,22 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const FluigScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  product: 'product',
+  code: 'code',
+  nFluig: 'nFluig',
+  quantity: 'quantity',
+  costTotal: 'costTotal',
+  date: 'date',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type FluigScalarFieldEnum = (typeof FluigScalarFieldEnum)[keyof typeof FluigScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

@@ -1,3 +1,6 @@
+import dayjs from 'dayjs'
+import { useIsMobile } from '@/hooks/use-mobile'
+
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Button } from './ui/button'
@@ -22,7 +25,6 @@ import {
 import {
   Drawer,
   DrawerTitle,
-  DrawerClose,
   DrawerHeader,
   DrawerFooter,
   DrawerContent,
@@ -30,20 +32,18 @@ import {
   DrawerDescription,
 } from './ui/drawer'
 
-import { useIsMobile } from '@/hooks/use-mobile'
-
-interface DataItem {
-  id: number
-  code: string
-  date: string
-  cost: string
-  nFluig: string
+interface FluigProps {
+  code: number
+  nFluig: number
   status: string
   product: string
-  quantity: string
+  quantity: number
+  costTotal: number
+  createdAt: Date
+  date: Date
 }
 
-export function EditableFluigDialog({ item }: { item: DataItem }) {
+export function EditableFluigDialog({ item }: { item: FluigProps }) {
   const isMobile = useIsMobile()
 
   return (
@@ -109,13 +109,13 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                     <Label htmlFor="date">Data</Label>
                     <Input
                       id="date"
-                      defaultValue={item.date}
+                      defaultValue={dayjs(item.date).format('DD/MM/YYYY')}
                       className="border-border bg-muted border text-sm"
                     />
                   </div>
                   <div className="mb-4 flex flex-col gap-3">
                     <Label htmlFor="status">Status</Label>
-                    <Select defaultValue={item.status}>
+                    <Select defaultValue="pending">
                       <SelectTrigger
                         id="status"
                         className="bg-muted border-border h-9 w-full cursor-pointer border"
@@ -124,16 +124,22 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                       </SelectTrigger>
                       <SelectContent className="bg-card border-border border">
                         <SelectItem
-                          value="Aprovado"
+                          value="Approved"
                           className="hover:bg-muted cursor-pointer text-sm"
                         >
                           Aprovado
                         </SelectItem>
                         <SelectItem
-                          value="Aguardando"
+                          value="Pending"
                           className="hover:bg-muted cursor-pointer text-sm"
                         >
                           Aguardando
+                        </SelectItem>
+                        <SelectItem
+                          value="Not_Approved"
+                          className="hover:bg-muted cursor-pointer text-sm"
+                        >
+                          Não Aprovado
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -160,7 +166,9 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
         <Dialog>
           <form>
             <DialogTrigger asChild>
-              <Button variant="link">{item.product}</Button>
+              <Button className="px-0!" variant="link">
+                {item.product}
+              </Button>
             </DialogTrigger>
             <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
               <div className="p-6">
@@ -212,7 +220,7 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                     <Label htmlFor="date">Data</Label>
                     <Input
                       id="date"
-                      defaultValue={item.date}
+                      defaultValue={dayjs(item.date).format('DD/MM/YYYY')}
                       className="border-border bg-muted border"
                     />
                   </Field>
@@ -227,16 +235,22 @@ export function EditableFluigDialog({ item }: { item: DataItem }) {
                       </SelectTrigger>
                       <SelectContent className="bg-card border-border border">
                         <SelectItem
-                          value="Aprovado"
+                          value="Approved"
                           className="hover:bg-muted cursor-pointer text-sm"
                         >
                           Aprovado
                         </SelectItem>
                         <SelectItem
-                          value="Aguardando"
+                          value="Pending"
                           className="hover:bg-muted cursor-pointer text-sm"
                         >
                           Aguardando
+                        </SelectItem>
+                        <SelectItem
+                          value="Not_Approved"
+                          className="hover:bg-muted cursor-pointer text-sm"
+                        >
+                          Não Aprovado
                         </SelectItem>
                       </SelectContent>
                     </Select>

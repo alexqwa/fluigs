@@ -1,5 +1,8 @@
 'use client'
 
+import Link from 'next/link'
+import { toast } from 'sonner'
+import { User } from 'better-auth'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client'
 import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from 'lucide-react'
@@ -19,8 +22,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar'
-import { toast } from 'sonner'
-import { User } from 'better-auth'
 
 interface NavUserProps {
   user: User
@@ -93,9 +94,14 @@ export function NavUser({ user }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-                <BadgeCheck />
-                Conta
+              <DropdownMenuItem
+                asChild
+                className="hover:bg-muted cursor-pointer"
+              >
+                <Link href="/account">
+                  <BadgeCheck />
+                  Conta
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-muted cursor-pointer">
                 <Bell />

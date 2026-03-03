@@ -1,6 +1,6 @@
 'use client'
+import dayjs from 'dayjs'
 import * as React from 'react'
-import { addDays, format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { ptBR } from 'react-day-picker/locale'
 import { type DateRange } from 'react-day-picker'
@@ -17,10 +17,10 @@ export function DatePicker() {
   const [date, setDate] = React.useState<DateRange | undefined>(undefined)
 
   React.useEffect(() => {
-    const today = new Date()
+    const today = dayjs()
     setDate({
-      from: new Date(today.getFullYear(), 0, 20),
-      to: addDays(new Date(today.getFullYear(), 0, 20), 20),
+      from: today.toDate(),
+      to: today.add(7, 'day').toDate(),
     })
   }, [])
 
@@ -36,11 +36,11 @@ export function DatePicker() {
           {date?.from ? (
             date.to ? (
               <>
-                {format(date.from, 'dd/MM/yyyy')} -{' '}
-                {format(date.to, 'dd/MM/yyyy')}
+                {dayjs(date.from).format('DD/MM/YYYY')} -{' '}
+                {dayjs(date.to).format('DD/MM/YYYY')}
               </>
             ) : (
-              format(date.from, 'dd/MM/yyyy')
+              dayjs(date.from).format('DD/MM/YYYY')
             )
           ) : (
             <span>Selecionar Data</span>
