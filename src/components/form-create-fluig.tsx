@@ -33,7 +33,7 @@ import {
 } from 'components/ui/select'
 
 import products from '@/hooks/products.json'
-import { createFluig } from 'actions/fluig/create-fluig'
+import { createFluig } from 'actions/create-fluig'
 
 const fluigSchema = z.object({
   date: z.date(),

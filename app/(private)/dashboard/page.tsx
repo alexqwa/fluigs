@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { getFluigs } from '../../actions/fluig/get-fluigs'
+import { getFluigs } from '../../actions/get-fluigs'
 
 import { DataTable } from '@/components/DataTable'
 import { AnalyticsCard } from '@/components/AnalyticsCard'

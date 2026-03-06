@@ -7,11 +7,12 @@ import { getServerSession } from 'actions/get-session'
 
 const fluigSchema = z.object({
   date: z.date(),
-  product: z.string(),
-  code: z.number().min(1, 'Código obrigatório'),
-  quantity: z.number().min(1, 'Quantidade obrigatória'),
-  nFluig: z.number().min(1, 'Número de fluig obrigatório'),
+  code: z.string().min(1, 'Código é obrigatório'),
+  product: z.string().min(1, 'Produto é obrigatório'),
+  quantity: z.string().min(1, 'Quantidade é obrigatória'),
+  nFluig: z.number().min(1, 'Número de fluig é obrigatório'),
   status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+  cost: z.string().min(1, 'Custo é obrigatório'),
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>

@@ -59,7 +59,7 @@ import {
   TableBody,
   TableHeader,
 } from 'components/ui/table'
-import { deleteFluig } from 'actions/fluig/delete-fluig'
+import { deleteFluig } from 'actions/delete-fluig'
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
