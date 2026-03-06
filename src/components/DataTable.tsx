@@ -1,12 +1,13 @@
 'use client'
 import dayjs from 'dayjs'
 import * as React from 'react'
+import { type DateRange } from 'react-day-picker'
 
 import { Badge } from 'components/ui/badge'
 import { Input } from 'components/ui/input'
 import { Label } from 'components/ui/label'
 import { Button } from 'components/ui/button'
-import { DatePicker } from 'components/DatePicker'
+import { DatePicker } from '@/components/date-picker'
 import { FormCreateFluig } from 'components/form-create-fluig'
 import { EditableFluigDialog } from 'components/EditableFluigDialog'
 import { FieldGroup, Field, FieldLabel } from 'components/ui/field'
@@ -34,6 +35,7 @@ import {
   IconChevronsLeft,
   IconChevronsRight,
   IconCircleCheckFilled,
+  IconExclamationCircleFilled,
 } from '@tabler/icons-react'
 import {
   DropdownMenu,
@@ -57,16 +59,44 @@ import {
   TableBody,
   TableHeader,
 } from 'components/ui/table'
+import { deleteFluig } from 'actions/fluig/delete-fluig'
+
+type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
 interface FluigProps {
   id: string
   code: number
   nFluig: number
-  status: string
+  status: FluigStatus
   product: string
   quantity: number
   costTotal: number
   date: Date
+}
+
+const statusMap: Record<
+  FluigStatus,
+  {
+    label: string
+    icon: React.ElementType
+    color: string
+  }
+> = {
+  Approved: {
+    label: 'Aprovado',
+    icon: IconCircleCheckFilled,
+    color: 'text-green-500',
+  },
+  Pending: {
+    label: 'Aguardando',
+    icon: IconLoader,
+    color: 'animate-spin',
+  },
+  Not_Approved: {
+    label: 'Não Aprovado',
+    icon: IconExclamationCircleFilled,
+    color: 'text-red-400',
+  },
 }
 
 const columns: ColumnDef<FluigProps>[] = [
@@ -98,7 +128,7 @@ const columns: ColumnDef<FluigProps>[] = [
     cell: ({ row }) => (
       <div className="w-32 md:w-fit">
         <span className="text-muted-foreground text-sm">
-          {row.original.quantity}
+          {row.original.quantity.toString().replaceAll(/\./g, ',')}
         </span>
       </div>
     ),
@@ -126,18 +156,19 @@ const columns: ColumnDef<FluigProps>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => (
-      <div className="w-32 md:w-fit">
-        <Badge variant="outline" className="text-muted-foreground px-1.5">
-          {row.original.status === 'Approved' ? (
-            <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
-          ) : (
-            <IconLoader className="animate-spin" />
-          )}
-          {row.original.status}
-        </Badge>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const status = statusMap[row.original.status]
+      const Icon = status.icon
+
+      return (
+        <div className="w-32 md:w-fit">
+          <Badge variant="outline" className="text-muted-foreground px-1.5">
+            <Icon className={status.color} />
+            {status.label}
+          </Badge>
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'costTotal',
@@ -145,46 +176,51 @@ const columns: ColumnDef<FluigProps>[] = [
     cell: ({ row }) => (
       <div className="w-28 md:w-fit">
         <span className="text-muted-foreground text-sm">
-          {row.original.costTotal}
+          {`R$ ${row.original.costTotal}`.replaceAll(/\./g, ',')}
         </span>
       </div>
     ),
   },
   {
     id: 'actions',
-    cell: () => (
-      <div className="flex justify-center">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-              size="icon"
+    cell: ({ row }) => {
+      const id = row.original.id
+
+      return (
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
+                size="icon"
+              >
+                <IconDotsVertical />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="bg-card border-border w-36 border"
             >
-              <IconDotsVertical />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="bg-card border-border w-36 border"
-          >
-            <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-              <IconPencilMinus className="text-muted-foreground" />
-              <span className="text-foreground text-sm">Editar</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="hover:bg-muted cursor-pointer"
-              variant="destructive"
-            >
-              <IconTrashX className="text-muted-foreground" />
-              <span className="text-foreground text-sm">Deletar</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    ),
+              <DropdownMenuItem className="hover:bg-muted cursor-pointer">
+                <IconPencilMinus className="text-muted-foreground" />
+                <span className="text-foreground text-sm">Editar</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => deleteFluig(id)}
+                className="hover:bg-muted cursor-pointer"
+              >
+                <IconTrashX className="text-muted-foreground" />
+                <span className="text-foreground text-sm">Deletar</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )
+    },
   },
 ]
 
@@ -201,8 +237,31 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
     pageSize: 10,
   })
 
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
+    undefined
+  )
+
+  const filteredData = React.useMemo(() => {
+    if (!dateRange?.from) return initialData
+
+    return initialData.filter((item) => {
+      // Normaliza a data do item para comparar apenas ano/mês/dia (ignora horário UTC)
+      const itemDate = dayjs(item.date).startOf('day')
+      const fromDate = dayjs(dateRange.from).startOf('day')
+      const toDate = dateRange.to
+        ? dayjs(dateRange.to).startOf('day')
+        : fromDate
+
+      // Compara as datas normalizadas (>= from e <= to)
+      return (
+        (itemDate.isSame(fromDate) || itemDate.isAfter(fromDate)) &&
+        (itemDate.isSame(toDate) || itemDate.isBefore(toDate))
+      )
+    })
+  }, [initialData, dateRange])
+
   const table = useReactTable({
-    data: initialData,
+    data: filteredData,
     columns,
     state: {
       sorting,
@@ -246,7 +305,7 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
           </Field>
           <Field orientation="vertical">
             <FieldLabel htmlFor="fieldgroup-date">Período</FieldLabel>
-            <DatePicker />
+            <DatePicker value={dateRange} onChange={setDateRange} />
           </Field>
         </FieldGroup>
         <FormCreateFluig />

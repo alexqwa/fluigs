@@ -1,9 +1,4 @@
 {
-  "user": {
-    "name": "1040 - Gurupi",
-    "email": "gerencia.grp@atacadaodiaadia.com.br",
-    "avatar": "https://github.com/shadcn.png"
-  },
   "navMain": [
     {
       "title": "Dashboard",
@@ -90,7 +85,7 @@
     {
       "value": "1050",
       "email": "gerencia.mda@atacadaodiaadia.com.br",
-      "label": "M. D'armas"
+      "label": "Mestre D'armas"
     },
     {
       "value": "1018",
@@ -115,7 +110,7 @@
     {
       "value": "1037",
       "email": "gerencia.vcp@atacadaodiaadia.com.br",
-      "label": "Vicente Rua 12"
+      "label": "Vicente Pires Rua 12"
     },
     {
       "value": "1032",
@@ -160,7 +155,7 @@
     {
       "value": "1038",
       "email": "gerencia.vcp2@atacadaodiaadia.com.br",
-      "label": "Vicente Rua 04"
+      "label": "Vicente Pires Rua 04"
     },
     {
       "value": "1004",

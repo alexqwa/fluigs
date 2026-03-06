@@ -7,25 +7,18 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Status {
-  Approved     @map("approved")
-  Not_Approved @map("not_approved")
-  Pending      @map("pending")
-}
-
 model Fluig {
   id        String   @id @default(cuid())
   status    Status   @default(Pending)
   product   String
-  code      Int
+  code      String
   nFluig    Int
-  quantity  Int
-  costTotal Int
+  quantity  String
+  costTotal String
   date      DateTime
   createdAt DateTime @default(now())
-
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([code])
   @@index([date])
@@ -42,9 +35,8 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
+  fluigs        Fluig[]
   sessions      Session[]
-
-  fluigs Fluig[]
 
   @@map("user")
 }
@@ -94,4 +86,10 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum Status {
+  Approved     @map("approved")
+  Not_Approved @map("not_approved")
+  Pending      @map("pending")
 }

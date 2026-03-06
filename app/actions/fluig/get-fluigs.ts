@@ -1,19 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
-import { unstable_cache } from 'next/cache'
 import { getServerSession } from 'actions/get-session'
-
-async function getFluigsRaw(userId: string) {
-  return await prisma.fluig.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  })
-}
+import { getFluigsCached } from '@/lib/cache/fluig-cache'
 
 export async function getFluigs() {
   const session = await getServerSession()
@@ -22,14 +10,5 @@ export async function getFluigs() {
     return []
   }
 
-  const cached = unstable_cache(
-    () => getFluigsRaw(session.user.id),
-    ['fluigs', session.user.id],
-    {
-      tags: ['fluigs'],
-      revalidate: 5,
-    }
-  )
-
-  return cached()
+  return getFluigsCached(session.user.id)
 }

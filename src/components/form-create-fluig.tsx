@@ -2,11 +2,11 @@
 
 import z from 'zod'
 import dayjs from 'dayjs'
-import { useState, useEffect } from 'react'
-import { ChevronDownIcon } from 'lucide-react'
 import { ptBR } from 'react-day-picker/locale'
+import { useState, useEffect, useMemo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ChevronDownIcon, Loader2 } from 'lucide-react'
 
 import { Label } from 'components/ui/label'
 import { Button } from 'components/ui/button'
@@ -32,24 +32,44 @@ import {
   SelectTrigger,
 } from 'components/ui/select'
 
+import products from '@/hooks/products.json'
 import { createFluig } from 'actions/fluig/create-fluig'
 
 const fluigSchema = z.object({
   date: z.date(),
-  code: z.number().min(1, 'Código obrigatório'),
-  product: z.string().min(1, 'Produto obrigatório'),
-  quantity: z.number().min(1, 'Quantidade obrigatória'),
-  nFluig: z.number().min(1, 'Número de fluig obrigatório'),
+  code: z.string().min(1, 'Código é obrigatório'),
+  product: z.string().min(1, 'Produto é obrigatório'),
+  quantity: z.string().min(1, 'Quantidade é obrigatória'),
+  nFluig: z.number().min(1, 'Número de fluig é obrigatório'),
   status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+  cost: z.string().min(1, 'Custo é obrigatório'),
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
+type Product = {
+  code: string
+  product: string
+  cost: string
+}
 
 export function FormCreateFluig() {
   const [open, setOpen] = useState(false)
   const form = useForm<FluigSchema>({
     resolver: zodResolver(fluigSchema),
   })
+
+  const codeValue = form.watch('code')
+
+  const productMap = useMemo(() => {
+    return new Map((products as Product[]).map((p) => [p.code, p]))
+  }, [])
+
+  useEffect(() => {
+    const product = productMap.get(codeValue)
+
+    form.setValue('product', product?.product ?? '')
+    form.setValue('cost', product?.cost ?? '')
+  }, [codeValue, form, productMap])
 
   async function onSubmit(data: FluigSchema) {
     await createFluig(data)
@@ -58,9 +78,7 @@ export function FormCreateFluig() {
   }
 
   useEffect(() => {
-    if (!open) {
-      form.reset()
-    }
+    if (!open) form.reset()
   }, [open])
 
   return (
@@ -88,15 +106,16 @@ export function FormCreateFluig() {
                 <Input
                   type="number"
                   placeholder="Código"
-                  {...form.register('code', { valueAsNumber: true })}
+                  {...form.register('code')}
                   className="border-border bg-muted no-spinner border"
                 />
               </Field>
               <Field>
                 <Label>Produto</Label>
                 <Input
-                  placeholder="Produto"
+                  readOnly
                   {...form.register('product')}
+                  placeholder="Digite o código para buscar"
                   className="border-border bg-muted trucate border"
                 />
               </Field>
@@ -105,10 +124,20 @@ export function FormCreateFluig() {
               <Field>
                 <Label>Quantidade</Label>
                 <Input
-                  type="number"
                   placeholder="Quantidade (KG)"
-                  {...form.register('quantity', { valueAsNumber: true })}
+                  {...form.register('quantity')}
                   className="no-spinner border-border bg-muted border"
+                  onChange={(e) => {
+                    let value = e.target.value.replace(/[^0-9.,]/g, '')
+
+                    const parts = value.split(/[.,]/)
+
+                    if (parts.length > 2) {
+                      value = parts[0] + '.' + parts.slice(1).join('')
+                    }
+
+                    form.setValue('quantity', value)
+                  }}
                 />
               </Field>
               <Field>
@@ -201,6 +230,15 @@ export function FormCreateFluig() {
                 )}
               />
             </FieldGroup>
+            <Field>
+              <Label>Custo</Label>
+              <Input
+                readOnly
+                {...form.register('cost')}
+                placeholder="Digite o código para buscar"
+                className="border-border no-spinner bg-muted border"
+              />
+            </Field>
           </div>
           <DialogFooter className="bg-muted p-4">
             <DialogClose asChild>
@@ -214,9 +252,13 @@ export function FormCreateFluig() {
             </DialogClose>
             <Button
               type="submit"
-              className="cursor-pointer transition-all hover:brightness-125"
+              disabled={form.formState.isSubmitting}
+              className="flex min-w-32 cursor-pointer items-center justify-center transition-all hover:brightness-125"
             >
-              Adicionar fluig
+              {form.formState.isSubmitting && (
+                <Loader2 className="size-4 animate-spin" />
+              )}
+              {!form.formState.isSubmitting && 'Adicionar fluig'}
             </Button>
           </DialogFooter>
         </form>

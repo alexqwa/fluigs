@@ -7,31 +7,37 @@ import { getServerSession } from 'actions/get-session'
 
 const fluigSchema = z.object({
   date: z.date(),
-  product: z.string(),
-  code: z.number().min(1, 'Código obrigatório'),
-  quantity: z.number().min(1, 'Quantidade obrigatória'),
-  nFluig: z.number().min(1, 'Número de fluig obrigatório'),
+  code: z.string().min(1, 'Código é obrigatório'),
+  product: z.string().min(1, 'Produto é obrigatório'),
+  quantity: z.string().min(1, 'Quantidade é obrigatória'),
+  nFluig: z.number().min(1, 'Número de fluig é obrigatório'),
   status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+  cost: z.string().min(1, 'Custo é obrigatório'),
 })
 
-export async function createFluig(data: unknown) {
-  const { code, product, date, nFluig, quantity, status } =
-    fluigSchema.parse(data)
+type FluigSchema = z.infer<typeof fluigSchema>
+
+export async function createFluig(data: FluigSchema) {
   const session = await getServerSession()
+  const costNumber = Number(data.cost)
+  const quantityNumber = Number(data.quantity.replaceAll(/\,/g, '.'))
+  const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
+  const normalizedCostTotal = normalizedCost * quantityNumber
+  const costTotal = normalizedCostTotal.toFixed(2)
 
   if (!session?.user) {
-    return []
+    throw new Error('Unauthorized')
   }
 
   await prisma.fluig.create({
     data: {
-      code: code,
-      product: product,
-      quantity: quantity,
-      nFluig: nFluig,
-      date: date,
-      status: status,
-      costTotal: 0,
+      code: data.code,
+      date: data.date,
+      nFluig: data.nFluig,
+      product: data.product,
+      quantity: data.quantity,
+      costTotal: costTotal,
+      status: data.status,
       userId: session.user.id,
     },
   })
