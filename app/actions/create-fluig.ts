@@ -23,7 +23,11 @@ export async function createFluig(data: FluigSchema) {
   const quantityNumber = Number(data.quantity.replaceAll(/\,/g, '.'))
   const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
   const normalizedCostTotal = normalizedCost * quantityNumber
-  const costTotal = normalizedCostTotal.toFixed(2)
+
+  const costTotal = Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(normalizedCostTotal)
 
   if (!session?.user) {
     throw new Error('Unauthorized')
