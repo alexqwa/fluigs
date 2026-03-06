@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { useForm, Controller } from 'react-hook-form'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, ChevronRight, Mail } from 'lucide-react'
+import { Check, ChevronRight, Loader2, Mail } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { authClient } from '@/lib/auth-client'
 
@@ -63,16 +63,23 @@ export function LoginForm() {
   const [codeHasSend, setCodeHasSend] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const { handleSubmit, control, setValue, getValues, reset, trigger } =
-    useForm<SignInSchema>({
-      resolver: zodResolver(signInSchema),
-      defaultValues: {
-        name: '',
-        email: '',
-        value: '',
-        otp: '',
-      },
-    })
+  const {
+    reset,
+    control,
+    trigger,
+    setValue,
+    getValues,
+    formState,
+    handleSubmit,
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      value: '',
+      otp: '',
+    },
+  })
 
   async function sendEmailOTPVerification() {
     const isValid = await trigger('value')
@@ -117,8 +124,8 @@ export function LoginForm() {
   }
 
   function ResetFields() {
-    reset()
     setCodeHasSend(false)
+    reset()
   }
 
   return (
@@ -303,11 +310,17 @@ export function LoginForm() {
           <Button
             type="submit"
             form="form-rhf-select"
+            disabled={formState.isSubmitting}
             className="group/button bg-foreground group text-background relative inline-flex h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
-            <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
-              Entrar
-            </span>
+            {formState.isSubmitting && (
+              <Loader2 className="size-4 animate-spin" />
+            )}
+            {!formState.isSubmitting && (
+              <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
+                Entrar
+              </span>
+            )}
             <div className="absolute top-1/2 right-12 -translate-y-1/2 opacity-0 transition-all duration-300 ease-in-out group-hover:right-4 group-hover:opacity-100">
               <ChevronRight size={24} className="text-black" />
             </div>
