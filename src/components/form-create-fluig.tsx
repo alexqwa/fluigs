@@ -11,7 +11,7 @@ import { ChevronDownIcon, Loader2 } from 'lucide-react'
 import { Label } from 'components/ui/label'
 import { Button } from 'components/ui/button'
 import { Calendar } from 'components/ui/calendar'
-import { FieldGroup, Field } from 'components/ui/field'
+import { FieldGroup, Field, FieldError } from 'components/ui/field'
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover'
 import {
   Dialog,
@@ -37,12 +37,12 @@ import { createFluig } from 'actions/create-fluig'
 
 const fluigSchema = z.object({
   date: z.date(),
-  code: z.string().min(1, 'Código é obrigatório'),
-  product: z.string().min(1, 'Produto é obrigatório'),
-  quantity: z.string().min(1, 'Quantidade é obrigatória'),
-  nFluig: z.number().min(1, 'Número de fluig é obrigatório'),
+  code: z.string().min(1, 'Código é obrigatório.'),
+  product: z.string().min(1, 'Produto é obrigatório.'),
+  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
+  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
+  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
   status: z.enum(['Approved', 'Pending', 'Not_Approved']),
-  cost: z.string().min(1, 'Custo é obrigatório'),
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
@@ -56,6 +56,15 @@ export function FormCreateFluig() {
   const [open, setOpen] = useState(false)
   const form = useForm<FluigSchema>({
     resolver: zodResolver(fluigSchema),
+    defaultValues: {
+      code: '',
+      cost: '',
+      nFluig: 0,
+      product: '',
+      quantity: '',
+      status: 'Pending',
+      date: dayjs().toDate(),
+    },
   })
 
   const codeValue = form.watch('code')
@@ -107,8 +116,15 @@ export function FormCreateFluig() {
                   type="number"
                   placeholder="Código"
                   {...form.register('code')}
-                  className="border-border bg-muted no-spinner border"
+                  aria-invalid={form.getFieldState('code').invalid}
+                  className="border-border bg-muted no-spinner border aria-[invalid=true]:border-red-400"
                 />
+                {form.getFieldState('code').invalid && (
+                  <FieldError
+                    className="text-red-400"
+                    errors={[form.getFieldState('code').error]}
+                  />
+                )}
               </Field>
               <Field>
                 <Label>Produto</Label>
@@ -116,8 +132,15 @@ export function FormCreateFluig() {
                   readOnly
                   {...form.register('product')}
                   placeholder="Digite o código para buscar"
-                  className="border-border bg-muted trucate border"
+                  aria-invalid={form.getFieldState('product').invalid}
+                  className="border-border bg-muted trucate border aria-[invalid=true]:border-red-400"
                 />
+                {form.getFieldState('product').invalid && (
+                  <FieldError
+                    className="text-red-400"
+                    errors={[form.getFieldState('product').error]}
+                  />
+                )}
               </Field>
             </FieldGroup>
             <FieldGroup>
@@ -126,7 +149,8 @@ export function FormCreateFluig() {
                 <Input
                   placeholder="Quantidade (KG)"
                   {...form.register('quantity')}
-                  className="no-spinner border-border bg-muted border"
+                  aria-invalid={form.getFieldState('quantity').invalid}
+                  className="no-spinner border-border bg-muted border aria-[invalid=true]:border-red-400"
                   onChange={(e) => {
                     let value = e.target.value.replace(/[^0-9.,]/g, '')
 
@@ -139,15 +163,28 @@ export function FormCreateFluig() {
                     form.setValue('quantity', value)
                   }}
                 />
+                {form.getFieldState('quantity').invalid && (
+                  <FieldError
+                    className="text-red-400"
+                    errors={[form.getFieldState('quantity').error]}
+                  />
+                )}
               </Field>
               <Field>
                 <Label>N Fluig</Label>
                 <Input
                   type="number"
                   placeholder="Número do fluig"
+                  aria-invalid={form.getFieldState('nFluig').invalid}
                   {...form.register('nFluig', { valueAsNumber: true })}
-                  className="border-border no-spinner bg-muted border"
+                  className="border-border no-spinner bg-muted border aria-[invalid=true]:border-red-400"
                 />
+                {form.getFieldState('nFluig').invalid && (
+                  <FieldError
+                    className="text-red-400"
+                    errors={[form.getFieldState('nFluig').error]}
+                  />
+                )}
               </Field>
             </FieldGroup>
             <FieldGroup>
@@ -236,8 +273,15 @@ export function FormCreateFluig() {
                 readOnly
                 {...form.register('cost')}
                 placeholder="Digite o código para buscar"
-                className="border-border no-spinner bg-muted border"
+                aria-invalid={form.getFieldState('cost').invalid}
+                className="border-border no-spinner bg-muted border aria-[invalid=true]:border-red-400"
               />
+              {form.getFieldState('cost').invalid && (
+                <FieldError
+                  className="text-red-400"
+                  errors={[form.getFieldState('cost').error]}
+                />
+              )}
             </Field>
           </div>
           <DialogFooter className="bg-muted p-4">
