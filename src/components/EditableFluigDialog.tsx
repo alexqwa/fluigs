@@ -32,14 +32,16 @@ import {
   DrawerDescription,
 } from './ui/drawer'
 
+type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
+
 interface FluigProps {
   id: string
-  code: number
+  code: string
   nFluig: number
-  status: string
+  status: FluigStatus
   product: string
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date
 }
 

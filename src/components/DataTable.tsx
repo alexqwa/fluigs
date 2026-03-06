@@ -65,12 +65,12 @@ type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
 interface FluigProps {
   id: string
-  code: number
+  code: string
   nFluig: number
   status: FluigStatus
   product: string
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date
 }
 
