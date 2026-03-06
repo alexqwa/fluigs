@@ -33,13 +33,13 @@ import {
 } from './ui/drawer'
 
 interface FluigProps {
+  id: string
   code: number
   nFluig: number
   status: string
   product: string
   quantity: number
   costTotal: number
-  createdAt: Date
   date: Date
 }
 
@@ -166,7 +166,7 @@ export function EditableFluigDialog({ item }: { item: FluigProps }) {
         <Dialog>
           <form>
             <DialogTrigger asChild>
-              <Button className="px-0!" variant="link">
+              <Button className="cursor-pointer px-0!" variant="link">
                 {item.product}
               </Button>
             </DialogTrigger>

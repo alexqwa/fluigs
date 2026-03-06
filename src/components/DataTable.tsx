@@ -1,11 +1,15 @@
 'use client'
 import dayjs from 'dayjs'
 import * as React from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
+
+import { Badge } from 'components/ui/badge'
+import { Input } from 'components/ui/input'
+import { Label } from 'components/ui/label'
+import { Button } from 'components/ui/button'
+import { DatePicker } from 'components/DatePicker'
+import { FormCreateFluig } from 'components/form-create-fluig'
+import { EditableFluigDialog } from 'components/EditableFluigDialog'
+import { FieldGroup, Field, FieldLabel } from 'components/ui/field'
 import {
   flexRender,
   useReactTable,
@@ -37,14 +41,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
+} from 'components/ui/dropdown-menu'
 import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
-} from '@/components/ui/select'
+} from 'components/ui/select'
 import {
   Table,
   TableRow,
@@ -52,19 +56,16 @@ import {
   TableHead,
   TableBody,
   TableHeader,
-} from '@/components/ui/table'
-
-import { DatePicker } from '@/components/DatePicker'
-import { EditableFluigDialog } from '@/components/EditableFluigDialog'
+} from 'components/ui/table'
 
 interface FluigProps {
+  id: string
   code: number
   nFluig: number
   status: string
   product: string
   quantity: number
   costTotal: number
-  createdAt: Date
   date: Date
 }
 
@@ -210,7 +211,7 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
       columnFilters,
       pagination,
     },
-    getRowId: (row) => row.code.toString(),
+    getRowId: (row) => row.id,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -227,7 +228,7 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
 
   return (
     <div className="relative flex flex-1 flex-col gap-4 overflow-auto">
-      <div className="mt-8 mb-4 flex flex-col items-end md:flex-row md:justify-between">
+      <div className="mt-10 flex flex-col items-end gap-4 md:flex-row md:justify-between">
         <FieldGroup className="w-full">
           <Field orientation="vertical">
             <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
@@ -235,6 +236,12 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
               id="fieldgroup-code"
               placeholder="Buscar pelo código"
               className="border-border bg-card border"
+              value={
+                (table.getColumn('code')?.getFilterValue() as string) ?? ''
+              }
+              onChange={(event) =>
+                table.getColumn('code')?.setFilterValue(event.target.value)
+              }
             />
           </Field>
           <Field orientation="vertical">
@@ -242,9 +249,7 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
             <DatePicker />
           </Field>
         </FieldGroup>
-        <Button className="mt-4 w-full cursor-pointer text-sm font-medium transition-all hover:brightness-125 md:mt-0 md:w-fit">
-          Adicionar Fluig
-        </Button>
+        <FormCreateFluig />
       </div>
 
       <div className="border-border overflow-hidden rounded-lg border">
@@ -270,10 +275,7 @@ export function DataTable({ data: initialData }: { data: FluigProps[] }) {
           <TableBody className="bg-card **:data-[slot=table-cell]:first:w-8">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
+                <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
