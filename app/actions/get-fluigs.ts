@@ -1,7 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
-import { getServerSession } from './get-session'
+import { getServerSession } from 'actions/get-session'
+import { getFluigsCached } from '@/lib/cache/fluig-cache'
 
 export async function getFluigs() {
   const session = await getServerSession()
@@ -10,12 +10,5 @@ export async function getFluigs() {
     return []
   }
 
-  return await prisma.fluig.findMany({
-    where: {
-      userId: session.user.id,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  })
+  return getFluigsCached(session.user.id)
 }

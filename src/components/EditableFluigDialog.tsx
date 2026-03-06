@@ -32,14 +32,16 @@ import {
   DrawerDescription,
 } from './ui/drawer'
 
+type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
+
 interface FluigProps {
-  code: number
+  id: string
+  code: string
   nFluig: number
-  status: string
+  status: FluigStatus
   product: string
-  quantity: number
-  costTotal: number
-  createdAt: Date
+  quantity: string
+  costTotal: string
   date: Date
 }
 
@@ -166,7 +168,7 @@ export function EditableFluigDialog({ item }: { item: FluigProps }) {
         <Dialog>
           <form>
             <DialogTrigger asChild>
-              <Button className="px-0!" variant="link">
+              <Button className="cursor-pointer px-0!" variant="link">
                 {item.product}
               </Button>
             </DialogTrigger>

@@ -27,27 +27,21 @@ export type AggregateFluig = {
 }
 
 export type FluigAvgAggregateOutputType = {
-  code: number | null
   nFluig: number | null
-  quantity: number | null
-  costTotal: number | null
 }
 
 export type FluigSumAggregateOutputType = {
-  code: number | null
   nFluig: number | null
-  quantity: number | null
-  costTotal: number | null
 }
 
 export type FluigMinAggregateOutputType = {
   id: string | null
   status: $Enums.Status | null
   product: string | null
-  code: number | null
+  code: string | null
   nFluig: number | null
-  quantity: number | null
-  costTotal: number | null
+  quantity: string | null
+  costTotal: string | null
   date: Date | null
   createdAt: Date | null
   userId: string | null
@@ -57,10 +51,10 @@ export type FluigMaxAggregateOutputType = {
   id: string | null
   status: $Enums.Status | null
   product: string | null
-  code: number | null
+  code: string | null
   nFluig: number | null
-  quantity: number | null
-  costTotal: number | null
+  quantity: string | null
+  costTotal: string | null
   date: Date | null
   createdAt: Date | null
   userId: string | null
@@ -82,17 +76,11 @@ export type FluigCountAggregateOutputType = {
 
 
 export type FluigAvgAggregateInputType = {
-  code?: true
   nFluig?: true
-  quantity?: true
-  costTotal?: true
 }
 
 export type FluigSumAggregateInputType = {
-  code?: true
   nFluig?: true
-  quantity?: true
-  costTotal?: true
 }
 
 export type FluigMinAggregateInputType = {
@@ -225,10 +213,10 @@ export type FluigGroupByOutputType = {
   id: string
   status: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date
   createdAt: Date
   userId: string | null
@@ -261,10 +249,10 @@ export type FluigWhereInput = {
   id?: Prisma.StringFilter<"Fluig"> | string
   status?: Prisma.EnumStatusFilter<"Fluig"> | $Enums.Status
   product?: Prisma.StringFilter<"Fluig"> | string
-  code?: Prisma.IntFilter<"Fluig"> | number
+  code?: Prisma.StringFilter<"Fluig"> | string
   nFluig?: Prisma.IntFilter<"Fluig"> | number
-  quantity?: Prisma.IntFilter<"Fluig"> | number
-  costTotal?: Prisma.IntFilter<"Fluig"> | number
+  quantity?: Prisma.StringFilter<"Fluig"> | string
+  costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   userId?: Prisma.StringNullableFilter<"Fluig"> | string | null
@@ -292,10 +280,10 @@ export type FluigWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FluigWhereInput | Prisma.FluigWhereInput[]
   status?: Prisma.EnumStatusFilter<"Fluig"> | $Enums.Status
   product?: Prisma.StringFilter<"Fluig"> | string
-  code?: Prisma.IntFilter<"Fluig"> | number
+  code?: Prisma.StringFilter<"Fluig"> | string
   nFluig?: Prisma.IntFilter<"Fluig"> | number
-  quantity?: Prisma.IntFilter<"Fluig"> | number
-  costTotal?: Prisma.IntFilter<"Fluig"> | number
+  quantity?: Prisma.StringFilter<"Fluig"> | string
+  costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   userId?: Prisma.StringNullableFilter<"Fluig"> | string | null
@@ -327,10 +315,10 @@ export type FluigScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   status?: Prisma.EnumStatusWithAggregatesFilter<"Fluig"> | $Enums.Status
   product?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
-  code?: Prisma.IntWithAggregatesFilter<"Fluig"> | number
+  code?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   nFluig?: Prisma.IntWithAggregatesFilter<"Fluig"> | number
-  quantity?: Prisma.IntWithAggregatesFilter<"Fluig"> | number
-  costTotal?: Prisma.IntWithAggregatesFilter<"Fluig"> | number
+  quantity?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
+  costTotal?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Fluig"> | Date | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"Fluig"> | string | null
@@ -340,10 +328,10 @@ export type FluigCreateInput = {
   id?: string
   status?: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date | string
   createdAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutFluigsInput
@@ -353,10 +341,10 @@ export type FluigUncheckedCreateInput = {
   id?: string
   status?: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date | string
   createdAt?: Date | string
   userId?: string | null
@@ -366,10 +354,10 @@ export type FluigUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutFluigsNestedInput
@@ -379,10 +367,10 @@ export type FluigUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -392,10 +380,10 @@ export type FluigCreateManyInput = {
   id?: string
   status?: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date | string
   createdAt?: Date | string
   userId?: string | null
@@ -405,10 +393,10 @@ export type FluigUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -417,10 +405,10 @@ export type FluigUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -440,10 +428,7 @@ export type FluigCountOrderByAggregateInput = {
 }
 
 export type FluigAvgOrderByAggregateInput = {
-  code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  costTotal?: Prisma.SortOrder
 }
 
 export type FluigMaxOrderByAggregateInput = {
@@ -473,10 +458,7 @@ export type FluigMinOrderByAggregateInput = {
 }
 
 export type FluigSumOrderByAggregateInput = {
-  code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  costTotal?: Prisma.SortOrder
 }
 
 export type FluigListRelationFilter = {
@@ -559,10 +541,10 @@ export type FluigCreateWithoutUserInput = {
   id?: string
   status?: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date | string
   createdAt?: Date | string
 }
@@ -571,10 +553,10 @@ export type FluigUncheckedCreateWithoutUserInput = {
   id?: string
   status?: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date | string
   createdAt?: Date | string
 }
@@ -612,10 +594,10 @@ export type FluigScalarWhereInput = {
   id?: Prisma.StringFilter<"Fluig"> | string
   status?: Prisma.EnumStatusFilter<"Fluig"> | $Enums.Status
   product?: Prisma.StringFilter<"Fluig"> | string
-  code?: Prisma.IntFilter<"Fluig"> | number
+  code?: Prisma.StringFilter<"Fluig"> | string
   nFluig?: Prisma.IntFilter<"Fluig"> | number
-  quantity?: Prisma.IntFilter<"Fluig"> | number
-  costTotal?: Prisma.IntFilter<"Fluig"> | number
+  quantity?: Prisma.StringFilter<"Fluig"> | string
+  costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   userId?: Prisma.StringNullableFilter<"Fluig"> | string | null
@@ -625,10 +607,10 @@ export type FluigCreateManyUserInput = {
   id?: string
   status?: $Enums.Status
   product: string
-  code: number
+  code: string
   nFluig: number
-  quantity: number
-  costTotal: number
+  quantity: string
+  costTotal: string
   date: Date | string
   createdAt?: Date | string
 }
@@ -637,10 +619,10 @@ export type FluigUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -649,10 +631,10 @@ export type FluigUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -661,10 +643,10 @@ export type FluigUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   product?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  costTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -746,10 +728,10 @@ export type $FluigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     status: $Enums.Status
     product: string
-    code: number
+    code: string
     nFluig: number
-    quantity: number
-    costTotal: number
+    quantity: string
+    costTotal: string
     date: Date
     createdAt: Date
     userId: string | null
@@ -1180,10 +1162,10 @@ export interface FluigFieldRefs {
   readonly id: Prisma.FieldRef<"Fluig", 'String'>
   readonly status: Prisma.FieldRef<"Fluig", 'Status'>
   readonly product: Prisma.FieldRef<"Fluig", 'String'>
-  readonly code: Prisma.FieldRef<"Fluig", 'Int'>
+  readonly code: Prisma.FieldRef<"Fluig", 'String'>
   readonly nFluig: Prisma.FieldRef<"Fluig", 'Int'>
-  readonly quantity: Prisma.FieldRef<"Fluig", 'Int'>
-  readonly costTotal: Prisma.FieldRef<"Fluig", 'Int'>
+  readonly quantity: Prisma.FieldRef<"Fluig", 'String'>
+  readonly costTotal: Prisma.FieldRef<"Fluig", 'String'>
   readonly date: Prisma.FieldRef<"Fluig", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Fluig", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Fluig", 'String'>

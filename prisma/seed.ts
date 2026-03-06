@@ -13,7 +13,7 @@ async function seed() {
       },
       {
         email: 'gerencia.sad@atacadaodiaadia.com.br',
-        name: 'Santo Antônio',
+        name: 'Santo Antônio do Descoberto',
       },
       {
         email: 'gerencia.rde@atacadaodiaadia.com.br',
@@ -57,7 +57,7 @@ async function seed() {
       },
       {
         email: 'gerencia.mda@atacadaodiaadia.com.br',
-        name: "M. D'armas",
+        name: "Mestre D'armas",
       },
       {
         email: 'gerencia.agl@atacadaodiaadia.com.br',
@@ -77,7 +77,7 @@ async function seed() {
       },
       {
         email: 'gerencia.vcp@atacadaodiaadia.com.br',
-        name: 'Vicente Rua 12',
+        name: 'Vicente Pires Rua 12',
       },
       {
         email: 'gerencia.qnm11@atacadaodiaadia.com.br',
@@ -113,7 +113,7 @@ async function seed() {
       },
       {
         email: 'gerencia.vcp2@atacadaodiaadia.com.br',
-        name: 'Vicente Rua 04',
+        name: 'Vicente Pires Rua 04',
       },
       {
         email: 'gerencia.sob@atacadaodiaadia.com.br',
