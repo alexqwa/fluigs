@@ -1,4 +1,5 @@
 'use client'
+
 import dayjs from 'dayjs'
 import * as React from 'react'
 import { type DateRange } from 'react-day-picker'
@@ -176,7 +177,7 @@ const columns: ColumnDef<FluigProps>[] = [
     cell: ({ row }) => (
       <div className="w-28 md:w-fit">
         <span className="text-muted-foreground text-sm">
-          {`R$ ${row.original.costTotal}`.replaceAll(/\./g, ',')}
+          {row.original.costTotal}
         </span>
       </div>
     ),

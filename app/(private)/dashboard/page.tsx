@@ -1,17 +1,11 @@
-import { Suspense } from 'react'
-import { getFluigs } from '../../actions/get-fluigs'
+import { getFluigs } from 'actions/get-fluigs'
 
-import { DataTable } from '@/components/DataTable'
-import { AnalyticsCard } from '@/components/AnalyticsCard'
-import { DataTableSkeleton } from '@/components/datatable-skeleton'
-
-async function FluigTable() {
-  const fluigs = await getFluigs()
-
-  return <DataTable data={fluigs} />
-}
+import { DataTable } from 'components/data-table'
+import { AnalyticsCard } from 'components/AnalyticsCard'
 
 export default async function Dashboard() {
+  const fluigs = await getFluigs()
+
   return (
     <>
       <div className="space-y-1">
@@ -56,9 +50,7 @@ export default async function Dashboard() {
           icon="trending-up"
         />
       </div>
-      <Suspense fallback={<DataTableSkeleton />}>
-        <FluigTable />
-      </Suspense>
+      <DataTable data={fluigs} />
     </>
   )
 }
