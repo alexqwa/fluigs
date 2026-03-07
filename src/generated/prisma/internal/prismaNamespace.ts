@@ -824,6 +824,7 @@ export const FluigScalarFieldEnum = {
   code: 'code',
   nFluig: 'nFluig',
   quantity: 'quantity',
+  cost: 'cost',
   costTotal: 'costTotal',
   date: 'date',
   createdAt: 'createdAt',

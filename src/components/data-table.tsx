@@ -1,5 +1,6 @@
 'use client'
 
+import z from 'zod'
 import dayjs from 'dayjs'
 import * as React from 'react'
 import { type DateRange } from 'react-day-picker'
@@ -66,17 +67,19 @@ import { updateFluig } from 'actions/update-fluig'
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
-interface FluigProps {
-  id: string
-  code: string
-  nFluig: number
-  status: FluigStatus
-  costTotal: string
-  quantity: string
-  product: string
-  cost: string
-  date: Date
-}
+const fluigSchema = z.object({
+  id: z.string(),
+  date: z.date(),
+  code: z.string().min(1, 'Código é obrigatório.'),
+  product: z.string().min(1, 'Produto é obrigatório.'),
+  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
+  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
+  costTotal: z.string().min(1, 'Custo do produto é obrigatório.'),
+  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
+  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+})
+
+type FluigSchema = z.infer<typeof fluigSchema>
 
 const statusMap: Record<
   FluigStatus,
@@ -103,7 +106,7 @@ const statusMap: Record<
   },
 }
 
-const columns: ColumnDef<FluigProps>[] = [
+const columns: ColumnDef<FluigSchema>[] = [
   {
     accessorKey: 'code',
     header: 'Código',
@@ -180,13 +183,18 @@ const columns: ColumnDef<FluigProps>[] = [
   {
     accessorKey: 'costTotal',
     header: 'Custo (R$)',
-    cell: ({ row }) => (
-      <div className="w-28 md:w-fit">
-        <span className="text-muted-foreground text-sm">
-          {row.original.costTotal}
-        </span>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const costTotal = Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(Number(row.original.costTotal))
+
+      return (
+        <div className="w-28 md:w-fit">
+          <span className="text-muted-foreground text-sm">{costTotal}</span>
+        </div>
+      )
+    },
   },
   {
     id: 'actions',
@@ -231,7 +239,7 @@ const columns: ColumnDef<FluigProps>[] = [
   },
 ]
 
-export function DataTable({ data: initialData }: { data: FluigProps[] }) {
+export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})

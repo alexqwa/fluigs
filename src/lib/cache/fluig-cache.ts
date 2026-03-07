@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { prisma } from 'lib/prisma'
 import { unstable_cache } from 'next/cache'
 
 export function getFluigsCached(userId: string) {
@@ -15,8 +15,8 @@ export function getFluigsCached(userId: string) {
     },
     ['fluigs', userId],
     {
-      tags: [`fluigs`],
-      revalidate: 60 * 5,
+      tags: ['fluigs'],
+      revalidate: 5,
     }
   )()
 }
