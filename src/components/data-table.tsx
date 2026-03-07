@@ -8,9 +8,9 @@ import { Badge } from 'components/ui/badge'
 import { Input } from 'components/ui/input'
 import { Label } from 'components/ui/label'
 import { Button } from 'components/ui/button'
-import { DatePicker } from '@/components/date-picker'
+import { DatePicker } from 'components/date-picker'
 import { FormCreateFluig } from 'components/form-create-fluig'
-import { EditableFluigDialog } from 'components/EditableFluigDialog'
+import { FormUpdateFluig } from '@/components/form-update-fluig'
 import { FieldGroup, Field, FieldLabel } from 'components/ui/field'
 import {
   flexRender,
@@ -60,7 +60,9 @@ import {
   TableBody,
   TableHeader,
 } from 'components/ui/table'
+
 import { deleteFluig } from 'actions/delete-fluig'
+import { updateFluig } from 'actions/update-fluig'
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
@@ -69,9 +71,10 @@ interface FluigProps {
   code: string
   nFluig: number
   status: FluigStatus
-  product: string
-  quantity: string
   costTotal: string
+  quantity: string
+  product: string
+  cost: string
   date: Date
 }
 
@@ -107,7 +110,7 @@ const columns: ColumnDef<FluigProps>[] = [
     cell: ({ row }) => (
       <div className="w-24 md:w-fit">
         <span className="text-muted-foreground pr-8 text-sm">
-          {row.original.code.toString()}
+          {row.original.code}
         </span>
       </div>
     ),
@@ -117,7 +120,10 @@ const columns: ColumnDef<FluigProps>[] = [
     header: 'Produto',
     cell: ({ row }) => (
       <div className="w-32 md:w-fit">
-        <EditableFluigDialog item={row.original} />
+        <FormUpdateFluig
+          defaultValues={row.original}
+          onSubmit={(data) => updateFluig(row.original.id, data)}
+        />
       </div>
     ),
 
@@ -129,7 +135,7 @@ const columns: ColumnDef<FluigProps>[] = [
     cell: ({ row }) => (
       <div className="w-32 md:w-fit">
         <span className="text-muted-foreground text-sm">
-          {row.original.quantity.toString().replaceAll(/\./g, ',')}
+          {row.original.quantity.replaceAll(/\./g, ',')}
         </span>
       </div>
     ),
@@ -173,7 +179,7 @@ const columns: ColumnDef<FluigProps>[] = [
   },
   {
     accessorKey: 'costTotal',
-    header: 'Custo Total',
+    header: 'Custo (R$)',
     cell: ({ row }) => (
       <div className="w-28 md:w-fit">
         <span className="text-muted-foreground text-sm">

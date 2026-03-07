@@ -9,10 +9,10 @@ import {
   SidebarContent,
 } from '@/components/ui/sidebar'
 
-import data from '@/hooks/data.json'
+import data from 'hooks/data.json'
 
-import { NavMain } from '@/components/NavMain'
-import { NavUser } from '@/components/NavUser'
+import { NavMain } from 'components/NavMain'
+import { NavUser } from 'components/NavUser'
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: User

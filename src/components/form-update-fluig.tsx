@@ -2,37 +2,36 @@
 
 import z from 'zod'
 import dayjs from 'dayjs'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ptBR } from 'react-day-picker/locale'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDownIcon, Loader2 } from 'lucide-react'
 
+import { Input } from 'components/ui/input'
 import { Label } from 'components/ui/label'
 import { Button } from 'components/ui/button'
 import { Calendar } from 'components/ui/calendar'
 import { FieldGroup, Field, FieldError } from 'components/ui/field'
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover'
+import { PopoverTrigger, PopoverContent, Popover } from 'components/ui/popover'
 import {
   Dialog,
-  DialogTitle,
   DialogClose,
+  DialogTitle,
   DialogHeader,
   DialogFooter,
   DialogTrigger,
   DialogContent,
   DialogDescription,
 } from 'components/ui/dialog'
-import { Input } from 'components/ui/input'
 import {
   Select,
   SelectItem,
   SelectValue,
-  SelectContent,
   SelectTrigger,
+  SelectContent,
 } from 'components/ui/select'
 
-import { createFluig } from 'actions/create-fluig'
 import { useProductAutoFill } from 'hooks/use-product-autofill'
 
 const fluigSchema = z.object({
@@ -46,54 +45,62 @@ const fluigSchema = z.object({
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
+type FluigInput = Omit<FluigSchema, 'date'> & { date: Date | string }
 
-export function FormCreateFluig() {
+interface FormUpdateFluigProps {
+  defaultValues: FluigInput
+  onSubmit: (data: FluigSchema) => Promise<void>
+}
+
+export function FormUpdateFluig({
+  defaultValues,
+  onSubmit,
+}: FormUpdateFluigProps) {
   const [open, setOpen] = useState(false)
   const { getProduct } = useProductAutoFill()
 
   const form = useForm<FluigSchema>({
     resolver: zodResolver(fluigSchema),
     defaultValues: {
-      code: '',
-      cost: '',
-      nFluig: 0,
-      product: '',
-      quantity: '',
-      status: 'Pending',
-      date: dayjs().toDate(),
+      ...defaultValues,
+      date: new Date(defaultValues.date),
     },
   })
 
-  async function onSubmit(data: FluigSchema) {
-    await createFluig(data)
+  async function handleSubmit(data: FluigSchema) {
+    await onSubmit(data)
     setOpen(false)
     form.reset()
   }
 
   useEffect(() => {
-    if (!open) form.reset()
-  }, [open])
+    form.reset({
+      ...defaultValues,
+      date: new Date(defaultValues.date),
+    })
+  }, [defaultValues, form])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="cursor-pointer text-sm font-medium transition-all hover:brightness-125"
-        >
-          Adicionar fluig
+        <Button className="cursor-pointer px-0!" variant="link">
+          {defaultValues.product}
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit, (errors) =>
+            console.log(errors)
+          )}
+        >
           <div className="space-y-4 p-6">
             <DialogHeader>
-              <DialogTitle>Adicionar fluig</DialogTitle>
+              <DialogTitle>Detalhes do Fluig</DialogTitle>
               <DialogDescription>
-                Insira todos os detalhes para criação do fluig
+                Mostrando os detalhes do Fluig
               </DialogDescription>
             </DialogHeader>
-            <FieldGroup>
+            <FieldGroup className="mt-6">
               <Field>
                 <Label>Código</Label>
                 <Input
@@ -144,7 +151,7 @@ export function FormCreateFluig() {
             </FieldGroup>
             <FieldGroup>
               <Field>
-                <Label>Quantidade</Label>
+                <Label htmlFor="quantity">Quantidade</Label>
                 <Input
                   {...form.register('quantity')}
                   placeholder="Quantidade (KG ou UN)"
@@ -231,10 +238,7 @@ export function FormCreateFluig() {
                 render={({ field }) => (
                   <Field>
                     <Label>Status</Label>
-                    <Select
-                      defaultValue={field.value}
-                      onValueChange={field.onChange}
-                    >
+                    <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger
                         id="status"
                         className="bg-muted border-border h-9 w-full cursor-pointer border"
@@ -296,16 +300,132 @@ export function FormCreateFluig() {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="flex min-w-32 cursor-pointer items-center justify-center transition-all hover:brightness-125"
+              className="flex min-w-36 cursor-pointer items-center justify-center transition-all hover:brightness-125"
             >
               {form.formState.isSubmitting && (
                 <Loader2 className="size-4 animate-spin" />
               )}
-              {!form.formState.isSubmitting && 'Adicionar fluig'}
+              {!form.formState.isSubmitting && 'Salvar alterações'}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   )
+}
+
+{
+  /* <Drawer direction="bottom">
+  <DrawerTrigger asChild>
+    <Button
+      variant="link"
+      className="text-foreground w-fit px-0 text-left"
+    >
+      {item.product}
+    </Button>
+  </DrawerTrigger>
+  <DrawerContent className="border-border border-t">
+    <DrawerHeader className="gap-1">
+      <DrawerTitle>Detalhes do Fluig</DrawerTitle>
+      <DrawerDescription>
+        Mostrando os detalhes do Fluig
+      </DrawerDescription>
+    </DrawerHeader>
+    <div className="overflow-y-auto px-4 text-sm">
+      <form className="flex flex-col gap-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="code">Codigo</Label>
+            <Input
+              id="code"
+              defaultValue={item.code}
+              className="border-border bg-muted border text-sm"
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="title">Produto</Label>
+            <Input
+              id="title"
+              defaultValue={item.product}
+              className="border-border trucate bg-muted border text-sm"
+              disabled
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="quantity">Quantidade</Label>
+            <Input
+              id="quantity"
+              defaultValue={item.quantity}
+              className="border-border bg-muted border text-sm"
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="nFluig">N Fluig</Label>
+            <Input
+              id="nFluig"
+              defaultValue={item.nFluig}
+              className="border-border bg-muted border text-sm"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="date">Data</Label>
+            <Input
+              id="date"
+              defaultValue={dayjs(item.date).format('DD/MM/YYYY')}
+              className="border-border bg-muted border text-sm"
+            />
+          </div>
+          <div className="mb-4 flex flex-col gap-3">
+            <Label htmlFor="status">Status</Label>
+            <Select defaultValue="pending">
+              <SelectTrigger
+                id="status"
+                className="bg-muted border-border h-9 w-full cursor-pointer border"
+              >
+                <SelectValue placeholder="Selecione o status" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border border">
+                <SelectItem
+                  value="Approved"
+                  className="hover:bg-muted cursor-pointer text-sm"
+                >
+                  Aprovado
+                </SelectItem>
+                <SelectItem
+                  value="Pending"
+                  className="hover:bg-muted cursor-pointer text-sm"
+                >
+                  Aguardando
+                </SelectItem>
+                <SelectItem
+                  value="Not_Approved"
+                  className="hover:bg-muted cursor-pointer text-sm"
+                >
+                  Não Aprovado
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <DrawerFooter className="bg-muted">
+      <Button className="cursor-pointer text-sm font-medium hover:brightness-125">
+        Salvar alterações
+      </Button>
+      <DialogClose asChild>
+        <Button
+          variant="outline"
+          className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
+        >
+          Cancelar
+        </Button>
+      </DialogClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer> */
 }

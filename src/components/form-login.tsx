@@ -173,7 +173,7 @@ export function LoginForm() {
                       <SelectTrigger
                         id="form-rhf-select-store"
                         aria-invalid={fieldState.invalid}
-                        className="bg-muted border-border min-w-full cursor-pointer border aria-[invalid=true]:border-red-400"
+                        className="bg-muted border-border min-w-full cursor-pointer border aria-invalid:border-red-400"
                       >
                         <SelectValue placeholder="Selecionar Filial" />
                       </SelectTrigger>
@@ -260,7 +260,7 @@ export function LoginForm() {
                       onChange={field.onChange}
                       pattern={REGEXP_ONLY_DIGITS}
                     >
-                      <InputOTPGroup className="*:data-[slot=input-otp-slot]:bg-muted *:data-[slot=input-otp-slot]:border-border w-full font-semibold *:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:flex-1 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:aria-[invalid=true]:ring-2 *:data-[slot=input-otp-slot]:aria-[invalid=true]:ring-red-400!">
+                      <InputOTPGroup className="*:data-[slot=input-otp-slot]:bg-muted *:data-[slot=input-otp-slot]:border-border w-full font-semibold *:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:flex-1 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:aria-invalid:ring-2 *:data-[slot=input-otp-slot]:aria-invalid:ring-red-400!">
                         <InputOTPSlot
                           index={0}
                           aria-invalid={fieldState.invalid}
@@ -277,7 +277,7 @@ export function LoginForm() {
 
                       <InputOTPSeparator className="mx-2" />
 
-                      <InputOTPGroup className="*:data-[slot=input-otp-slot]:bg-muted *:data-[slot=input-otp-slot]:border-border w-full font-semibold *:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:flex-1 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:aria-[invalid=true]:ring-2 *:data-[slot=input-otp-slot]:aria-[invalid=true]:ring-red-400!">
+                      <InputOTPGroup className="*:data-[slot=input-otp-slot]:bg-muted *:data-[slot=input-otp-slot]:border-border w-full font-semibold *:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:flex-1 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:aria-invalid:ring-2 *:data-[slot=input-otp-slot]:aria-invalid:ring-red-400!">
                         <InputOTPSlot
                           aria-invalid={fieldState.invalid}
                           index={3}
