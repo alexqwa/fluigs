@@ -24,11 +24,6 @@ export async function createFluig(data: FluigSchema) {
   const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
   const normalizedCostTotal = normalizedCost * quantityNumber
 
-  const costTotal = Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(normalizedCostTotal)
-
   if (!session?.user) {
     throw new Error('Unauthorized')
   }
@@ -37,10 +32,11 @@ export async function createFluig(data: FluigSchema) {
     data: {
       code: data.code,
       date: data.date,
+      cost: data.cost,
       nFluig: data.nFluig,
       product: data.product,
+      costTotal: normalizedCostTotal.toFixed(2),
       quantity: data.quantity,
-      costTotal: costTotal,
       status: data.status,
       userId: session.user.id,
     },

@@ -41,6 +41,7 @@ export type FluigMinAggregateOutputType = {
   code: string | null
   nFluig: number | null
   quantity: string | null
+  cost: string | null
   costTotal: string | null
   date: Date | null
   createdAt: Date | null
@@ -54,6 +55,7 @@ export type FluigMaxAggregateOutputType = {
   code: string | null
   nFluig: number | null
   quantity: string | null
+  cost: string | null
   costTotal: string | null
   date: Date | null
   createdAt: Date | null
@@ -67,6 +69,7 @@ export type FluigCountAggregateOutputType = {
   code: number
   nFluig: number
   quantity: number
+  cost: number
   costTotal: number
   date: number
   createdAt: number
@@ -90,6 +93,7 @@ export type FluigMinAggregateInputType = {
   code?: true
   nFluig?: true
   quantity?: true
+  cost?: true
   costTotal?: true
   date?: true
   createdAt?: true
@@ -103,6 +107,7 @@ export type FluigMaxAggregateInputType = {
   code?: true
   nFluig?: true
   quantity?: true
+  cost?: true
   costTotal?: true
   date?: true
   createdAt?: true
@@ -116,6 +121,7 @@ export type FluigCountAggregateInputType = {
   code?: true
   nFluig?: true
   quantity?: true
+  cost?: true
   costTotal?: true
   date?: true
   createdAt?: true
@@ -216,6 +222,7 @@ export type FluigGroupByOutputType = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date
   createdAt: Date
@@ -252,6 +259,7 @@ export type FluigWhereInput = {
   code?: Prisma.StringFilter<"Fluig"> | string
   nFluig?: Prisma.IntFilter<"Fluig"> | number
   quantity?: Prisma.StringFilter<"Fluig"> | string
+  cost?: Prisma.StringFilter<"Fluig"> | string
   costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
@@ -266,6 +274,7 @@ export type FluigOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -283,6 +292,7 @@ export type FluigWhereUniqueInput = Prisma.AtLeast<{
   code?: Prisma.StringFilter<"Fluig"> | string
   nFluig?: Prisma.IntFilter<"Fluig"> | number
   quantity?: Prisma.StringFilter<"Fluig"> | string
+  cost?: Prisma.StringFilter<"Fluig"> | string
   costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
@@ -297,6 +307,7 @@ export type FluigOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -318,6 +329,7 @@ export type FluigScalarWhereWithAggregatesInput = {
   code?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   nFluig?: Prisma.IntWithAggregatesFilter<"Fluig"> | number
   quantity?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
+  cost?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   costTotal?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Fluig"> | Date | string
@@ -331,6 +343,7 @@ export type FluigCreateInput = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date | string
   createdAt?: Date | string
@@ -344,6 +357,7 @@ export type FluigUncheckedCreateInput = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date | string
   createdAt?: Date | string
@@ -357,6 +371,7 @@ export type FluigUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,6 +385,7 @@ export type FluigUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,6 +399,7 @@ export type FluigCreateManyInput = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date | string
   createdAt?: Date | string
@@ -396,6 +413,7 @@ export type FluigUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -408,6 +426,7 @@ export type FluigUncheckedUpdateManyInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -421,6 +440,7 @@ export type FluigCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -438,6 +458,7 @@ export type FluigMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -451,6 +472,7 @@ export type FluigMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   nFluig?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -544,6 +566,7 @@ export type FluigCreateWithoutUserInput = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date | string
   createdAt?: Date | string
@@ -556,6 +579,7 @@ export type FluigUncheckedCreateWithoutUserInput = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date | string
   createdAt?: Date | string
@@ -597,6 +621,7 @@ export type FluigScalarWhereInput = {
   code?: Prisma.StringFilter<"Fluig"> | string
   nFluig?: Prisma.IntFilter<"Fluig"> | number
   quantity?: Prisma.StringFilter<"Fluig"> | string
+  cost?: Prisma.StringFilter<"Fluig"> | string
   costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
@@ -610,6 +635,7 @@ export type FluigCreateManyUserInput = {
   code: string
   nFluig: number
   quantity: string
+  cost: string
   costTotal: string
   date: Date | string
   createdAt?: Date | string
@@ -622,6 +648,7 @@ export type FluigUpdateWithoutUserInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -634,6 +661,7 @@ export type FluigUncheckedUpdateWithoutUserInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -646,6 +674,7 @@ export type FluigUncheckedUpdateManyWithoutUserInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   nFluig?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.StringFieldUpdateOperationsInput | string
+  cost?: Prisma.StringFieldUpdateOperationsInput | string
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -660,6 +689,7 @@ export type FluigSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   code?: boolean
   nFluig?: boolean
   quantity?: boolean
+  cost?: boolean
   costTotal?: boolean
   date?: boolean
   createdAt?: boolean
@@ -674,6 +704,7 @@ export type FluigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   code?: boolean
   nFluig?: boolean
   quantity?: boolean
+  cost?: boolean
   costTotal?: boolean
   date?: boolean
   createdAt?: boolean
@@ -688,6 +719,7 @@ export type FluigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   code?: boolean
   nFluig?: boolean
   quantity?: boolean
+  cost?: boolean
   costTotal?: boolean
   date?: boolean
   createdAt?: boolean
@@ -702,13 +734,14 @@ export type FluigSelectScalar = {
   code?: boolean
   nFluig?: boolean
   quantity?: boolean
+  cost?: boolean
   costTotal?: boolean
   date?: boolean
   createdAt?: boolean
   userId?: boolean
 }
 
-export type FluigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "product" | "code" | "nFluig" | "quantity" | "costTotal" | "date" | "createdAt" | "userId", ExtArgs["result"]["fluig"]>
+export type FluigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "product" | "code" | "nFluig" | "quantity" | "cost" | "costTotal" | "date" | "createdAt" | "userId", ExtArgs["result"]["fluig"]>
 export type FluigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
 }
@@ -731,6 +764,7 @@ export type $FluigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     code: string
     nFluig: number
     quantity: string
+    cost: string
     costTotal: string
     date: Date
     createdAt: Date
@@ -1165,6 +1199,7 @@ export interface FluigFieldRefs {
   readonly code: Prisma.FieldRef<"Fluig", 'String'>
   readonly nFluig: Prisma.FieldRef<"Fluig", 'Int'>
   readonly quantity: Prisma.FieldRef<"Fluig", 'String'>
+  readonly cost: Prisma.FieldRef<"Fluig", 'String'>
   readonly costTotal: Prisma.FieldRef<"Fluig", 'String'>
   readonly date: Prisma.FieldRef<"Fluig", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Fluig", 'DateTime'>

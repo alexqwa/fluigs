@@ -14,11 +14,13 @@ model Fluig {
   code      String
   nFluig    Int
   quantity  String
+  cost      String
   costTotal String
   date      DateTime
   createdAt DateTime @default(now())
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([code])
   @@index([date])

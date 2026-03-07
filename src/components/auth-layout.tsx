@@ -1,9 +1,9 @@
 import { unauthorized } from 'next/navigation'
-import { getServerSession } from '../../app/actions/get-session'
+import { getServerSession } from 'actions/get-session'
 
-import { SiteHeader } from '@/components/SiteHeader'
-import { AppSidebar } from '@/components/AppSidebar'
-import { SidebarProvider } from '@/components/ui/sidebar'
+import { SiteHeader } from 'components/SiteHeader'
+import { AppSidebar } from 'components/AppSidebar'
+import { SidebarProvider } from 'components/ui/sidebar'
 
 export default async function AuthLayout({
   children,

@@ -19,6 +19,10 @@ type FluigSchema = z.infer<typeof fluigSchema>
 
 export async function updateFluig(id: string, data: FluigSchema) {
   const session = await getServerSession()
+  const costNumber = Number(data.cost)
+  const quantityNumber = Number(data.quantity.replaceAll(/\,/g, '.'))
+  const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
+  const normalizedCostTotal = normalizedCost * quantityNumber
 
   if (!session?.user) {
     throw new Error('Unauthorized')
@@ -27,8 +31,18 @@ export async function updateFluig(id: string, data: FluigSchema) {
   await prisma.fluig.update({
     where: {
       id,
+      userId: session.user.id,
     },
-    data,
+    data: {
+      code: data.code,
+      date: data.date,
+      cost: data.cost,
+      nFluig: data.nFluig,
+      product: data.product,
+      costTotal: normalizedCostTotal.toFixed(2),
+      quantity: data.quantity,
+      status: data.status,
+    },
   })
 
   updateTag('fluigs')

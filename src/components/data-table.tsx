@@ -1,5 +1,6 @@
 'use client'
 
+import z from 'zod'
 import dayjs from 'dayjs'
 import * as React from 'react'
 import { type DateRange } from 'react-day-picker'
@@ -8,9 +9,9 @@ import { Badge } from 'components/ui/badge'
 import { Input } from 'components/ui/input'
 import { Label } from 'components/ui/label'
 import { Button } from 'components/ui/button'
-import { DatePicker } from '@/components/date-picker'
+import { DatePicker } from 'components/date-picker'
 import { FormCreateFluig } from 'components/form-create-fluig'
-import { EditableFluigDialog } from 'components/EditableFluigDialog'
+import { FormUpdateFluig } from '@/components/form-update-fluig'
 import { FieldGroup, Field, FieldLabel } from 'components/ui/field'
 import {
   flexRender,
@@ -60,20 +61,25 @@ import {
   TableBody,
   TableHeader,
 } from 'components/ui/table'
+
 import { deleteFluig } from 'actions/delete-fluig'
+import { updateFluig } from 'actions/update-fluig'
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
-interface FluigProps {
-  id: string
-  code: string
-  nFluig: number
-  status: FluigStatus
-  product: string
-  quantity: string
-  costTotal: string
-  date: Date
-}
+const fluigSchema = z.object({
+  id: z.string(),
+  date: z.date(),
+  code: z.string().min(1, 'Código é obrigatório.'),
+  product: z.string().min(1, 'Produto é obrigatório.'),
+  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
+  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
+  costTotal: z.string().min(1, 'Custo do produto é obrigatório.'),
+  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
+  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+})
+
+type FluigSchema = z.infer<typeof fluigSchema>
 
 const statusMap: Record<
   FluigStatus,
@@ -100,14 +106,14 @@ const statusMap: Record<
   },
 }
 
-const columns: ColumnDef<FluigProps>[] = [
+const columns: ColumnDef<FluigSchema>[] = [
   {
     accessorKey: 'code',
     header: 'Código',
     cell: ({ row }) => (
       <div className="w-24 md:w-fit">
         <span className="text-muted-foreground pr-8 text-sm">
-          {row.original.code.toString()}
+          {row.original.code}
         </span>
       </div>
     ),
@@ -117,7 +123,10 @@ const columns: ColumnDef<FluigProps>[] = [
     header: 'Produto',
     cell: ({ row }) => (
       <div className="w-32 md:w-fit">
-        <EditableFluigDialog item={row.original} />
+        <FormUpdateFluig
+          defaultValues={row.original}
+          onSubmit={(data) => updateFluig(row.original.id, data)}
+        />
       </div>
     ),
 
@@ -129,7 +138,7 @@ const columns: ColumnDef<FluigProps>[] = [
     cell: ({ row }) => (
       <div className="w-32 md:w-fit">
         <span className="text-muted-foreground text-sm">
-          {row.original.quantity.toString().replaceAll(/\./g, ',')}
+          {row.original.quantity.replaceAll(/\./g, ',')}
         </span>
       </div>
     ),
@@ -173,14 +182,19 @@ const columns: ColumnDef<FluigProps>[] = [
   },
   {
     accessorKey: 'costTotal',
-    header: 'Custo Total',
-    cell: ({ row }) => (
-      <div className="w-28 md:w-fit">
-        <span className="text-muted-foreground text-sm">
-          {row.original.costTotal}
-        </span>
-      </div>
-    ),
+    header: 'Custo (R$)',
+    cell: ({ row }) => {
+      const costTotal = Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(Number(row.original.costTotal))
+
+      return (
+        <div className="w-28 md:w-fit">
+          <span className="text-muted-foreground text-sm">{costTotal}</span>
+        </div>
+      )
+    },
   },
   {
     id: 'actions',
@@ -225,7 +239,7 @@ const columns: ColumnDef<FluigProps>[] = [
   },
 ]
 
-export function DataTable({ data: initialData }: { data: FluigProps[] }) {
+export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
