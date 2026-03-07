@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronRight, Loader2, Mail } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { authClient } from '@/lib/auth-client'
+import { sendOTPEmail } from '@/actions/send-otp-email'
 
 import { Button } from './ui/button'
 import {
@@ -61,6 +62,7 @@ type SignInSchema = z.infer<typeof signInSchema>
 export function LoginForm() {
   const router = useRouter()
   const [codeHasSend, setCodeHasSend] = useState(false)
+  const [isSendingCode, setIsSendingCode] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const {
@@ -86,15 +88,36 @@ export function LoginForm() {
 
     if (!isValid) return
 
-    setCodeHasSend(true)
+    setIsSendingCode(true)
+    setError(null)
 
     try {
-      const { data, error } = await authClient.emailOtp.sendVerificationOtp({
-        email: getValues().email,
-        type: 'sign-in',
+      const { email, name } = getValues()
+
+      // Opção 1: Usando Server Action com Resend diretamente
+      const result = await sendOTPEmail({
+        email,
+        storeName: name,
       })
+
+      if (!result.success) {
+        setError(result.error || 'Erro ao enviar código')
+        setIsSendingCode(false)
+        return
+      }
+
+      // Opção 2: Usando better-auth (mantido como alternativa)
+      // const { data, error } = await authClient.emailOtp.sendVerificationOtp({
+      //   email,
+      //   type: 'sign-in',
+      // })
+
+      setCodeHasSend(true)
     } catch (error) {
       console.error(error)
+      setError('Erro ao enviar código de verificação')
+    } finally {
+      setIsSendingCode(false)
     }
   }
 
@@ -200,14 +223,34 @@ export function LoginForm() {
                         errors={[fieldState.error]}
                       />
                     )}
+                    {error && (
+                      <p className="text-sm text-red-400">{error}</p>
+                    )}
                     <Button
                       variant="outline"
-                      disabled={codeHasSend}
+                      disabled={codeHasSend || isSendingCode}
                       onClick={sendEmailOTPVerification}
                       className="bg-muted border-border flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border transition-all hover:brightness-125"
                     >
                       <AnimatePresence mode="wait">
-                        {!codeHasSend ? (
+                        {isSendingCode ? (
+                          <motion.div
+                            key="loading"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex items-center gap-2"
+                          >
+                            <Loader2
+                              size={22}
+                              className="text-foreground animate-spin"
+                            />
+                            <span className="text-foreground text-sm font-semibold">
+                              Enviando código...
+                            </span>
+                          </motion.div>
+                        ) : !codeHasSend ? (
                           <motion.div
                             key="send"
                             initial={{ x: 0, opacity: 1 }}
@@ -222,7 +265,7 @@ export function LoginForm() {
                           </motion.div>
                         ) : (
                           <motion.div
-                            key="loading"
+                            key="success"
                             initial={{ x: -60, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: 60, opacity: 0 }}
