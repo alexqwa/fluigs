@@ -1,10 +1,21 @@
 import { getFluigs } from 'actions/get-fluigs'
+import { useDashboardAnalytics } from 'hooks/use-dashboard-analytics'
 
 import { DataTable } from 'components/data-table'
 import { AnalyticsCard } from 'components/AnalyticsCard'
 
 export default async function Dashboard() {
   const fluigs = await getFluigs()
+  const {
+    totalCost,
+    totalQuantity,
+    pendingFluigs,
+    todayCostTotal,
+    averageFluigs,
+    averageGrowth,
+    formatCurrency,
+    currentMonthAverage,
+  } = useDashboardAnalytics(fluigs)
 
   return (
     <>
@@ -19,35 +30,59 @@ export default async function Dashboard() {
       <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <AnalyticsCard
           title="Quantidade Total"
-          value="1.455 Kg"
-          indicator="3 Fluigs"
-          prospect="Em alta neste mês"
+          value={`${totalQuantity.toFixed(2).replaceAll('.', ',')} KG`}
+          indicator={`${fluigs.length} Fluigs`}
+          prospect={
+            totalQuantity >= 500 ? 'Em alta neste mês' : 'Em queda neste mês'
+          }
           discover="Total consolidado de produtos"
-          icon="trending-up"
+          icon={totalQuantity >= 500 ? 'trending-up' : 'trending-down'}
         />
         <AnalyticsCard
           title="Custo Médio"
-          value="R$ 423,34"
-          indicator="+34.5% Este Mês"
-          prospect="Aumento no custo médio"
-          discover="Comparativo mensal com tendência de crescimento"
-          icon="trending-up"
+          value={formatCurrency(currentMonthAverage)}
+          indicator={`${averageGrowth.toFixed(1)}% Este Mês`}
+          prospect={
+            averageGrowth >= 0
+              ? 'Aumento no custo médio'
+              : 'Redução no custo médio'
+          }
+          discover={
+            averageGrowth >= 0
+              ? 'Comparativo mensal com tendência de crescimento'
+              : 'Comparativo mensal com tendência de redução'
+          }
+          icon={averageGrowth >= 0 ? 'trending-up' : 'trending-down'}
         />
         <AnalyticsCard
           title="Fluigs Pendentes"
-          value="8 Fluigs"
-          indicator="57% Processados"
-          prospect="Solicitações com lentidão neste período"
-          discover="As solicitações requer atenção"
-          icon="trending-down"
+          value={String(pendingFluigs)}
+          indicator={`${averageFluigs.toFixed(1)}% Processados`}
+          prospect={
+            averageFluigs === 100
+              ? 'Todas as solicitações em dias'
+              : 'Solicitações com lentidão neste período'
+          }
+          discover={
+            averageFluigs === 100
+              ? 'Parabéns continue assim'
+              : 'As solicitações requer atenção'
+          }
+          icon={averageFluigs === 100 ? 'trending-up' : 'trending-down'}
         />
         <AnalyticsCard
           title="Custo Total"
-          value="R$ 5.818,47"
-          indicator="R$ 824,17 Hoje"
-          prospect="Em alta neste mês"
-          discover="Crescimento de despesas neste mês"
-          icon="trending-up"
+          value={formatCurrency(totalCost)}
+          indicator={`${formatCurrency(todayCostTotal)} Hoje`}
+          prospect={
+            totalCost >= 500 ? 'Em alta neste mês' : 'Em queda neste mês'
+          }
+          discover={
+            totalCost >= 500
+              ? 'Crescimento de despesas neste mês'
+              : 'Redução de despesas neste mês'
+          }
+          icon={totalCost >= 500 ? 'trending-up' : 'trending-down'}
         />
       </div>
       <DataTable data={fluigs} />
