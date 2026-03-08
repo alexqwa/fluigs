@@ -122,7 +122,7 @@ const columns: ColumnDef<FluigSchema>[] = [
     accessorKey: 'product',
     header: 'Produto',
     cell: ({ row }) => (
-      <div className="w-32 md:w-fit">
+      <div className="w-fit">
         <FormUpdateFluig
           defaultValues={row.original}
           onSubmit={(data) => updateFluig(row.original.id, data)}
@@ -147,7 +147,7 @@ const columns: ColumnDef<FluigSchema>[] = [
     accessorKey: 'nFluig',
     header: 'N Fluig',
     cell: ({ row }) => (
-      <div className="w-24 md:w-fit">
+      <div className="w-28 md:w-fit">
         <span className="text-muted-foreground text-sm">
           {row.original.nFluig}
         </span>
@@ -158,9 +158,11 @@ const columns: ColumnDef<FluigSchema>[] = [
     accessorKey: 'date',
     header: 'Data',
     cell: ({ row }) => (
-      <span className="text-muted-foreground text-sm">
-        {dayjs(row.original.date).format('DD/MM/YYYY')}
-      </span>
+      <div className="w-28 md:w-fit">
+        <span className="text-muted-foreground text-sm">
+          {dayjs(row.original.date).format('DD/MM/YYYY')}
+        </span>
+      </div>
     ),
   },
   {
