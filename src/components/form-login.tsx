@@ -1,8 +1,8 @@
 'use client'
 
 import z from 'zod'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { useForm, Controller } from 'react-hook-form'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -60,6 +60,8 @@ type SignInSchema = z.infer<typeof signInSchema>
 
 export function LoginForm() {
   const router = useRouter()
+  const [cooldown, setCooldown] = useState(0)
+  const [sending, setSending] = useState(false)
   const [codeHasSend, setCodeHasSend] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -81,21 +83,45 @@ export function LoginForm() {
     },
   })
 
+  useEffect(() => {
+    if (cooldown <= 0) return
+
+    const timer = setInterval(() => {
+      setCooldown((c) => c - 1)
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [cooldown])
+
   async function sendEmailOTPVerification() {
-    const isValid = await trigger('value')
+    setError(null)
+    setSending(true)
+
+    const email = getValues('email')
+    const isValid = trigger(['email', 'value'])
 
     if (!isValid) return
 
-    setCodeHasSend(true)
-
     try {
-      const { data, error } = await authClient.emailOtp.sendVerificationOtp({
-        email: getValues().email,
+      const { error } = await authClient.emailOtp.sendVerificationOtp({
+        email,
         type: 'sign-in',
       })
-    } catch (error) {
-      console.error(error)
+
+      if (error) {
+        setError(error.message!)
+        setSending(false)
+        return
+      }
+
+      setCooldown(30)
+      setCodeHasSend(true)
+    } catch (err) {
+      console.error(err)
+      setError('Erro ao enviar código de verificação.')
     }
+
+    setSending(false)
   }
 
   async function onSubmit({ email, otp }: SignInSchema) {
@@ -125,6 +151,8 @@ export function LoginForm() {
 
   function ResetFields() {
     setCodeHasSend(false)
+    setCooldown(0)
+    setError(null)
     reset()
   }
 
@@ -168,7 +196,7 @@ export function LoginForm() {
                           setValue('name', selected.label)
                         }
                       }}
-                      disabled={codeHasSend}
+                      disabled={codeHasSend || sending}
                     >
                       <SelectTrigger
                         id="form-rhf-select-store"
@@ -202,8 +230,8 @@ export function LoginForm() {
                     )}
                     <Button
                       variant="outline"
-                      disabled={codeHasSend}
                       onClick={sendEmailOTPVerification}
+                      disabled={codeHasSend || sending || cooldown > 0}
                       className="bg-muted border-border flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border transition-all hover:brightness-125"
                     >
                       <AnimatePresence mode="wait">
@@ -311,7 +339,7 @@ export function LoginForm() {
             type="submit"
             form="form-rhf-select"
             disabled={formState.isSubmitting}
-            className="group/button bg-foreground group text-background relative inline-flex h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
+            className="group/button bg-foreground group text-background relative inline-flex min-h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
             {formState.isSubmitting && (
               <Loader2 className="size-4 animate-spin" />
@@ -328,9 +356,10 @@ export function LoginForm() {
           <Button
             variant="link"
             onClick={ResetFields}
+            disabled={cooldown > 0}
             className="text-muted-foreground mx-auto mt-3 w-fit cursor-pointer text-sm"
           >
-            Reenviar código?
+            {cooldown > 0 ? `Reenviar em ${cooldown}s` : 'Reenviar código?'}
           </Button>
         </div>
       </CardFooter>

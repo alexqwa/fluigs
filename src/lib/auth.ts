@@ -4,6 +4,8 @@ import { betterAuth } from 'better-auth'
 import { emailOTP } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 
+import { EmailVerifyFluig } from '@/components/email-verify-fluig'
+
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
 export const auth = betterAuth({
@@ -11,19 +13,26 @@ export const auth = betterAuth({
     provider: 'postgresql',
   }),
   emailAndPassword: {
-    enabled: true,
-    minPasswordLength: 4,
+    enabled: false,
+  },
+  rateLimit: {
+    storage: 'database',
+    modelName: 'rateLimit',
+    window: 30,
+    max: 5,
   },
   basePath: '/api/auth',
   baseURL: process.env.BETTER_AUTH_URL,
   plugins: [
     emailOTP({
+      expiresIn: 300,
+
       async sendVerificationOTP({ email, otp }) {
-        resend.emails.send({
+        await resend.emails.send({
           from: 'delivered@resend.dev',
           to: email,
-          subject: 'Seu código de verificação',
-          html: `<h1>${otp}</h1>`,
+          subject: `${otp} - Seu código de login do Controle de Fluigs`,
+          react: EmailVerifyFluig({ verificationCode: otp }),
         })
       },
     }),
