@@ -21,7 +21,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
     if (value === undefined && date === undefined) {
       const today = dayjs()
       const initialRange = {
-        from: today.toDate(),
+        from: today.startOf('month').toDate(),
         to: today.add(7, 'day').toDate(),
       }
       setDate(initialRange)

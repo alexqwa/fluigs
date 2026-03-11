@@ -2,10 +2,18 @@ import dayjs from 'dayjs'
 
 export function useDashboardAnalytics(fluigs: any) {
   const today = dayjs()
-  const lastMonth = today.subtract(1, 'month')
 
-  let totalQuantity = 0
+  const startOfToday = today.startOf('day')
+  const endOfToday = today.endOf('day')
+
+  const startOfCurrentMonth = today.startOf('month')
+  const endOfCurrentMonth = today.endOf('month')
+
+  const startOfLastMonth = today.subtract(1, 'month').startOf('month')
+  const endOfLastMonth = today.subtract(1, 'month').endOf('month')
+
   let totalCost = 0
+  let totalQuantity = 0
   let pendingFluigs = 0
   let todayCostTotal = 0
 
@@ -27,16 +35,19 @@ export function useDashboardAnalytics(fluigs: any) {
       pendingFluigs++
     }
 
-    if (date.isSame(today, 'day')) {
+    // Today
+    if (date >= startOfToday && date <= endOfToday) {
       todayCostTotal += cost
     }
 
-    if (date.isSame(today, 'month')) {
+    // Current Month
+    if (date >= startOfCurrentMonth && date <= endOfCurrentMonth) {
       currentMonthCost += cost
       currentMonthCount++
     }
 
-    if (date.isSame(lastMonth, 'month')) {
+    // Last Month
+    if (date >= startOfLastMonth && date <= endOfLastMonth) {
       lastMonthCost += cost
       lastMonthCount++
     }
@@ -47,7 +58,6 @@ export function useDashboardAnalytics(fluigs: any) {
     : 0
 
   const currentMonthAverage = currentMonthCost / (currentMonthCount || 1)
-
   const lastMonthAverage = lastMonthCost / (lastMonthCount || 1)
 
   const averageGrowth =
