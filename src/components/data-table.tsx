@@ -106,141 +106,6 @@ const statusMap: Record<
   },
 }
 
-const columns: ColumnDef<FluigSchema>[] = [
-  {
-    accessorKey: 'code',
-    header: 'Código',
-    cell: ({ row }) => (
-      <div className="w-24 md:w-fit">
-        <span className="text-muted-foreground pr-8 text-sm">
-          {row.original.code}
-        </span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'product',
-    header: 'Produto',
-    cell: ({ row }) => (
-      <div className="w-fit">
-        <FormUpdateFluig
-          defaultValues={row.original}
-          onSubmit={(data) => updateFluig(row.original.id, data)}
-        />
-      </div>
-    ),
-
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'quantity',
-    header: 'Quantidade',
-    cell: ({ row }) => (
-      <div className="w-32 md:w-fit">
-        <span className="text-muted-foreground text-sm">
-          {row.original.quantity.replaceAll(/\./g, ',')}
-        </span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'nFluig',
-    header: 'N Fluig',
-    cell: ({ row }) => (
-      <div className="w-28 md:w-fit">
-        <span className="text-muted-foreground text-sm">
-          {row.original.nFluig}
-        </span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'date',
-    header: 'Data',
-    cell: ({ row }) => (
-      <div className="w-28 md:w-fit">
-        <span className="text-muted-foreground text-sm">
-          {dayjs(row.original.date).format('DD/MM/YYYY')}
-        </span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = statusMap[row.original.status]
-      const Icon = status.icon
-
-      return (
-        <div className="w-32 md:w-fit">
-          <Badge variant="outline" className="text-muted-foreground px-1.5">
-            <Icon className={status.color} />
-            {status.label}
-          </Badge>
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'costTotal',
-    header: 'Custo (R$)',
-    cell: ({ row }) => {
-      const costTotal = Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(Number(row.original.costTotal))
-
-      return (
-        <div className="w-28 md:w-fit">
-          <span className="text-muted-foreground text-sm">{costTotal}</span>
-        </div>
-      )
-    },
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      const id = row.original.id
-
-      return (
-        <div className="flex justify-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-                size="icon"
-              >
-                <IconDotsVertical />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="bg-card border-border w-36 border"
-            >
-              <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-                <IconPencilMinus className="text-muted-foreground" />
-                <span className="text-foreground text-sm">Editar</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                variant="destructive"
-                onClick={() => deleteFluig(id)}
-                className="hover:bg-muted cursor-pointer"
-              >
-                <IconTrashX className="text-muted-foreground" />
-                <span className="text-foreground text-sm">Deletar</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )
-    },
-  },
-]
-
 export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -276,6 +141,141 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
       )
     })
   }, [initialData, dateRange])
+
+  const columns: ColumnDef<FluigSchema>[] = [
+    {
+      accessorKey: 'code',
+      header: 'Código',
+      cell: ({ row }) => (
+        <div className="w-24 md:w-fit">
+          <span className="text-muted-foreground pr-8 text-sm">
+            {row.original.code}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'product',
+      header: 'Produto',
+      cell: ({ row }) => (
+        <div className="w-fit pr-8 md:pr-0">
+          <FormUpdateFluig
+            defaultValues={row.original}
+            onSubmit={(data) => updateFluig(row.original.id, data)}
+          />
+        </div>
+      ),
+
+      enableHiding: false,
+    },
+    {
+      accessorKey: 'quantity',
+      header: 'Quantidade',
+      cell: ({ row }) => (
+        <div className="w-32 md:w-fit">
+          <span className="text-muted-foreground text-sm">
+            {row.original.quantity.replaceAll(/\./g, ',')}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'nFluig',
+      header: 'N Fluig',
+      cell: ({ row }) => (
+        <div className="w-28 md:w-fit">
+          <span className="text-muted-foreground text-sm">
+            {row.original.nFluig}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'date',
+      header: 'Data',
+      cell: ({ row }) => (
+        <div className="w-28 md:w-fit">
+          <span className="text-muted-foreground text-sm">
+            {dayjs(row.original.date).format('DD/MM/YYYY')}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => {
+        const status = statusMap[row.original.status]
+        const Icon = status.icon
+
+        return (
+          <div className="w-32 md:w-fit">
+            <Badge variant="outline" className="text-muted-foreground px-1.5">
+              <Icon className={status.color} />
+              {status.label}
+            </Badge>
+          </div>
+        )
+      },
+    },
+    {
+      accessorKey: 'costTotal',
+      header: 'Custo (R$)',
+      cell: ({ row }) => {
+        const costTotal = Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(Number(row.original.costTotal))
+
+        return (
+          <div className="w-28 md:w-fit">
+            <span className="text-muted-foreground text-sm">{costTotal}</span>
+          </div>
+        )
+      },
+    },
+    {
+      id: 'actions',
+      cell: ({ row }) => {
+        const id = row.original.id
+
+        return (
+          <div className="flex justify-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
+                  size="icon"
+                >
+                  <IconDotsVertical />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-card border-border w-36 border"
+              >
+                <DropdownMenuItem className="hover:bg-muted cursor-pointer">
+                  <IconPencilMinus className="text-muted-foreground" />
+                  <span className="text-foreground text-sm">Editar</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={() => deleteFluig(id)}
+                  className="hover:bg-muted cursor-pointer"
+                >
+                  <IconTrashX className="text-muted-foreground" />
+                  <span className="text-foreground text-sm">Deletar</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )
+      },
+    },
+  ]
 
   const table = useReactTable({
     data: filteredData,

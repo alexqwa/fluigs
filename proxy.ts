@@ -8,10 +8,9 @@ type PublicRoute = {
 const publicRoutes: readonly PublicRoute[] = [
   { path: '/', whenAuthenticated: 'redirect' },
   { path: '/account', whenAuthenticated: 'next' },
-  { path: '/skeleton', whenAuthenticated: 'next' },
   { path: '/dashboard', whenAuthenticated: 'next' },
+  { path: '/notifications', whenAuthenticated: 'next' },
   { path: '/reports', whenAuthenticated: 'next' },
-  { path: '/orders', whenAuthenticated: 'next' },
 ] as const
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'

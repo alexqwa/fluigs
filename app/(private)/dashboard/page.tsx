@@ -4,6 +4,10 @@ import { useDashboardAnalytics } from 'hooks/use-dashboard-analytics'
 import { DataTable } from 'components/data-table'
 import { AnalyticsCard } from 'components/AnalyticsCard'
 
+// async function DataFluigsSkeleton() {
+//   const fluigs = await getFluigs()
+// }
+
 export default async function Dashboard() {
   const fluigs = await getFluigs()
   const {

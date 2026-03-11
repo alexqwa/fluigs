@@ -9,11 +9,6 @@
       "title": "Relatórios",
       "url": "/reports",
       "icon": "file-chart-pie"
-    },
-    {
-      "title": "Meus pedidos",
-      "url": "/orders",
-      "icon": "shopping-basket"
     }
   ],
   "stores": [

@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -91,7 +92,17 @@ model Verification {
 }
 
 enum Status {
-  Approved     @map("approved")
+  Approved @map("approved")
   Not_Approved @map("not_approved")
-  Pending      @map("pending")
+  Pending @map("pending")
+}
+
+model RateLimit {
+  id          String @id
+  key         String
+  count       Int
+  lastRequest BigInt
+
+  @@unique([key])
+  @@map("rateLimit")
 }
