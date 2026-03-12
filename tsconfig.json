@@ -21,12 +21,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "lib/*": ["./src/lib/*"],
-      "hooks/*": ["./src/hooks/*"],
-      "utils/*": ["./src/utils/*"],
-      "components/*": ["./src/components/*"],
-      "actions/*": ["./app/actions/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
