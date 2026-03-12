@@ -17,7 +17,7 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'
 
 export function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
-  const authToken = request.cookies.get('better-auth.session_token')
+  const authToken = request.cookies.get('__Secure-better-auth.session_token')
 
   // Verifica se a rota é pública
   const publicRoute = publicRoutes.find((route) => {
