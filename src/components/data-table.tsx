@@ -28,8 +28,8 @@ import {
   type ColumnFiltersState,
 } from '@tanstack/react-table'
 import {
-  IconLoader,
   IconTrashX,
+  IconReload,
   IconPencilMinus,
   IconChevronLeft,
   IconDotsVertical,
@@ -96,8 +96,8 @@ const statusMap: Record<
   },
   Pending: {
     label: 'Aguardando',
-    icon: IconLoader,
-    color: 'animate-spin',
+    icon: IconReload,
+    color: 'text-yellow-400 animate-spin duration-300',
   },
   Not_Approved: {
     label: 'Não Aprovado',
