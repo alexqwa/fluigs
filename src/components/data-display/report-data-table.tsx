@@ -1,17 +1,14 @@
 'use client'
 
 import z from 'zod'
+dayjs.locale('pt-br')
 import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
 import * as React from 'react'
-import { type DateRange } from 'react-day-picker'
 
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { DatePicker } from '@/components/data-display/date-picker'
-import { FormCreateFluig } from '@/components/forms/form-create-fluig'
-import { FormUpdateFluig } from '@/components/forms/form-update-fluig'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
 import {
   flexRender,
@@ -28,11 +25,8 @@ import {
   type ColumnFiltersState,
 } from '@tanstack/react-table'
 import {
-  IconTrashX,
   IconReload,
-  IconPencilMinus,
   IconChevronLeft,
-  IconDotsVertical,
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
@@ -40,16 +34,11 @@ import {
   IconExclamationCircleFilled,
 } from '@tabler/icons-react'
 import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
-import {
   Select,
   SelectItem,
   SelectValue,
+  SelectLabel,
+  SelectGroup,
   SelectTrigger,
   SelectContent,
 } from '@/components/ui/select'
@@ -61,9 +50,6 @@ import {
   TableBody,
   TableHeader,
 } from '@/components/ui/table'
-
-import { Delete } from '@/actions/fluig/delete'
-import { Update } from '@/actions/fluig/update'
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
@@ -106,7 +92,11 @@ const statusMap: Record<
   },
 }
 
-export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
+export function ReportDataTable({
+  data: initialData,
+}: {
+  data: FluigSchema[]
+}) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -119,28 +109,23 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
     pageSize: 10,
   })
 
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
-    undefined
+  const [statusFilter, setStatusFilter] = React.useState<FluigStatus | 'All'>(
+    'All'
   )
+  const [monthFilter, setMonthFilter] = React.useState<number | 'All'>('All')
 
   const filteredData = React.useMemo(() => {
-    if (!dateRange?.from) return initialData
-
     return initialData.filter((item) => {
-      // Normaliza a data do item para comparar apenas ano/mês/dia (ignora horário UTC)
-      const itemDate = dayjs(item.date).startOf('day')
-      const fromDate = dayjs(dateRange.from).startOf('day')
-      const toDate = dateRange.to
-        ? dayjs(dateRange.to).startOf('day')
-        : fromDate
+      const itemDate = dayjs(item.date)
 
-      // Compara as datas normalizadas (>= from e <= to)
-      return (
-        (itemDate.isSame(fromDate) || itemDate.isAfter(fromDate)) &&
-        (itemDate.isSame(toDate) || itemDate.isBefore(toDate))
-      )
+      const matchStatus = statusFilter === 'All' || item.status === statusFilter
+
+      const matchMonth =
+        monthFilter === 'All' || itemDate.month() === monthFilter
+
+      return matchStatus && matchMonth
     })
-  }, [initialData, dateRange])
+  }, [initialData, statusFilter, monthFilter])
 
   const columns: ColumnDef<FluigSchema>[] = [
     {
@@ -158,15 +143,12 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
       accessorKey: 'product',
       header: 'Produto',
       cell: ({ row }) => (
-        <div className="w-fit pr-8 md:pr-0">
-          <FormUpdateFluig
-            defaultValues={row.original}
-            onSubmit={(data) => Update(row.original.id, data)}
-          />
+        <div className="w-fit py-2 pr-8 md:pr-0">
+          <span className="text-muted-foreground text-sm">
+            {row.original.product}
+          </span>
         </div>
       ),
-
-      enableHiding: false,
     },
     {
       accessorKey: 'quantity',
@@ -234,47 +216,6 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
         )
       },
     },
-    {
-      id: 'actions',
-      cell: ({ row }) => {
-        const id = row.original.id
-
-        return (
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-                  size="icon"
-                >
-                  <IconDotsVertical />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-card border-border w-36 border"
-              >
-                <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-                  <IconPencilMinus className="text-muted-foreground" />
-                  <span className="text-foreground text-sm">Editar</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={() => Delete(id)}
-                  className="hover:bg-muted cursor-pointer"
-                >
-                  <IconTrashX className="text-muted-foreground" />
-                  <span className="text-foreground text-sm">Deletar</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        )
-      },
-    },
   ]
 
   const table = useReactTable({
@@ -307,25 +248,99 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
       <div className="mt-10 flex flex-col items-end gap-4 md:flex-row md:justify-between">
         <FieldGroup className="w-full">
           <Field orientation="vertical">
-            <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
-            <Input
-              id="fieldgroup-code"
-              placeholder="Buscar pelo código"
-              className="border-border bg-card border"
-              value={
-                (table.getColumn('code')?.getFilterValue() as string) ?? ''
+            <FieldLabel htmlFor="fieldgroup-code">Status</FieldLabel>
+            <Select
+              defaultValue="All"
+              value={statusFilter}
+              onValueChange={(value) =>
+                setStatusFilter(value as FluigStatus | 'All')
               }
-              onChange={(event) =>
-                table.getColumn('code')?.setFilterValue(event.target.value)
-              }
-            />
+            >
+              <SelectTrigger className="bg-card border-border min-w-full cursor-pointer border aria-invalid:border-red-400">
+                <SelectValue placeholder="Selecionar status" />
+              </SelectTrigger>
+              <SelectContent
+                position="popper"
+                className="bg-card border-border border"
+              >
+                <SelectGroup>
+                  <SelectLabel>Selecionar status</SelectLabel>
+                  <SelectItem
+                    value="All"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Todos
+                  </SelectItem>
+                  <SelectItem
+                    value="Approved"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Aprovado
+                  </SelectItem>
+                  <SelectItem
+                    value="Pending"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Aguardando
+                  </SelectItem>
+                  <SelectItem
+                    value="Not_Approved"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Não Aprovado
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </Field>
           <Field orientation="vertical">
-            <FieldLabel htmlFor="fieldgroup-date">Período</FieldLabel>
-            <DatePicker value={dateRange} onChange={setDateRange} />
+            <FieldLabel htmlFor="fieldgroup-date">Mês</FieldLabel>
+            <Select
+              defaultValue="All"
+              value={monthFilter.toString()}
+              onValueChange={(value) =>
+                setMonthFilter(value === 'All' ? 'All' : Number(value))
+              }
+            >
+              <SelectTrigger className="bg-card border-border min-w-full cursor-pointer border aria-invalid:border-red-400">
+                <SelectValue placeholder="Selecionar mês" />
+              </SelectTrigger>
+              <SelectContent
+                position="popper"
+                className="bg-card border-border border"
+              >
+                <SelectGroup>
+                  <SelectLabel>Selecionar mês</SelectLabel>
+                  <SelectItem
+                    value="All"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Todos
+                  </SelectItem>
+                  {Array.from({ length: 12 }).map((_, i) => {
+                    const month = dayjs()
+                      .startOf('year')
+                      .add(i, 'month')
+                      .format('MMMM')
+
+                    return (
+                      <SelectItem
+                        key={i}
+                        value={i.toString()}
+                        className="hover:bg-muted cursor-pointer text-sm"
+                      >
+                        {month.charAt(0).toUpperCase() + month.slice(1)}
+                      </SelectItem>
+                    )
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </Field>
         </FieldGroup>
-        <FormCreateFluig />
+        <Button className="w-full cursor-pointer md:w-fit">
+          Exportar relatório
+        </Button>
       </div>
 
       <div className="border-border overflow-hidden rounded-lg border">

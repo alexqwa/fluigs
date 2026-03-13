@@ -3,13 +3,13 @@ import { Suspense } from 'react'
 import { Queries } from '@/actions/fluig/queries'
 import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
-import { DataTable } from '@/components/data-display/data-table'
-import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 import { AnalyticsCard } from '@/components/data-display/analytics-card'
+import { FluigDataTable } from '@/components/data-display/fluig-data-table'
+import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 import { AnalyticsSkeletonCard } from '@/components/data-display/analytics-skeleton-card'
 
 async function DataFluigs({ fluigs }: { fluigs: any }) {
-  return <DataTable data={fluigs} />
+  return <FluigDataTable data={fluigs} />
 }
 
 async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
