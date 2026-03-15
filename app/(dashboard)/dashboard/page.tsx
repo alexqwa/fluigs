@@ -8,11 +8,15 @@ import { FluigDataTable } from '@/components/data-display/fluig-data-table'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 import { AnalyticsSkeletonCard } from '@/components/data-display/analytics-skeleton-card'
 
-async function DataFluigs({ fluigs }: { fluigs: any }) {
+async function DataFluigs() {
+  const fluigs = await Queries()
+
   return <FluigDataTable data={fluigs} />
 }
 
-async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
+async function DashboardAnalytics() {
+  const fluigs = await Queries()
+
   const {
     totalCost,
     formatWeight,
@@ -86,8 +90,6 @@ async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
 }
 
 export default async function Dashboard() {
-  const fluigs = await Queries()
-
   return (
     <>
       <div className="space-y-1">
@@ -107,10 +109,10 @@ export default async function Dashboard() {
           </div>
         }
       >
-        <DashboardAnalytics fluigs={fluigs} />
+        <DashboardAnalytics />
       </Suspense>
       <Suspense fallback={<DataTableSkeleton />}>
-        <DataFluigs fluigs={fluigs} />
+        <DataFluigs />
       </Suspense>
     </>
   )

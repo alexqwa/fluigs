@@ -5,13 +5,13 @@ import { Queries } from '@/actions/fluig/queries'
 import { ReportDataTable } from '@/components/data-display/report-data-table'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 
-async function DataFluigs({ fluigs }: { fluigs: any }) {
+async function DataFluigs() {
+  const fluigs = await Queries()
+
   return <ReportDataTable data={fluigs} />
 }
 
 export default async function Reports() {
-  const fluigs = await Queries()
-
   return (
     <>
       <div className="space-y-1">
@@ -23,7 +23,7 @@ export default async function Reports() {
         </p>
       </div>
       <Suspense fallback={<DataTableSkeleton />}>
-        <DataFluigs fluigs={fluigs} />
+        <DataFluigs />
       </Suspense>
     </>
   )
