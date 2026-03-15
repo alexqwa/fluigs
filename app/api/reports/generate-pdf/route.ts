@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
 import puppeteer from 'puppeteer'
 import chromium from '@sparticuz/chromium'
+import { NextRequest, NextResponse } from 'next/server'
 
 import { ReportPDFTemplate } from '@/templates/report-pdf-template'
 
@@ -26,7 +26,30 @@ interface GeneratePDFRequest {
   }
 }
 
+async function getBrowser() {
+  const isLocal = process.env.NODE_ENV === 'development'
+
+  if (isLocal) {
+    // Desenvolvimento local - usa puppeteer com chromium local
+    const puppeteerFull = await import('puppeteer')
+    return puppeteerFull.default.launch({
+      headless: true,
+    })
+  }
+
+  // Produção - usa @sparticuz/chromium otimizado para serverless
+  chromium.setGraphicsMode = false
+
+  return puppeteer.launch({
+    args: chromium.args,
+    executablePath: await chromium.executablePath(),
+    headless: true,
+  })
+}
+
 export async function POST(request: NextRequest) {
+  let browser = null
+
   try {
     const body: GeneratePDFRequest = await request.json()
     const { data, filters } = body
@@ -44,20 +67,11 @@ export async function POST(request: NextRequest) {
       generatedAt: new Date(),
     })
 
-    const isProduction = process.env.NODE_ENV === 'production'
-
-    const browser = await puppeteer.launch({
-      args: isProduction ? chromium.args : [],
-      executablePath: isProduction
-        ? await chromium.executablePath()
-        : undefined,
-      headless: true,
-    })
-
+    browser = await getBrowser()
     const page = await browser.newPage()
 
     await page.setContent(htmlContent, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'domcontentloaded',
     })
 
     const pdf = await page.pdf({
@@ -85,5 +99,9 @@ export async function POST(request: NextRequest) {
       { error: 'Erro interno ao gerar o relatório' },
       { status: 500 }
     )
+  } finally {
+    if (browser) {
+      await browser.close()
+    }
   }
 }
