@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    await browser.close()
+    await page.close()
 
     return new NextResponse(Buffer.from(pdf), {
       headers: {
@@ -91,7 +91,5 @@ export async function POST(request: NextRequest) {
       { error: 'Erro interno ao gerar o relatório' },
       { status: 500 }
     )
-  } finally {
-    if (browser) await browser.close()
   }
 }
