@@ -160,8 +160,10 @@ export function ReportDataTable({
 
       const a = document.createElement('a')
       a.href = url
-      a.download = `relatorio-fluig-${dayjs().format('DD/MM/YYYY')}.pdf`
+      a.download = `fluig-${dayjs().format('DD-MM-YYYY')}.pdf`
       a.click()
+
+      URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Erro ao exportar PDF:', error)
     } finally {

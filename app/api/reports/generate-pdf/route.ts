@@ -26,22 +26,22 @@ interface GeneratePDFRequest {
   }
 }
 
-export async function POST(request: NextRequest) {
-  const viewport = {
-    deviceScaleFactor: 1,
-    hasTouch: false,
-    height: 1080,
-    isLandscape: false,
-    isMobile: false,
-    width: 1920,
+let browserPromise: any = null
+
+async function getBrowser() {
+  if (!browserPromise) {
+    browserPromise = puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    })
   }
 
-  const browser = await puppeteer.launch({
-    args: puppeteer.defaultArgs({ args: chromium.args, headless: 'shell' }),
-    defaultViewport: viewport,
-    executablePath: await chromium.executablePath(),
-    headless: 'shell',
-  })
+  return browserPromise
+}
+
+export async function POST(request: NextRequest) {
+  const browser = await getBrowser()
 
   try {
     const body: GeneratePDFRequest = await request.json()
@@ -54,13 +54,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const page = await browser.newPage()
+
     const htmlContent = ReportPDFTemplate({
       data,
       filters,
       generatedAt: new Date(),
     })
-
-    const page = await browser.newPage()
 
     await page.setContent(htmlContent, {
       waitUntil: 'networkidle0',
@@ -92,8 +92,6 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   } finally {
-    if (browser) {
-      await browser.close()
-    }
+    if (browser) await browser.close()
   }
 }
