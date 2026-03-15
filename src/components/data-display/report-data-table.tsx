@@ -26,6 +26,8 @@ import {
 } from '@tanstack/react-table'
 import {
   IconReload,
+  IconLoader2,
+  IconDownload,
   IconChevronLeft,
   IconChevronRight,
   IconChevronsLeft,
@@ -113,6 +115,7 @@ export function ReportDataTable({
     'All'
   )
   const [monthFilter, setMonthFilter] = React.useState<number | 'All'>('All')
+  const [isExporting, setIsExporting] = React.useState(false)
 
   const filteredData = React.useMemo(() => {
     return initialData.filter((item) => {
@@ -126,6 +129,46 @@ export function ReportDataTable({
       return matchStatus && matchMonth
     })
   }, [initialData, statusFilter, monthFilter])
+
+  const handleExportPDF = React.useCallback(async () => {
+    if (filteredData.length === 0) return
+
+    setIsExporting(true)
+
+    try {
+      const response = await fetch('/api/reports/generate-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          data: filteredData,
+          filters: {
+            status: statusFilter,
+            month: monthFilter,
+          },
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao gerar o relatório')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `relatorio-fluig-${dayjs().format('DD/MM/YYYY')}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Erro ao exportar PDF:', error)
+    } finally {
+      setIsExporting(false)
+    }
+  }, [filteredData, statusFilter, monthFilter])
 
   const columns: ColumnDef<FluigSchema>[] = [
     {
@@ -153,13 +196,18 @@ export function ReportDataTable({
     {
       accessorKey: 'quantity',
       header: 'Quantidade',
-      cell: ({ row }) => (
-        <div className="w-32 md:w-fit">
-          <span className="text-muted-foreground text-sm">
-            {row.original.quantity.replaceAll(/\./g, ',')}
-          </span>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const quantity = Intl.NumberFormat('pt-BR', {
+          style: 'decimal',
+          minimumFractionDigits: 2,
+        }).format(Number(row.original.quantity))
+
+        return (
+          <div className="w-32 md:w-fit">
+            <span className="text-muted-foreground text-sm">{quantity}</span>
+          </div>
+        )
+      },
     },
     {
       accessorKey: 'nFluig',
@@ -338,8 +386,22 @@ export function ReportDataTable({
             </Select>
           </Field>
         </FieldGroup>
-        <Button className="w-full cursor-pointer md:w-fit">
-          Exportar relatório
+        <Button
+          onClick={handleExportPDF}
+          disabled={isExporting || filteredData.length === 0}
+          className="w-full cursor-pointer md:w-56"
+        >
+          {isExporting ? (
+            <>
+              <IconLoader2 className="size-4 animate-spin" />
+              Gerando PDF...
+            </>
+          ) : (
+            <>
+              <IconDownload className="size-4" />
+              Exportar relatório
+            </>
+          )}
         </Button>
       </div>
 

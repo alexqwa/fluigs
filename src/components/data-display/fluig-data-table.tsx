@@ -184,13 +184,18 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
     {
       accessorKey: 'quantity',
       header: 'Quantidade',
-      cell: ({ row }) => (
-        <div className="w-32 md:w-fit">
-          <span className="text-muted-foreground text-sm">
-            {row.original.quantity.replaceAll(/\./g, ',')}
-          </span>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const quantity = Intl.NumberFormat('pt-BR', {
+          style: 'decimal',
+          minimumFractionDigits: 2,
+        }).format(Number(row.original.quantity))
+
+        return (
+          <div className="w-32 md:w-fit">
+            <span className="text-muted-foreground text-sm">{quantity}</span>
+          </div>
+        )
+      },
     },
     {
       accessorKey: 'nFluig',

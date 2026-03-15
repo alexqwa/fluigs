@@ -1,6 +1,13 @@
+import { Suspense } from 'react'
+
 import { Queries } from '@/actions/fluig/queries'
 
 import { ReportDataTable } from '@/components/data-display/report-data-table'
+import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
+
+async function DataFluigs({ fluigs }: { fluigs: any }) {
+  return <ReportDataTable data={fluigs} />
+}
 
 export default async function Reports() {
   const fluigs = await Queries()
@@ -15,7 +22,9 @@ export default async function Reports() {
           Simplifique a gestão dos seus relatórios em um só lugar
         </p>
       </div>
-      <ReportDataTable data={fluigs} />
+      <Suspense fallback={<DataTableSkeleton />}>
+        <DataFluigs fluigs={fluigs} />
+      </Suspense>
     </>
   )
 }

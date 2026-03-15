@@ -71,8 +71,15 @@ export function useDashboardAnalytics(fluigs: any) {
       currency: 'BRL',
     }).format(value)
 
+  const formatWeight = (value: number) =>
+    new Intl.NumberFormat('pt-BR', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+    }).format(value)
+
   return {
     totalCost,
+    formatWeight,
     totalQuantity,
     pendingFluigs,
     todayCostTotal,

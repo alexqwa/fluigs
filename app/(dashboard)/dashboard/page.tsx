@@ -15,12 +15,13 @@ async function DataFluigs({ fluigs }: { fluigs: any }) {
 async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
   const {
     totalCost,
+    formatWeight,
     totalQuantity,
     pendingFluigs,
-    todayCostTotal,
     averageFluigs,
     averageGrowth,
     formatCurrency,
+    todayCostTotal,
     currentMonthAverage,
   } = useDashboardAnalytics(fluigs)
 
@@ -28,7 +29,7 @@ async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
     <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <AnalyticsCard
         title="Quantidade Total"
-        value={`${totalQuantity.toFixed(2).replaceAll('.', ',')} KG`}
+        value={`${formatWeight(totalQuantity)} KG`}
         indicator={`${fluigs.length} Fluigs`}
         prospect={
           totalQuantity >= 500 ? 'Em alta neste mês' : 'Em queda neste mês'
