@@ -155,14 +155,13 @@ export function ReportDataTable({
       }
 
       const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `relatorio-fluig-${dayjs().format('DD/MM/YYYY')}.pdf`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      window.URL.revokeObjectURL(url)
+
+      const url = URL.createObjectURL(blob)
+
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `relatorio-fluig-${dayjs().format('DD/MM/YYYY')}.pdf`
+      a.click()
     } catch (error) {
       console.error('Erro ao exportar PDF:', error)
     } finally {
