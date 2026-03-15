@@ -40,7 +40,7 @@ export async function Update(id: string, data: FluigSchema) {
       nFluig: data.nFluig,
       product: data.product,
       costTotal: normalizedCostTotal.toFixed(2),
-      quantity: data.quantity,
+      quantity: quantityNumber.toFixed(2),
       status: data.status,
     },
   })

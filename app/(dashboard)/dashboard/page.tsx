@@ -3,24 +3,25 @@ import { Suspense } from 'react'
 import { Queries } from '@/actions/fluig/queries'
 import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
-import { DataTable } from '@/components/data-display/data-table'
-import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 import { AnalyticsCard } from '@/components/data-display/analytics-card'
+import { FluigDataTable } from '@/components/data-display/fluig-data-table'
+import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 import { AnalyticsSkeletonCard } from '@/components/data-display/analytics-skeleton-card'
 
 async function DataFluigs({ fluigs }: { fluigs: any }) {
-  return <DataTable data={fluigs} />
+  return <FluigDataTable data={fluigs} />
 }
 
 async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
   const {
     totalCost,
+    formatWeight,
     totalQuantity,
     pendingFluigs,
-    todayCostTotal,
     averageFluigs,
     averageGrowth,
     formatCurrency,
+    todayCostTotal,
     currentMonthAverage,
   } = useDashboardAnalytics(fluigs)
 
@@ -28,7 +29,7 @@ async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
     <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <AnalyticsCard
         title="Quantidade Total"
-        value={`${totalQuantity.toFixed(2).replaceAll('.', ',')} KG`}
+        value={`${formatWeight(totalQuantity)} KG`}
         indicator={`${fluigs.length} Fluigs`}
         prospect={
           totalQuantity >= 500 ? 'Em alta neste mês' : 'Em queda neste mês'

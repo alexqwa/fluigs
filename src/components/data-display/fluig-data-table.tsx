@@ -106,7 +106,7 @@ const statusMap: Record<
   },
 }
 
-export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
+export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -118,6 +118,8 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
     pageIndex: 0,
     pageSize: 10,
   })
+
+  const [loading, setLoading] = React.useState(false)
 
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
     undefined
@@ -141,6 +143,17 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
       )
     })
   }, [initialData, dateRange])
+
+  async function onDelete(id: string) {
+    setLoading(true)
+
+    try {
+      await Delete(id)
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const columns: ColumnDef<FluigSchema>[] = [
     {
@@ -171,13 +184,18 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
     {
       accessorKey: 'quantity',
       header: 'Quantidade',
-      cell: ({ row }) => (
-        <div className="w-32 md:w-fit">
-          <span className="text-muted-foreground text-sm">
-            {row.original.quantity.replaceAll(/\./g, ',')}
-          </span>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const quantity = Intl.NumberFormat('pt-BR', {
+          style: 'decimal',
+          minimumFractionDigits: 2,
+        }).format(Number(row.original.quantity))
+
+        return (
+          <div className="w-32 md:w-fit">
+            <span className="text-muted-foreground text-sm">{quantity}</span>
+          </div>
+        )
+      },
     },
     {
       accessorKey: 'nFluig',
@@ -263,7 +281,8 @@ export function DataTable({ data: initialData }: { data: FluigSchema[] }) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   variant="destructive"
-                  onClick={() => Delete(id)}
+                  disabled={loading}
+                  onClick={() => onDelete(id)}
                   className="hover:bg-muted cursor-pointer"
                 >
                   <IconTrashX className="text-muted-foreground" />

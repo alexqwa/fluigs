@@ -1,0 +1,536 @@
+'use client'
+
+import z from 'zod'
+dayjs.locale('pt-br')
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+import * as React from 'react'
+
+import { Badge } from '@/components/ui/badge'
+import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
+import {
+  flexRender,
+  useReactTable,
+  type ColumnDef,
+  getCoreRowModel,
+  getSortedRowModel,
+  type SortingState,
+  getFacetedRowModel,
+  getFilteredRowModel,
+  type VisibilityState,
+  getPaginationRowModel,
+  getFacetedUniqueValues,
+  type ColumnFiltersState,
+} from '@tanstack/react-table'
+import {
+  IconReload,
+  IconLoader2,
+  IconDownload,
+  IconChevronLeft,
+  IconChevronRight,
+  IconChevronsLeft,
+  IconChevronsRight,
+  IconCircleCheckFilled,
+  IconExclamationCircleFilled,
+} from '@tabler/icons-react'
+import {
+  Select,
+  SelectItem,
+  SelectValue,
+  SelectLabel,
+  SelectGroup,
+  SelectTrigger,
+  SelectContent,
+} from '@/components/ui/select'
+import {
+  Table,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableBody,
+  TableHeader,
+} from '@/components/ui/table'
+
+type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
+
+const fluigSchema = z.object({
+  id: z.string(),
+  date: z.date(),
+  code: z.string().min(1, 'Código é obrigatório.'),
+  product: z.string().min(1, 'Produto é obrigatório.'),
+  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
+  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
+  costTotal: z.string().min(1, 'Custo do produto é obrigatório.'),
+  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
+  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+})
+
+type FluigSchema = z.infer<typeof fluigSchema>
+
+const statusMap: Record<
+  FluigStatus,
+  {
+    label: string
+    icon: React.ElementType
+    color: string
+  }
+> = {
+  Approved: {
+    label: 'Aprovado',
+    icon: IconCircleCheckFilled,
+    color: 'text-green-500',
+  },
+  Pending: {
+    label: 'Aguardando',
+    icon: IconReload,
+    color: 'text-yellow-400 animate-spin duration-300',
+  },
+  Not_Approved: {
+    label: 'Não Aprovado',
+    icon: IconExclamationCircleFilled,
+    color: 'text-red-400',
+  },
+}
+
+export function ReportDataTable({
+  data: initialData,
+}: {
+  data: FluigSchema[]
+}) {
+  const [rowSelection, setRowSelection] = React.useState({})
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
+  const [statusFilter, setStatusFilter] = React.useState<FluigStatus | 'All'>(
+    'All'
+  )
+  const [monthFilter, setMonthFilter] = React.useState<number | 'All'>('All')
+  const [isExporting, setIsExporting] = React.useState(false)
+
+  const filteredData = React.useMemo(() => {
+    return initialData.filter((item) => {
+      const itemDate = dayjs(item.date)
+
+      const matchStatus = statusFilter === 'All' || item.status === statusFilter
+
+      const matchMonth =
+        monthFilter === 'All' || itemDate.month() === monthFilter
+
+      return matchStatus && matchMonth
+    })
+  }, [initialData, statusFilter, monthFilter])
+
+  const handleExportPDF = React.useCallback(async () => {
+    if (filteredData.length === 0) return
+
+    setIsExporting(true)
+
+    try {
+      const response = await fetch('/api/reports/generate-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          data: filteredData,
+          filters: {
+            status: statusFilter,
+            month: monthFilter,
+          },
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao gerar o relatório')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `relatorio-fluig-${dayjs().format('DD/MM/YYYY')}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Erro ao exportar PDF:', error)
+    } finally {
+      setIsExporting(false)
+    }
+  }, [filteredData, statusFilter, monthFilter])
+
+  const columns: ColumnDef<FluigSchema>[] = [
+    {
+      accessorKey: 'code',
+      header: 'Código',
+      cell: ({ row }) => (
+        <div className="w-24 md:w-fit">
+          <span className="text-muted-foreground pr-8 text-sm">
+            {row.original.code}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'product',
+      header: 'Produto',
+      cell: ({ row }) => (
+        <div className="w-fit py-2 pr-8 md:pr-0">
+          <span className="text-muted-foreground text-sm">
+            {row.original.product}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'quantity',
+      header: 'Quantidade',
+      cell: ({ row }) => {
+        const quantity = Intl.NumberFormat('pt-BR', {
+          style: 'decimal',
+          minimumFractionDigits: 2,
+        }).format(Number(row.original.quantity))
+
+        return (
+          <div className="w-32 md:w-fit">
+            <span className="text-muted-foreground text-sm">{quantity}</span>
+          </div>
+        )
+      },
+    },
+    {
+      accessorKey: 'nFluig',
+      header: 'N Fluig',
+      cell: ({ row }) => (
+        <div className="w-28 md:w-fit">
+          <span className="text-muted-foreground text-sm">
+            {row.original.nFluig}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'date',
+      header: 'Data',
+      cell: ({ row }) => (
+        <div className="w-28 md:w-fit">
+          <span className="text-muted-foreground text-sm">
+            {dayjs(row.original.date).format('DD/MM/YYYY')}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => {
+        const status = statusMap[row.original.status]
+        const Icon = status.icon
+
+        return (
+          <div className="w-32 md:w-fit">
+            <Badge variant="outline" className="text-muted-foreground px-1.5">
+              <Icon className={status.color} />
+              {status.label}
+            </Badge>
+          </div>
+        )
+      },
+    },
+    {
+      accessorKey: 'costTotal',
+      header: 'Custo (R$)',
+      cell: ({ row }) => {
+        const costTotal = Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(Number(row.original.costTotal))
+
+        return (
+          <div className="w-28 md:w-fit">
+            <span className="text-muted-foreground text-sm">{costTotal}</span>
+          </div>
+        )
+      },
+    },
+  ]
+
+  const table = useReactTable({
+    data: filteredData,
+    columns,
+    state: {
+      sorting,
+      columnVisibility,
+      rowSelection,
+      columnFilters,
+      pagination,
+    },
+    getRowId: (row) => row.id,
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+  })
+
+  return (
+    <div className="relative flex flex-1 flex-col gap-4 overflow-auto">
+      <div className="mt-10 flex flex-col items-end gap-4 md:flex-row md:justify-between">
+        <FieldGroup className="w-full">
+          <Field orientation="vertical">
+            <FieldLabel htmlFor="fieldgroup-code">Status</FieldLabel>
+            <Select
+              defaultValue="All"
+              value={statusFilter}
+              onValueChange={(value) =>
+                setStatusFilter(value as FluigStatus | 'All')
+              }
+            >
+              <SelectTrigger className="bg-card border-border min-w-full cursor-pointer border aria-invalid:border-red-400">
+                <SelectValue placeholder="Selecionar status" />
+              </SelectTrigger>
+              <SelectContent
+                position="popper"
+                className="bg-card border-border border"
+              >
+                <SelectGroup>
+                  <SelectLabel>Selecionar status</SelectLabel>
+                  <SelectItem
+                    value="All"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Todos
+                  </SelectItem>
+                  <SelectItem
+                    value="Approved"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Aprovado
+                  </SelectItem>
+                  <SelectItem
+                    value="Pending"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Aguardando
+                  </SelectItem>
+                  <SelectItem
+                    value="Not_Approved"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Não Aprovado
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </Field>
+          <Field orientation="vertical">
+            <FieldLabel htmlFor="fieldgroup-date">Mês</FieldLabel>
+            <Select
+              defaultValue="All"
+              value={monthFilter.toString()}
+              onValueChange={(value) =>
+                setMonthFilter(value === 'All' ? 'All' : Number(value))
+              }
+            >
+              <SelectTrigger className="bg-card border-border min-w-full cursor-pointer border aria-invalid:border-red-400">
+                <SelectValue placeholder="Selecionar mês" />
+              </SelectTrigger>
+              <SelectContent
+                position="popper"
+                className="bg-card border-border border"
+              >
+                <SelectGroup>
+                  <SelectLabel>Selecionar mês</SelectLabel>
+                  <SelectItem
+                    value="All"
+                    className="hover:bg-muted cursor-pointer text-sm"
+                  >
+                    Todos
+                  </SelectItem>
+                  {Array.from({ length: 12 }).map((_, i) => {
+                    const month = dayjs()
+                      .startOf('year')
+                      .add(i, 'month')
+                      .format('MMMM')
+
+                    return (
+                      <SelectItem
+                        key={i}
+                        value={i.toString()}
+                        className="hover:bg-muted cursor-pointer text-sm"
+                      >
+                        {month.charAt(0).toUpperCase() + month.slice(1)}
+                      </SelectItem>
+                    )
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </Field>
+        </FieldGroup>
+        <Button
+          onClick={handleExportPDF}
+          disabled={isExporting || filteredData.length === 0}
+          className="w-full cursor-pointer md:w-56"
+        >
+          {isExporting ? (
+            <>
+              <IconLoader2 className="size-4 animate-spin" />
+              Gerando PDF...
+            </>
+          ) : (
+            <>
+              <IconDownload className="size-4" />
+              Exportar relatório
+            </>
+          )}
+        </Button>
+      </div>
+
+      <div className="border-border overflow-hidden rounded-lg border">
+        <Table>
+          <TableHeader className="bg-muted border-border sticky top-0 z-10 border-b">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id} colSpan={header.colSpan}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className="bg-card **:data-[slot=table-cell]:first:w-8">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Sem resultados.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex w-full items-center justify-between">
+        <div className="hidden items-center gap-2 lg:flex">
+          <Label htmlFor="rows-per-page" className="text-sm font-medium">
+            Linhas por página
+          </Label>
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
+            onValueChange={(value) => {
+              table.setPageSize(Number(value))
+            }}
+          >
+            <SelectTrigger
+              size="sm"
+              className="bg-card border-border w-20 border"
+              id="rows-per-page"
+            >
+              <SelectValue placeholder={table.getState().pagination.pageSize} />
+            </SelectTrigger>
+            <SelectContent side="top" className="bg-card border-border border">
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <SelectItem
+                  className="hover:bg-muted cursor-pointer"
+                  key={pageSize}
+                  value={`${pageSize}`}
+                >
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex w-fit items-center justify-center text-sm font-medium">
+            Página {table.getState().pagination.pageIndex + 1} de{' '}
+            {table.getPageCount()}
+          </div>
+          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <Button
+              variant="outline"
+              className="bg-card border-border hidden h-8 w-8 cursor-pointer border p-0 lg:flex"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Vá para primeira página</span>
+              <IconChevronsLeft />
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-card border-border size-8 cursor-pointer border"
+              size="icon"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Vá para página anterior</span>
+              <IconChevronLeft />
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-card border-border size-8 cursor-pointer border"
+              size="icon"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Vá para próxima página</span>
+              <IconChevronRight />
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-card border-border hidden size-8 cursor-pointer border lg:flex"
+              size="icon"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Vá para última página</span>
+              <IconChevronsRight />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

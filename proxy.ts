@@ -1,3 +1,4 @@
+import { auth } from '@/lib/auth/server'
 import { NextRequest, NextResponse } from 'next/server'
 
 type PublicRoute = {
@@ -15,27 +16,31 @@ const publicRoutes: readonly PublicRoute[] = [
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
-  const authToken = request.cookies.get('__Secure-better-auth.session_token')
 
-  // Verifica se a rota é pública
-  const publicRoute = publicRoutes.find((route) => {
-    return route.path === path
+  // valida sessão usando Better Auth
+  const session = await auth.api.getSession({
+    headers: request.headers,
   })
 
-  if (!authToken && publicRoute) {
+  const isAuthenticated = !!session
+
+  // Verifica se a rota é pública
+  const publicRoute = publicRoutes.find((route) => route.path === path)
+
+  if (!isAuthenticated && publicRoute) {
     return NextResponse.next()
   }
 
-  if (!authToken && !publicRoute) {
+  if (!isAuthenticated && !publicRoute) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE
     return NextResponse.redirect(redirectUrl)
   }
 
   if (
-    authToken &&
+    isAuthenticated &&
     publicRoute &&
     publicRoute.whenAuthenticated === 'redirect'
   ) {
@@ -43,7 +48,7 @@ export function proxy(request: NextRequest) {
     redirectUrl.pathname = '/dashboard'
     return NextResponse.redirect(redirectUrl)
   }
-
+  
   return NextResponse.next()
 }
 
