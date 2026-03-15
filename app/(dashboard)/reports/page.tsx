@@ -1,4 +1,5 @@
 import { Queries } from '@/actions/fluig/queries'
+
 import { ReportDataTable } from '@/components/data-display/report-data-table'
 
 export default async function Reports() {

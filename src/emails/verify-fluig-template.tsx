@@ -15,7 +15,9 @@ interface FluigVerifyEmailProps {
   verificationCode?: string
 }
 
-export function VerifyFluig({ verificationCode }: FluigVerifyEmailProps) {
+export function VerifyFluigTemplate({
+  verificationCode,
+}: FluigVerifyEmailProps) {
   return (
     <Html>
       <Head />

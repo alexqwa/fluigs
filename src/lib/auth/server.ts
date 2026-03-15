@@ -4,7 +4,7 @@ import { emailOTP } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 
 import { prisma } from '@/lib/db/prisma'
-import { VerifyFluig } from '@/emails/verify-fluig'
+import { VerifyFluigTemplate } from '@/emails/verify-fluig-template'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
@@ -32,7 +32,7 @@ export const auth = betterAuth({
           from: 'delivered@resend.dev',
           to: email,
           subject: `${otp} - Seu código de login do Controle de Fluigs`,
-          react: VerifyFluig({ verificationCode: otp }),
+          react: VerifyFluigTemplate({ verificationCode: otp }),
         })
       },
     }),
