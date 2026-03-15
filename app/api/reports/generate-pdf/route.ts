@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
+import chromium from '@sparticuz/chromium'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { ReportPDFTemplate } from '@/templates/report-pdf-template'
@@ -26,8 +27,20 @@ interface GeneratePDFRequest {
 }
 
 export async function POST(request: NextRequest) {
+  const viewport = {
+    deviceScaleFactor: 1,
+    hasTouch: false,
+    height: 1080,
+    isLandscape: false,
+    isMobile: false,
+    width: 1920,
+  }
+
   const browser = await puppeteer.launch({
-    headless: true,
+    args: puppeteer.defaultArgs({ args: chromium.args, headless: 'shell' }),
+    defaultViewport: viewport,
+    executablePath: await chromium.executablePath(),
+    headless: 'shell',
   })
 
   try {
