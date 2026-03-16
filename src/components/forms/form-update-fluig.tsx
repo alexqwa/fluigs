@@ -187,7 +187,9 @@ export function FormUpdateFluig({
                         value = parts[0] + '.' + parts.slice(1).join('')
                       }
 
-                      form.setValue('quantity', value)
+                      form.setValue('quantity', value, {
+                        shouldDirty: true,
+                      })
                     }}
                   />
                   {form.getFieldState('quantity').invalid && (
@@ -426,7 +428,9 @@ export function FormUpdateFluig({
                       value = parts[0] + '.' + parts.slice(1).join('')
                     }
 
-                    form.setValue('quantity', value)
+                    form.setValue('quantity', value, {
+                      shouldDirty: true,
+                    })
                   }}
                 />
                 {form.getFieldState('quantity').invalid && (
