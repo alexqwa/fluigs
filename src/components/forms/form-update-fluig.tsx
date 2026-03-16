@@ -249,6 +249,7 @@ export function FormUpdateFluig({
                             locale={ptBR}
                             selected={field.value}
                             onSelect={field.onChange}
+                            timeZone="America/Sao_Paulo"
                           />
                         </PopoverContent>
                       </Popover>
@@ -490,6 +491,7 @@ export function FormUpdateFluig({
                           locale={ptBR}
                           selected={field.value}
                           onSelect={field.onChange}
+                          timeZone="America/Sao_Paulo"
                         />
                       </PopoverContent>
                     </Popover>

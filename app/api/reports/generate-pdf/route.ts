@@ -1,6 +1,12 @@
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import puppeteer from 'puppeteer-core'
 import chromium from '@sparticuz/chromium'
+import timezone from 'dayjs/plugin/timezone'
 import { NextRequest, NextResponse } from 'next/server'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 import { ReportPDFTemplate } from '@/templates/report-pdf-template'
 

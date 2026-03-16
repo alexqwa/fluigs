@@ -1,7 +1,12 @@
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 export function useDashboardAnalytics(fluigs: any) {
-  const today = dayjs()
+  const today = dayjs().tz('America/Sao_Paulo')
 
   const startOfToday = today.startOf('day')
   const endOfToday = today.endOf('day')
@@ -26,7 +31,7 @@ export function useDashboardAnalytics(fluigs: any) {
   for (const fluig of fluigs) {
     const quantity = Number(fluig.quantity.replaceAll(',', '.'))
     const cost = Number(fluig.costTotal)
-    const date = dayjs(fluig.date)
+    const date = dayjs.utc(fluig.date).tz('America/Sao_Paulo')
 
     totalQuantity += quantity
     totalCost += cost
