@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     const htmlContent = ReportPDFTemplate({
       data,
       filters,
-      generatedAt: dayjs().tz('America/Sao_Paulo').toDate(),
+      generatedAt: new Date(),
     })
 
     await page.setContent(htmlContent, {

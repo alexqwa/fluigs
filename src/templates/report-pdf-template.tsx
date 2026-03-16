@@ -279,7 +279,6 @@ export function ReportPDFTemplate({
           font-size: 10px;
           color: #9ca3af;
         }
-
         /* Page break */
         .page-break {
           page-break-after: always;
@@ -302,7 +301,7 @@ export function ReportPDFTemplate({
           </div>
           <div class="header-right">
             <p><strong>Gerado em:</strong></p>
-            <p>${dayjs(generatedAt).format('DD/MM/YYYY [às] HH:mm')}</p>
+            <p>${dayjs(generatedAt).tz('America/Sao_Paulo').format('DD/MM/YYYY [às] HH:mm')}</p>
           </div>
         </header>
 
