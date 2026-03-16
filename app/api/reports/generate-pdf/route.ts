@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
 import chromium from '@sparticuz/chromium'
+import { NextRequest, NextResponse } from 'next/server'
 
 import { ReportPDFTemplate } from '@/templates/report-pdf-template'
 
@@ -26,7 +26,23 @@ interface GeneratePDFRequest {
   }
 }
 
+let browserPromise: any = null
+
+async function getBrowser() {
+  if (!browserPromise) {
+    browserPromise = puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    })
+  }
+
+  return browserPromise
+}
+
 export async function POST(request: NextRequest) {
+  const browser = await getBrowser()
+
   try {
     const body: GeneratePDFRequest = await request.json()
     const { data, filters } = body
@@ -38,23 +54,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const page = await browser.newPage()
+
     const htmlContent = ReportPDFTemplate({
       data,
       filters,
       generatedAt: new Date(),
     })
-
-    const isProduction = process.env.NODE_ENV === 'production'
-
-    const browser = await puppeteer.launch({
-      args: isProduction ? chromium.args : [],
-      executablePath: isProduction
-        ? await chromium.executablePath()
-        : undefined,
-      headless: true,
-    })
-
-    const page = await browser.newPage()
 
     await page.setContent(htmlContent, {
       waitUntil: 'networkidle0',
@@ -71,7 +77,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    await browser.close()
+    await page.close()
 
     return new NextResponse(Buffer.from(pdf), {
       headers: {

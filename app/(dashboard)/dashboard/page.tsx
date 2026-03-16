@@ -1,18 +1,39 @@
-import { Suspense } from 'react'
+import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
+import { getServerSession } from '@/actions/auth/session'
 import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
 import { AnalyticsCard } from '@/components/data-display/analytics-card'
 import { FluigDataTable } from '@/components/data-display/fluig-data-table'
-import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
-import { AnalyticsSkeletonCard } from '@/components/data-display/analytics-skeleton-card'
 
-async function DataFluigs({ fluigs }: { fluigs: any }) {
+import type { Fluig } from '@/generated/prisma/client'
+
+async function CachedDataTable({
+  userId,
+  fluigs,
+}: {
+  userId: string
+  fluigs: Fluig[]
+}) {
+  'use cache'
+  cacheLife('max')
+  cacheTag(`dashboard-table-${userId}`)
+
   return <FluigDataTable data={fluigs} />
 }
 
-async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
+async function CachedAnalytics({
+  userId,
+  fluigs,
+}: {
+  userId: string
+  fluigs: Fluig[]
+}) {
+  'use cache'
+  cacheLife('max')
+  cacheTag(`dashboard-analytics-${userId}`)
+
   const {
     totalCost,
     formatWeight,
@@ -86,6 +107,8 @@ async function DashboardAnalytics({ fluigs }: { fluigs: any }) {
 }
 
 export default async function Dashboard() {
+  const session = await getServerSession()
+  const userId = session?.user?.id ?? ''
   const fluigs = await Queries()
 
   return (
@@ -98,20 +121,8 @@ export default async function Dashboard() {
           Tenha uma visão completa e em tempo real dos seus fluigs
         </p>
       </div>
-      <Suspense
-        fallback={
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <AnalyticsSkeletonCard key={i} />
-            ))}
-          </div>
-        }
-      >
-        <DashboardAnalytics fluigs={fluigs} />
-      </Suspense>
-      <Suspense fallback={<DataTableSkeleton />}>
-        <DataFluigs fluigs={fluigs} />
-      </Suspense>
+      <CachedAnalytics userId={userId} fluigs={fluigs} />
+      <CachedDataTable userId={userId} fluigs={fluigs} />
     </>
   )
 }

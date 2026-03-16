@@ -128,11 +128,11 @@ async function seed() {
         name: 'Samambaia',
       },
       {
-        email: 'delivered@resend.dev',
+        email: 'gerencia.lem@atacadaodiaadia.com.br',
         name: 'Luís Eduardo Magalhães',
       },
       {
-        email: 'gerencia.grp0@atacadaodiaadia.com.br',
+        email: 'delivered@resend.dev',
         name: 'Gurupi',
       },
       {

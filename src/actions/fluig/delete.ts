@@ -15,5 +15,9 @@ export async function Delete(id: string) {
     where: { id },
   })
 
-  updateTag('fluigs')
+  const userId = session.user.id
+  updateTag(`fluigs-${userId}`)
+  updateTag(`dashboard-table-${userId}`)
+  updateTag(`dashboard-analytics-${userId}`)
+  updateTag(`reports-table-${userId}`)
 }

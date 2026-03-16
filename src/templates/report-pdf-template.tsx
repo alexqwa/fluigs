@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
+
 dayjs.locale('pt-br')
 
 import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
@@ -54,13 +55,6 @@ const monthNames = [
   'Dezembro',
 ]
 
-function formatCurrency(value: string | number): string {
-  return Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(Number(value))
-}
-
 function getFilterDescription(
   filters: ReportPDFTemplateProps['filters']
 ): string {
@@ -88,7 +82,7 @@ export function ReportPDFTemplate({
     0
   )
 
-  const { formatWeight } = useDashboardAnalytics(data)
+  const { formatWeight, formatCurrency } = useDashboardAnalytics(data)
 
   return `
     <!DOCTYPE html>
@@ -121,7 +115,7 @@ export function ReportPDFTemplate({
         .header {
           display: flex;
           justify-content: space-between;
-          align-items: flex-start;
+          align-items: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
           border-bottom: 2px solid #e5e7eb;
@@ -342,7 +336,7 @@ export function ReportPDFTemplate({
                 <th>N° Fluig</th>
                 <th>Data</th>
                 <th>Status</th>
-                <th class="text-right">Custo Total</th>
+                <th class="text-right">Custo (R$)</th>
               </tr>
             </thead>
             <tbody>
@@ -352,7 +346,7 @@ export function ReportPDFTemplate({
                 <tr>
                   <td>${item.code}</td>
                   <td>${item.product}</td>
-                  <td>${item.quantity.replace(/\./g, ',')}</td>
+                  <td>${formatWeight(Number(item.quantity))}</td>
                   <td>${item.nFluig}</td>
                   <td>${dayjs(item.date).format('DD/MM/YYYY')}</td>
                   <td>
@@ -360,7 +354,7 @@ export function ReportPDFTemplate({
                       ${statusLabels[item.status]}
                     </span>
                   </td>
-                  <td class="text-right">${formatCurrency(item.costTotal)}</td>
+                  <td class="text-right">${formatCurrency(Number(item.costTotal))}</td>
                 </tr>
               `
                 )

@@ -1,23 +1,18 @@
-import { unstable_cache } from 'next/cache'
+import { cacheLife, cacheTag } from 'next/cache'
 
 import { prisma } from '@/lib/db/prisma'
 
-export function getFluigsCached(userId: string) {
-  return unstable_cache(
-    async () => {
-      return prisma.fluig.findMany({
-        where: {
-          userId,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      })
+export async function getFluigsCached(userId: string) {
+  'use cache'
+  cacheLife('hours')
+  cacheTag(`fluigs-${userId}`)
+
+  return prisma.fluig.findMany({
+    where: {
+      userId,
     },
-    ['fluigs', userId],
-    {
-      tags: ['fluigs'],
-      revalidate: 60 * 5,
-    }
-  )()
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 }
