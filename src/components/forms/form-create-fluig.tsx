@@ -75,7 +75,7 @@ export function FormCreateFluig() {
       product: '',
       quantity: '',
       status: 'Pending',
-      date: dayjs().toDate(),
+      date: dayjs().startOf('day').toDate(),
     },
   })
 
@@ -236,6 +236,7 @@ export function FormCreateFluig() {
                             locale={ptBR}
                             selected={field.value}
                             onSelect={field.onChange}
+                            timeZone="America/Sao_Paulo"
                           />
                         </PopoverContent>
                       </Popover>
@@ -350,7 +351,7 @@ export function FormCreateFluig() {
                 Insira todos os detalhes para criação do fluig
               </DialogDescription>
             </DialogHeader>
-            <FieldGroup>
+            <FieldGroup className="mt-6">
               <Field>
                 <Label>Código</Label>
                 <Input
@@ -476,6 +477,7 @@ export function FormCreateFluig() {
                           locale={ptBR}
                           selected={field.value}
                           onSelect={field.onChange}
+                          timeZone="America/Sao_Paulo"
                         />
                       </PopoverContent>
                     </Popover>
