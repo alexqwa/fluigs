@@ -10,17 +10,17 @@ import {
 } from '@/components/ui/sidebar'
 
 import data from '@/hooks/data.json'
-
+import { getUser } from '@/actions/auth/user'
 import { NavMain } from '@/components/layout/nav/nav-main'
 import { NavUser } from '@/components/layout/nav/nav-user'
 
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  user: User
-}
+export async function AppSidebar() {
+  const user = await getUser()
 
-export async function AppSidebar({ user, ...props }: AppSidebarProps) {
+  if (!user) return null
+
   return (
-    <Sidebar {...props}>
+    <Sidebar>
       <SidebarHeader>
         <div className="p-0">
           <div className="bg-muted flex items-center gap-2 rounded-lg px-2 py-1.5 text-left">

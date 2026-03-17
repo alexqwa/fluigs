@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth/server'
+import { auth } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 type PublicRoute = {
@@ -48,7 +48,7 @@ export async function proxy(request: NextRequest) {
     redirectUrl.pathname = '/dashboard'
     return NextResponse.redirect(redirectUrl)
   }
-  
+
   return NextResponse.next()
 }
 
