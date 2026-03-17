@@ -1,13 +1,14 @@
 import { Suspense } from 'react'
+import { cacheLife, cacheTag } from 'next/cache'
+
+import { Queries } from '@/actions/fluig/queries'
+import type { Fluig } from '@/generated/prisma/client'
 import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
 import { AnalyticsCard } from '@/components/data-display/analytics-card'
 import { FluigDataTable } from '@/components/data-display/fluig-data-table'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 import { AnalyticsSkeletonCard } from '@/components/data-display/analytics-skeleton-card'
-
-import { Queries } from '@/actions/fluig/queries'
-import type { Fluig } from '@/generated/prisma/client'
 
 async function CachedDataTable({ fluigs }: { fluigs: Fluig[] }) {
   return <FluigDataTable data={fluigs} />
@@ -87,6 +88,9 @@ async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
 }
 
 export default async function Dashboard() {
+  'use cache'
+  cacheLife('max')
+  cacheTag('fluigs')
   const fluigs = await Queries()
 
   return (

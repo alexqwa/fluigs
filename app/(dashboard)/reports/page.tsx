@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
 import type { Fluig } from '@/generated/prisma/client'
@@ -11,6 +12,9 @@ async function CachedDataTable({ fluigs }: { fluigs: Fluig[] }) {
 }
 
 export default async function Reports() {
+  'use cache'
+  cacheLife('max')
+  cacheTag('fluigs')
   const fluigs = await Queries()
 
   return (

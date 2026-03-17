@@ -7,12 +7,8 @@ export async function GET(request: NextRequest) {
     headers: request.headers,
   })
 
-  const user = session?.user
-
-  // if (!user) return new Response('Unauthorized', { status: 401 })
-
   const fluigs = await prisma.fluig.findMany({
-    where: { userId: user?.id },
+    where: { userId: session?.user.id },
     orderBy: { createdAt: 'desc' },
   })
 
