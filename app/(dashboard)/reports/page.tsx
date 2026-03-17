@@ -1,27 +1,17 @@
 import { Suspense } from 'react'
-import { unauthorized } from 'next/navigation'
-import { cacheLife, cacheTag } from 'next/cache'
 
-import { getUser } from '@/actions/auth/user'
 import { Queries } from '@/actions/fluig/queries'
+import type { Fluig } from '@/generated/prisma/client'
 
 import { ReportDataTable } from '@/components/data-display/report-data-table'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 
-async function CachedDataTable({ userId }: { userId: string }) {
-  'use cache'
-  cacheLife('max')
-  cacheTag(`fluigs-${userId}`)
-
-  const fluigs = await Queries(userId)
-
+async function CachedDataTable({ fluigs }: { fluigs: Fluig[] }) {
   return <ReportDataTable data={fluigs} />
 }
 
 export default async function Reports() {
-  const user = await getUser()
-
-  if (!user) return unauthorized()
+  const fluigs = await Queries()
 
   return (
     <>
@@ -34,7 +24,7 @@ export default async function Reports() {
         </p>
       </div>
       <Suspense fallback={<DataTableSkeleton />}>
-        <CachedDataTable userId={user.id} />
+        <CachedDataTable fluigs={fluigs} />
       </Suspense>
     </>
   )

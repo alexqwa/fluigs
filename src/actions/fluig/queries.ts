@@ -1,7 +1,13 @@
+// import { cacheLife, cacheTag } from 'next/cache'
 'use server'
+import { Fluig } from '@/generated/prisma/client'
 
-import { getFluigsCached } from '@/lib/db/cache/fluig-cache'
+export async function Queries() {
+  //   'use cache'
+  //   cacheLife('hours')
+  //   cacheTag('products')
 
-export async function Queries(userId: string) {
-  return getFluigsCached(userId)
+  const response = await fetch('http://localhost:3000/api/fluigs')
+  const data: Fluig[] = await response.json()
+  return data
 }
