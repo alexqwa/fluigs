@@ -7,7 +7,7 @@ export async function Queries() {
   //   cacheLife('hours')
   //   cacheTag('products')
 
-  const response = await fetch('http://localhost:3000/api/fluigs')
+  const response = await fetch(`${process.env.BETTER_AUTH_URL}/api/fluigs`)
   const data: Fluig[] = await response.json()
   return data
 }
