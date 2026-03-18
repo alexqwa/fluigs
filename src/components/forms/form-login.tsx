@@ -4,11 +4,10 @@ import z from 'zod'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronRight, Loader2, Mail } from 'lucide-react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { authClient } from '@/lib/auth/client'
 
 import { Button } from '../ui/button'
 import {
@@ -43,6 +42,7 @@ import {
 } from '@/components/ui/field'
 
 import data from '@/hooks/data.json'
+import { authClient } from '@/lib/auth/client'
 
 const signInSchema = z.object({
   value: z.string().min(4, 'Insira uma filial válida.'),

@@ -47,3 +47,8 @@ export type Verification = Prisma.VerificationModel
  * 
  */
 export type RateLimit = Prisma.RateLimitModel
+/**
+ * Model Jwks
+ * 
+ */
+export type Jwks = Prisma.JwksModel

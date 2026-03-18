@@ -1,29 +1,20 @@
+import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
-import { getServerSession } from '@/actions/auth/session'
-
-import { ReportDataTable } from '@/components/data-display/report-data-table'
-
 import type { Fluig } from '@/generated/prisma/client'
 
-async function CachedDataTable({
-  userId,
-  fluigs,
-}: {
-  userId: string
-  fluigs: Fluig[]
-}) {
-  'use cache'
-  cacheLife('max')
-  cacheTag(`reports-table-${userId}`)
+import { ReportDataTable } from '@/components/data-display/report-data-table'
+import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 
+async function CachedDataTable({ fluigs }: { fluigs: Fluig[] }) {
   return <ReportDataTable data={fluigs} />
 }
 
 export default async function Reports() {
-  const session = await getServerSession()
-  const userId = session?.user?.id ?? ''
+  'use cache'
+  cacheLife('max')
+  cacheTag('fluigs')
   const fluigs = await Queries()
 
   return (
@@ -36,7 +27,9 @@ export default async function Reports() {
           Simplifique a gestão dos seus relatórios em um só lugar
         </p>
       </div>
-      <CachedDataTable userId={userId} fluigs={fluigs} />
+      <Suspense fallback={<DataTableSkeleton />}>
+        <CachedDataTable fluigs={fluigs} />
+      </Suspense>
     </>
   )
 }

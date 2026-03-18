@@ -1,14 +1,9 @@
 'use server'
 
-import { getServerSession } from '@/actions/auth/session'
-import { getFluigsCached } from '@/lib/db/cache/fluig-cache'
+import { Fluig } from '@/generated/prisma/client'
 
 export async function Queries() {
-  const session = await getServerSession()
-
-  if (!session?.user) {
-    return []
-  }
-
-  return getFluigsCached(session.user.id)
+  const response = await fetch(`${process.env.BETTER_AUTH_URL}/api/fluigs`)
+  const data: Fluig[] = await response.json()
+  return data
 }
