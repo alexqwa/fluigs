@@ -42,7 +42,7 @@ import {
 } from '@/components/ui/field'
 
 import data from '@/hooks/data.json'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/lib/auth/client'
 
 const signInSchema = z.object({
   value: z.string().min(4, 'Insira uma filial válida.'),

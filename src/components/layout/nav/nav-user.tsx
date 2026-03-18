@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { toast } from 'sonner'
 import { User } from 'better-auth'
 import { useRouter } from 'next/navigation'
 import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from 'lucide-react'
@@ -22,7 +21,7 @@ import {
   SidebarMenuButton,
 } from '@/components/ui/sidebar'
 
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/lib/auth/client'
 
 interface NavUserProps {
   user: User
@@ -36,11 +35,10 @@ export function NavUser({ user }: NavUserProps) {
       const { error } = await authClient.signOut()
 
       if (error) {
-        toast.error(error.message || 'Algo deu errado.')
+        console.error(error.message || 'Algo deu errado.')
         return
       }
 
-      toast.success('Sessão finalizada com sucesso!')
       router.push('/')
     } catch (error) {
       console.error(error)
