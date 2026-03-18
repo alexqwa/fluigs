@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.5.0
+ * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.5.0",
+  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
 }
 
 /**
@@ -389,7 +389,8 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  RateLimit: 'RateLimit'
+  RateLimit: 'RateLimit',
+  Jwks: 'Jwks'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "fluig" | "user" | "session" | "account" | "verification" | "rateLimit"
+    modelProps: "fluig" | "user" | "session" | "account" | "verification" | "rateLimit" | "jwks"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Jwks: {
+      payload: Prisma.$JwksPayload<ExtArgs>
+      fields: Prisma.JwksFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JwksFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JwksFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>
+        }
+        findFirst: {
+          args: Prisma.JwksFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JwksFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>
+        }
+        findMany: {
+          args: Prisma.JwksFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>[]
+        }
+        create: {
+          args: Prisma.JwksCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>
+        }
+        createMany: {
+          args: Prisma.JwksCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JwksCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>[]
+        }
+        delete: {
+          args: Prisma.JwksDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>
+        }
+        update: {
+          args: Prisma.JwksUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>
+        }
+        deleteMany: {
+          args: Prisma.JwksDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JwksUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JwksUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>[]
+        }
+        upsert: {
+          args: Prisma.JwksUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwksPayload>
+        }
+        aggregate: {
+          args: Prisma.JwksAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJwks>
+        }
+        groupBy: {
+          args: Prisma.JwksGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JwksGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JwksCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JwksCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -975,6 +1050,17 @@ export const RateLimitScalarFieldEnum = {
 } as const
 
 export type RateLimitScalarFieldEnum = (typeof RateLimitScalarFieldEnum)[keyof typeof RateLimitScalarFieldEnum]
+
+
+export const JwksScalarFieldEnum = {
+  id: 'id',
+  publicKey: 'publicKey',
+  privateKey: 'privateKey',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type JwksScalarFieldEnum = (typeof JwksScalarFieldEnum)[keyof typeof JwksScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1198,6 +1284,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
   rateLimit?: Prisma.RateLimitOmit
+  jwks?: Prisma.JwksOmit
 }
 
 /* Types for Logging */

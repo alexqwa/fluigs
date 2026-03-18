@@ -1,5 +1,5 @@
-import { auth } from '@/lib/auth/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { getSessionCookie } from 'better-auth/cookies'
 
 type PublicRoute = {
   path: string
@@ -20,9 +20,7 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   // valida sessão usando Better Auth
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  })
+  const session = getSessionCookie(request)
 
   const isAuthenticated = !!session
 
@@ -48,7 +46,7 @@ export async function proxy(request: NextRequest) {
     redirectUrl.pathname = '/dashboard'
     return NextResponse.redirect(redirectUrl)
   }
-  
+
   return NextResponse.next()
 }
 
