@@ -22,7 +22,7 @@ async function Auth({ children }: Readonly<{ children: React.ReactNode }>) {
 
 function AuthSkeleton() {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center bg-[radial-gradient(rgba(229,231,235,0.10)_1px,transparent_1px)] bg-size-[14px_14px]">
+    <div className="flex min-h-svh w-full items-center justify-center">
       <div className="text-muted-foreground flex items-center gap-3 text-sm">
         <Loader2 className="text-muted-foreground animate-spin" />
         Carregando...

@@ -89,8 +89,8 @@ async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
 
 export default async function Dashboard() {
   'use cache'
-  cacheLife('max')
   cacheTag('fluigs')
+  cacheLife('minutes')
   const fluigs = await Queries()
 
   return (

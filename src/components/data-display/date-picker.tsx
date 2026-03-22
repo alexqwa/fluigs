@@ -1,6 +1,6 @@
 'use client'
 import dayjs from 'dayjs'
-import * as React from 'react'
+import { useState, useEffect } from 'react'
 import { CalendarIcon } from 'lucide-react'
 import { ptBR } from 'react-day-picker/locale'
 import { type DateRange } from 'react-day-picker'
@@ -18,20 +18,24 @@ interface DatePickerProps {
   onChange?: (range: DateRange | undefined) => void
 }
 
-export function DatePicker({ value, onChange }: DatePickerProps) {
-  const [date, setDate] = React.useState<DateRange | undefined>(value)
+const getDefaultRange = (): DateRange => {
+  const today = dayjs()
+  return {
+    from: today.startOf('month').toDate(),
+    to: today.add(7, 'day').toDate(),
+  }
+}
 
-  React.useEffect(() => {
-    if (value === undefined && date === undefined) {
-      const today = dayjs()
-      const initialRange = {
-        from: today.startOf('month').toDate(),
-        to: today.add(7, 'day').toDate(),
-      }
-      setDate(initialRange)
-      onChange?.(initialRange)
+export function DatePicker({ value, onChange }: DatePickerProps) {
+  const [date, setDate] = useState<DateRange | undefined>(
+    value ?? getDefaultRange()
+  )
+
+  useEffect(() => {
+    if (value) {
+      setDate(value)
     }
-  }, [value, date, onChange])
+  }, [value])
 
   const handleDateChange = (newDate: DateRange | undefined) => {
     setDate(newDate)
@@ -71,7 +75,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
           selected={date}
           numberOfMonths={2}
           onSelect={handleDateChange}
-          defaultMonth={date?.from}
+          defaultMonth={date?.from ?? new Date()}
         />
       </PopoverContent>
     </Popover>

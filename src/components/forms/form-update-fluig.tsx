@@ -317,7 +317,9 @@ export function FormUpdateFluig({
             <DrawerFooter className="bg-muted">
               <Button
                 type="submit"
-                disabled={form.formState.isSubmitting}
+                disabled={
+                  !form.formState.isDirty || form.formState.isSubmitting
+                }
                 className="flex min-w-36 cursor-pointer items-center justify-center transition-all hover:brightness-125"
               >
                 {form.formState.isSubmitting && (

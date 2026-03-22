@@ -70,7 +70,7 @@ export function SiteHeader({
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <div className="inset-0 flex flex-1 flex-col bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[20px_20px] px-6 pt-24 pb-10 md:px-10">
+      <div className="inset-0 flex flex-1 flex-col px-6 pt-24 pb-10 md:px-10">
         {children}
       </div>
     </SidebarInset>
