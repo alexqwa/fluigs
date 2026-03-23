@@ -2,7 +2,7 @@
 
 import z from 'zod'
 import { prisma } from '@/lib/prisma'
-import { updateTag } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 import { getServerSession } from '@/actions/auth/session'
 
 const fluigSchema = z.object({
@@ -45,5 +45,5 @@ export async function Update(id: string, data: FluigSchema) {
     },
   })
 
-  updateTag('fluigs')
+  revalidateTag('fluigs', 'max')
 }
