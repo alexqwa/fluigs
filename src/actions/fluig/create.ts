@@ -31,7 +31,7 @@ export async function Create(data: FluigSchema) {
     throw new Error('Unauthorized')
   }
 
-  await prisma.fluig.create({
+  const created = await prisma.fluig.create({
     data: {
       code: data.code,
       date: data.date,
@@ -46,4 +46,5 @@ export async function Create(data: FluigSchema) {
   })
 
   updateTag('fluigs')
+  return created
 }

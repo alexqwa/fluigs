@@ -31,7 +31,7 @@ export async function Update(id: string, data: FluigSchema) {
     throw new Error('Unauthorized')
   }
 
-  await prisma.fluig.update({
+  const updated = await prisma.fluig.update({
     where: {
       id,
       userId: session.user.id,
@@ -49,4 +49,5 @@ export async function Update(id: string, data: FluigSchema) {
   })
 
   updateTag('fluigs')
+  return updated
 }

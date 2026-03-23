@@ -123,8 +123,16 @@ function calculateCostTotal(cost: string, quantity: string): string {
 // ── Componente ─────────────────────────────────────────────────────────────────
 
 export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
-  const { data, add, update, remove, rollback } =
-    useFluigOptimistic(initialData)
+  const {
+    data,
+    add,
+    update,
+    remove,
+    rollback,
+    confirmCreate,
+    confirmUpdate,
+    confirmDelete,
+  } = useFluigOptimistic(initialData)
 
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -154,56 +162,49 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
   // ── Handlers ──────────────────────────────────────────────────────────────────
 
   // Criar: insere uma linha temporária imediatamente.
-  // Após Create + revalidatePath/revalidateTag, `initialData` chega com o
-  // registro real e substitui o item temporário automaticamente.
-
   async function handleCreate(formData: Omit<FluigSchema, 'id' | 'costTotal'>) {
-    const tempId = crypto.randomUUID()
-
-    const optimisticItem: FluigSchema = {
+    const tempId = add({
       ...formData,
-      id: tempId,
+      id: '',
       quantity: formData.quantity.replaceAll(/,/g, '.'),
       costTotal: calculateCostTotal(formData.cost, formData.quantity),
-    }
-
-    add(optimisticItem)
+    })
 
     try {
-      await Create(formData)
+      const realItem = await Create(formData)
+
+      confirmCreate(tempId, realItem)
     } catch {
-      rollback(initialData)
+      rollback()
     }
   }
 
   // Editar: aplica as mudanças na linha antes da resposta do servidor.
-  // Se a action falhar a Transition termina e o React reverte para `initialData`.
   async function handleUpdate(
     id: string,
     formData: Omit<FluigSchema, 'id' | 'costTotal'>
   ) {
-    const previous = data
-
     update(id, formData)
 
     try {
-      await Update(id, formData)
+      const updated = await Update(id, formData)
+
+      confirmUpdate(id, updated)
     } catch {
-      rollback(previous)
+      rollback()
     }
   }
 
   // Deletar: remove a linha imediatamente.
-  // Em caso de erro, o React descarta o estado otimista e volta a `initialData`.
   async function handleDelete(id: string) {
-    const previous = data
-
     remove(id)
 
     try {
       await Delete(id)
+
+      confirmDelete(id)
     } catch {
-      rollback(previous)
+      rollback()
     }
   }
 
