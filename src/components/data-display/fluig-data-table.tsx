@@ -172,10 +172,9 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
       header: 'Produto',
       cell: ({ row }) => (
         <div className="w-fit pr-8 md:pr-0">
-          <FormUpdateFluig
-            defaultValues={row.original}
-            onSubmit={(data) => Update(row.original.id, data)}
-          />
+          <span className="text-muted-foreground text-sm">
+            {row.original.product}
+          </span>
         </div>
       ),
 
@@ -274,10 +273,10 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
                 align="end"
                 className="bg-card border-border w-36 border"
               >
-                <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-                  <IconPencilMinus className="text-muted-foreground" />
-                  <span className="text-foreground text-sm">Editar</span>
-                </DropdownMenuItem>
+                <FormUpdateFluig
+                  defaultValues={row.original}
+                  onSubmit={(data) => Update(id, data)}
+                />
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   variant="destructive"

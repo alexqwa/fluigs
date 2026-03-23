@@ -61,7 +61,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
               dayjs(date.from).format('DD/MM/YYYY')
             )
           ) : (
-            <span>Selecionar Data</span>
+            <span>Selecionar data</span>
           )}
         </Button>
       </PopoverTrigger>

@@ -3,7 +3,7 @@ import { betterAuth } from 'better-auth'
 import { bearer, emailOTP, jwt } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 
-import { prisma } from '@/lib/db/prisma'
+import { prisma } from '@/lib/prisma'
 import { VerifyFluigTemplate } from '@/templates/verify-fluig-template'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)

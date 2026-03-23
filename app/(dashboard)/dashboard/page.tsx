@@ -58,7 +58,7 @@ async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
       <AnalyticsCard
         title="Fluigs Pendentes"
         value={String(pendingFluigs)}
-        indicator={`${averageFluigs.toFixed(1)}% Processados`}
+        indicator={`${averageFluigs.toFixed(0)}% Processados`}
         prospect={
           averageFluigs === 100
             ? 'Todas as solicitações em dias'

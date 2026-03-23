@@ -4,6 +4,7 @@ import z from 'zod'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { ptBR } from 'react-day-picker/locale'
+import { IconPencilMinus } from '@tabler/icons-react'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDownIcon, Loader2 } from 'lucide-react'
@@ -100,10 +101,11 @@ export function FormUpdateFluig({
       <Drawer open={open} onOpenChange={setOpen} direction="bottom">
         <DrawerTrigger asChild>
           <Button
-            variant="link"
-            className="text-foreground w-fit px-0 text-left"
+            className="hover:bg-muted flex w-full cursor-pointer justify-start px-2! py-1.5!"
+            variant="ghost"
           >
-            {defaultValues.product}
+            <IconPencilMinus className="text-muted-foreground" />
+            <span className="text-foreground text-sm">Editar</span>
           </Button>
         </DrawerTrigger>
         <DrawerContent className="border-border bg-card border-t p-0!">
@@ -346,8 +348,12 @@ export function FormUpdateFluig({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer px-0!" variant="link">
-          {defaultValues.product}
+        <Button
+          className="hover:bg-muted flex w-full cursor-pointer justify-start px-2! py-1.5!"
+          variant="ghost"
+        >
+          <IconPencilMinus className="text-muted-foreground" />
+          <span className="text-foreground text-sm">Editar</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
