@@ -64,7 +64,7 @@ type FluigInput = Omit<FluigSchema, 'date'> & { date: Date | string }
 
 interface FormUpdateFluigProps {
   defaultValues: FluigInput
-  onSubmit: (data: FluigSchema) => Promise<void>
+  onSubmit: (data: FluigSchema) => void
 }
 
 export function FormUpdateFluig({
@@ -83,8 +83,8 @@ export function FormUpdateFluig({
     },
   })
 
-  async function handleSubmit(data: FluigSchema) {
-    await onSubmit(data)
+  function handleSubmit(data: FluigSchema) {
+    onSubmit(data)
     setOpen(false)
     form.reset()
   }

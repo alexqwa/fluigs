@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { revalidateTag } from 'next/cache'
+import { updateTag } from 'next/cache'
 import { getServerSession } from '@/actions/auth/session'
 
 export async function Delete(id: string) {
@@ -15,5 +15,5 @@ export async function Delete(id: string) {
     where: { id },
   })
 
-  revalidateTag('fluigs', 'max')
+  updateTag('fluigs')
 }
