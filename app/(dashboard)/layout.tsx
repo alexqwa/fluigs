@@ -1,16 +1,16 @@
 import { Suspense } from 'react'
 import { Loader2 } from 'lucide-react'
-import { getUser } from '@/actions/auth/user'
 import { unauthorized } from 'next/navigation'
+import { getServerSession } from '@/actions/auth/session'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { SiteHeader } from '@/components/layout/header/site-header'
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar'
 
 async function Auth({ children }: Readonly<{ children: React.ReactNode }>) {
-  const user = await getUser()
+  const session = await getServerSession()
 
-  if (!user) return unauthorized()
+  if (!session?.user) return unauthorized()
 
   return (
     <SidebarProvider>

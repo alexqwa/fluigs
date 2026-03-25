@@ -10,14 +10,14 @@ import {
 } from '@/components/ui/sidebar'
 
 import data from '@/hooks/data.json'
-import { getUser } from '@/actions/auth/user'
+import { getServerSession } from '@/actions/auth/session'
 import { NavMain } from '@/components/layout/nav/nav-main'
 import { NavUser } from '@/components/layout/nav/nav-user'
 
 export async function AppSidebar() {
-  const user = await getUser()
+  const session = await getServerSession()
 
-  if (!user) return null
+  if (!session?.user) return null
 
   return (
     <Sidebar>
@@ -29,7 +29,7 @@ export async function AppSidebar() {
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="text-foreground truncate text-xs font-medium">
-                {user.name}
+                {session.user.name}
               </span>
               <span className="text-muted-foreground truncate text-xs">
                 Controle de Fluigs
@@ -42,7 +42,7 @@ export async function AppSidebar() {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser user={session.user} />
       </SidebarFooter>
     </Sidebar>
   )
