@@ -2,8 +2,8 @@
 
 import z from 'zod'
 import dayjs from 'dayjs'
-import * as React from 'react'
 import { type DateRange } from 'react-day-picker'
+import { useState, useMemo, ElementType } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -30,7 +30,6 @@ import {
 import {
   IconTrashX,
   IconReload,
-  IconPencilMinus,
   IconChevronLeft,
   IconDotsVertical,
   IconChevronRight,
@@ -64,6 +63,10 @@ import {
 
 import { Delete } from '@/actions/fluig/delete'
 import { Update } from '@/actions/fluig/update'
+import { Create } from '@/actions/fluig/create'
+import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
+
+// ── Tipos ──────────────────────────────────────────────────────────────────────
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
@@ -81,11 +84,13 @@ const fluigSchema = z.object({
 
 type FluigSchema = z.infer<typeof fluigSchema>
 
+// ── Status map ─────────────────────────────────────────────────────────────────
+
 const statusMap: Record<
   FluigStatus,
   {
     label: string
-    icon: React.ElementType
+    icon: ElementType
     color: string
   }
 > = {
@@ -106,195 +111,246 @@ const statusMap: Record<
   },
 }
 
+// ── CostTotal ─────────────────────────────────────────────────────────────────
+
+function calculateCostTotal(cost: string, quantity: string): string {
+  const costNumber = Number(cost)
+  const quantityNumber = Number(quantity.replaceAll(/,/g, '.'))
+  const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
+  return (normalizedCost * quantityNumber).toFixed(2)
+}
+
+// ── Componente ─────────────────────────────────────────────────────────────────
+
 export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [pagination, setPagination] = React.useState({
+  const {
+    data,
+    add,
+    update,
+    remove,
+    rollback,
+    confirmCreate,
+    confirmUpdate,
+    confirmDelete,
+  } = useFluigOptimistic(initialData)
+
+  const [rowSelection, setRowSelection] = useState({})
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   })
 
-  const [loading, setLoading] = React.useState(false)
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined)
 
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
-    undefined
-  )
+  // ── Filtro por período ─────────────────────────────────────────────────────
 
-  const filteredData = React.useMemo(() => {
-    if (!dateRange?.from) return initialData
+  const filteredData = useMemo(() => {
+    if (!dateRange?.from) return data
 
-    return initialData.filter((item) => {
-      // Normaliza a data do item para comparar apenas ano/mês/dia (ignora horário UTC)
-      const itemDate = dayjs(item.date).startOf('day')
-      const fromDate = dayjs(dateRange.from).startOf('day')
-      const toDate = dateRange.to
-        ? dayjs(dateRange.to).startOf('day')
-        : fromDate
+    const from = dayjs(dateRange.from).startOf('day')
+    const to = dateRange.to ? dayjs(dateRange.to).startOf('day') : from
 
-      // Compara as datas normalizadas (>= from e <= to)
-      return (
-        (itemDate.isSame(fromDate) || itemDate.isAfter(fromDate)) &&
-        (itemDate.isSame(toDate) || itemDate.isBefore(toDate))
-      )
+    return data.filter((item) => {
+      const d = dayjs(item.date)
+      return d.isAfter(from.subtract(1, 'day')) && d.isBefore(to.add(1, 'day'))
     })
-  }, [initialData, dateRange])
+  }, [data, dateRange])
 
-  async function onDelete(id: string) {
-    setLoading(true)
+  // ── Handlers ──────────────────────────────────────────────────────────────────
+
+  // Criar: insere uma linha temporária imediatamente.
+  async function handleCreate(formData: Omit<FluigSchema, 'id' | 'costTotal'>) {
+    const tempId = add({
+      ...formData,
+      id: '',
+      quantity: formData.quantity.replaceAll(/,/g, '.'),
+      costTotal: calculateCostTotal(formData.cost, formData.quantity),
+    })
 
     try {
-      await Delete(id)
-      setLoading(false)
-    } catch (error) {
-      console.error(error)
+      const realItem = await Create(formData)
+
+      confirmCreate(tempId, realItem)
+    } catch {
+      rollback()
     }
   }
 
-  const columns: ColumnDef<FluigSchema>[] = [
-    {
-      accessorKey: 'code',
-      header: 'Código',
-      cell: ({ row }) => (
-        <div className="w-24 md:w-fit">
-          <span className="text-muted-foreground pr-8 text-sm">
-            {row.original.code}
-          </span>
-        </div>
-      ),
-    },
-    {
-      accessorKey: 'product',
-      header: 'Produto',
-      cell: ({ row }) => (
-        <div className="w-fit pr-8 md:pr-0">
-          <FormUpdateFluig
-            defaultValues={row.original}
-            onSubmit={(data) => Update(row.original.id, data)}
-          />
-        </div>
-      ),
+  // Editar: aplica as mudanças na linha antes da resposta do servidor.
+  async function handleUpdate(
+    id: string,
+    formData: Omit<FluigSchema, 'id' | 'costTotal'>
+  ) {
+    update(id, formData)
 
-      enableHiding: false,
-    },
-    {
-      accessorKey: 'quantity',
-      header: 'Quantidade',
-      cell: ({ row }) => {
-        const quantity = Intl.NumberFormat('pt-BR', {
-          style: 'decimal',
-          minimumFractionDigits: 2,
-        }).format(Number(row.original.quantity))
+    try {
+      const updated = await Update(id, formData)
 
-        return (
-          <div className="w-32 md:w-fit">
-            <span className="text-muted-foreground text-sm">{quantity}</span>
+      confirmUpdate(id, updated)
+    } catch {
+      rollback()
+    }
+  }
+
+  // Deletar: remove a linha imediatamente.
+  async function handleDelete(id: string) {
+    remove(id)
+
+    try {
+      await Delete(id)
+
+      confirmDelete(id)
+    } catch {
+      rollback()
+    }
+  }
+
+  // ── Colunas ───────────────────────────────────────────────────────────────────
+
+  const columns = useMemo<ColumnDef<FluigSchema>[]>(
+    () => [
+      {
+        accessorKey: 'code',
+        header: 'Código',
+        cell: ({ row }) => (
+          <div className="w-24 md:w-fit">
+            <span className="text-muted-foreground pr-8 text-sm">
+              {row.original.code}
+            </span>
           </div>
-        )
+        ),
       },
-    },
-    {
-      accessorKey: 'nFluig',
-      header: 'N Fluig',
-      cell: ({ row }) => (
-        <div className="w-28 md:w-fit">
-          <span className="text-muted-foreground text-sm">
-            {row.original.nFluig}
-          </span>
-        </div>
-      ),
-    },
-    {
-      accessorKey: 'date',
-      header: 'Data',
-      cell: ({ row }) => (
-        <div className="w-28 md:w-fit">
-          <span className="text-muted-foreground text-sm">
-            {dayjs(row.original.date).format('DD/MM/YYYY')}
-          </span>
-        </div>
-      ),
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }) => {
-        const status = statusMap[row.original.status]
-        const Icon = status.icon
-
-        return (
-          <div className="w-32 md:w-fit">
-            <Badge variant="outline" className="text-muted-foreground px-1.5">
-              <Icon className={status.color} />
-              {status.label}
-            </Badge>
+      {
+        accessorKey: 'product',
+        header: 'Produto',
+        cell: ({ row }) => (
+          <div className="w-fit pr-8 md:pr-0">
+            <span className="text-muted-foreground text-sm">
+              {row.original.product}
+            </span>
           </div>
-        )
-      },
-    },
-    {
-      accessorKey: 'costTotal',
-      header: 'Custo (R$)',
-      cell: ({ row }) => {
-        const costTotal = Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format(Number(row.original.costTotal))
+        ),
 
-        return (
+        enableHiding: false,
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantidade',
+        cell: ({ row }) => {
+          const quantity = Intl.NumberFormat('pt-BR', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+          }).format(Number(row.original.quantity))
+
+          return (
+            <div className="w-32 md:w-fit">
+              <span className="text-muted-foreground text-sm">{quantity}</span>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'nFluig',
+        header: 'N Fluig',
+        cell: ({ row }) => (
           <div className="w-28 md:w-fit">
-            <span className="text-muted-foreground text-sm">{costTotal}</span>
+            <span className="text-muted-foreground text-sm">
+              {row.original.nFluig}
+            </span>
           </div>
-        )
+        ),
       },
-    },
-    {
-      id: 'actions',
-      cell: ({ row }) => {
-        const id = row.original.id
+      {
+        accessorKey: 'date',
+        header: 'Data',
+        cell: ({ row }) => (
+          <div className="w-28 md:w-fit">
+            <span className="text-muted-foreground text-sm">
+              {dayjs(row.original.date).format('DD/MM/YYYY')}
+            </span>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = statusMap[row.original.status]
+          const Icon = status.icon
 
-        return (
-          <div className="flex justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-                  size="icon"
-                >
-                  <IconDotsVertical />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-card border-border w-36 border"
-              >
-                <DropdownMenuItem className="hover:bg-muted cursor-pointer">
-                  <IconPencilMinus className="text-muted-foreground" />
-                  <span className="text-foreground text-sm">Editar</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  disabled={loading}
-                  onClick={() => onDelete(id)}
-                  className="hover:bg-muted cursor-pointer"
-                >
-                  <IconTrashX className="text-muted-foreground" />
-                  <span className="text-foreground text-sm">Deletar</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        )
+          return (
+            <div className="w-32 md:w-fit">
+              <Badge variant="outline" className="text-muted-foreground px-1.5">
+                <Icon className={status.color} />
+                {status.label}
+              </Badge>
+            </div>
+          )
+        },
       },
-    },
-  ]
+      {
+        accessorKey: 'costTotal',
+        header: 'Custo (R$)',
+        cell: ({ row }) => {
+          const costTotal = Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(Number(row.original.costTotal))
+
+          return (
+            <div className="w-28 md:w-fit">
+              <span className="text-muted-foreground text-sm">{costTotal}</span>
+            </div>
+          )
+        },
+      },
+      {
+        id: 'actions',
+        cell: ({ row }) => {
+          const id = row.original.id
+
+          return (
+            <div className="flex justify-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
+                    size="icon"
+                  >
+                    <IconDotsVertical />
+                    <span className="sr-only">Open menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-card border-border w-36 border"
+                >
+                  <FormUpdateFluig
+                    defaultValues={row.original}
+                    onSubmit={(formData) => handleUpdate(id, formData)}
+                  />
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => handleDelete(id)}
+                    className="hover:bg-muted cursor-pointer"
+                  >
+                    <IconTrashX className="text-muted-foreground" />
+                    <span className="text-foreground text-sm">Deletar</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )
+        },
+      },
+    ],
+    []
+  )
 
   const table = useReactTable({
     data: filteredData,
@@ -344,7 +400,7 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
             <DatePicker value={dateRange} onChange={setDateRange} />
           </Field>
         </FieldGroup>
-        <FormCreateFluig />
+        <FormCreateFluig onSubmit={handleCreate} />
       </div>
 
       <div className="border-border overflow-hidden rounded-lg border">

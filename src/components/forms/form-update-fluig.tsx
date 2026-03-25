@@ -4,6 +4,7 @@ import z from 'zod'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { ptBR } from 'react-day-picker/locale'
+import { IconPencilMinus } from '@tabler/icons-react'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDownIcon, Loader2 } from 'lucide-react'
@@ -63,7 +64,7 @@ type FluigInput = Omit<FluigSchema, 'date'> & { date: Date | string }
 
 interface FormUpdateFluigProps {
   defaultValues: FluigInput
-  onSubmit: (data: FluigSchema) => Promise<void>
+  onSubmit: (data: FluigSchema) => void
 }
 
 export function FormUpdateFluig({
@@ -82,8 +83,8 @@ export function FormUpdateFluig({
     },
   })
 
-  async function handleSubmit(data: FluigSchema) {
-    await onSubmit(data)
+  function handleSubmit(data: FluigSchema) {
+    onSubmit(data)
     setOpen(false)
     form.reset()
   }
@@ -100,10 +101,11 @@ export function FormUpdateFluig({
       <Drawer open={open} onOpenChange={setOpen} direction="bottom">
         <DrawerTrigger asChild>
           <Button
-            variant="link"
-            className="text-foreground w-fit px-0 text-left"
+            className="hover:bg-muted flex w-full cursor-pointer justify-start px-2! py-1.5!"
+            variant="ghost"
           >
-            {defaultValues.product}
+            <IconPencilMinus className="text-muted-foreground" />
+            <span className="text-foreground text-sm">Editar</span>
           </Button>
         </DrawerTrigger>
         <DrawerContent className="border-border bg-card border-t p-0!">
@@ -317,7 +319,9 @@ export function FormUpdateFluig({
             <DrawerFooter className="bg-muted">
               <Button
                 type="submit"
-                disabled={form.formState.isSubmitting}
+                disabled={
+                  !form.formState.isDirty || form.formState.isSubmitting
+                }
                 className="flex min-w-36 cursor-pointer items-center justify-center transition-all hover:brightness-125"
               >
                 {form.formState.isSubmitting && (
@@ -344,8 +348,12 @@ export function FormUpdateFluig({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer px-0!" variant="link">
-          {defaultValues.product}
+        <Button
+          className="hover:bg-muted flex w-full cursor-pointer justify-start px-2! py-1.5!"
+          variant="ghost"
+        >
+          <IconPencilMinus className="text-muted-foreground" />
+          <span className="text-foreground text-sm">Editar</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">

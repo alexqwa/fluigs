@@ -1,8 +1,8 @@
 'use server'
 
 import z from 'zod'
+import { prisma } from '@/lib/prisma'
 import { updateTag } from 'next/cache'
-import { prisma } from '@/lib/db/prisma'
 import { getServerSession } from '@/actions/auth/session'
 
 const fluigSchema = z.object({
@@ -17,18 +17,21 @@ const fluigSchema = z.object({
 
 type FluigSchema = z.infer<typeof fluigSchema>
 
+function calculateCostTotal(cost: string, quantity: string): string {
+  const costNumber = Number(cost)
+  const quantityNumber = Number(quantity.replaceAll(/,/g, '.'))
+  const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
+  return (normalizedCost * quantityNumber).toFixed(2)
+}
+
 export async function Update(id: string, data: FluigSchema) {
   const session = await getServerSession()
-  const costNumber = Number(data.cost)
-  const quantityNumber = Number(data.quantity.replaceAll(/\,/g, '.'))
-  const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
-  const normalizedCostTotal = normalizedCost * quantityNumber
 
   if (!session?.user) {
     throw new Error('Unauthorized')
   }
 
-  await prisma.fluig.update({
+  const updated = await prisma.fluig.update({
     where: {
       id,
       userId: session.user.id,
@@ -39,11 +42,12 @@ export async function Update(id: string, data: FluigSchema) {
       cost: data.cost,
       nFluig: data.nFluig,
       product: data.product,
-      costTotal: normalizedCostTotal.toFixed(2),
-      quantity: quantityNumber.toFixed(2),
+      costTotal: calculateCostTotal(data.cost, data.quantity),
+      quantity: data.quantity.replaceAll(/,/g, '.'),
       status: data.status,
     },
   })
 
   updateTag('fluigs')
+  return updated
 }

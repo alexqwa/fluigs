@@ -61,7 +61,11 @@ const fluigSchema = z.object({
 
 type FluigSchema = z.infer<typeof fluigSchema>
 
-export function FormCreateFluig() {
+interface FormCreateFluigProps {
+  onSubmit: (data: FluigSchema) => void
+}
+
+export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
   const isMobile = useIsMobile()
   const [open, setOpen] = useState(false)
   const { getProduct } = useProductAutoFill()
@@ -79,8 +83,8 @@ export function FormCreateFluig() {
     },
   })
 
-  async function onSubmit(data: FluigSchema) {
-    await Create(data)
+  function handleSubmit(data: FluigSchema) {
+    onSubmit(data)
     setOpen(false)
     form.reset()
   }
@@ -99,7 +103,7 @@ export function FormCreateFluig() {
         </DrawerTrigger>
         <DrawerContent className="border-border bg-card border-t p-0!">
           <form
-            onSubmit={form.handleSubmit(onSubmit, (errors) =>
+            onSubmit={form.handleSubmit(handleSubmit, (errors) =>
               console.log(errors)
             )}
           >
@@ -340,7 +344,7 @@ export function FormCreateFluig() {
       </DialogTrigger>
       <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
         <form
-          onSubmit={form.handleSubmit(onSubmit, (errors) =>
+          onSubmit={form.handleSubmit(handleSubmit, (errors) =>
             console.log(errors)
           )}
         >

@@ -1,7 +1,7 @@
 'use server'
 
+import { prisma } from '@/lib/prisma'
 import { updateTag } from 'next/cache'
-import { prisma } from '@/lib/db/prisma'
 import { getServerSession } from '@/actions/auth/session'
 
 export async function Delete(id: string) {

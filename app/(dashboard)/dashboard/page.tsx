@@ -58,7 +58,7 @@ async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
       <AnalyticsCard
         title="Fluigs Pendentes"
         value={String(pendingFluigs)}
-        indicator={`${averageFluigs.toFixed(1)}% Processados`}
+        indicator={`${averageFluigs.toFixed(0)}% Processados`}
         prospect={
           averageFluigs === 100
             ? 'Todas as solicitações em dias'
@@ -89,8 +89,8 @@ async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
 
 export default async function Dashboard() {
   'use cache'
-  cacheLife('max')
   cacheTag('fluigs')
+  cacheLife('minutes')
   const fluigs = await Queries()
 
   return (
