@@ -226,7 +226,7 @@ export type FluigGroupByOutputType = {
   costTotal: string
   date: Date
   createdAt: Date
-  userId: string | null
+  userId: string
   _count: FluigCountAggregateOutputType | null
   _avg: FluigAvgAggregateOutputType | null
   _sum: FluigSumAggregateOutputType | null
@@ -263,8 +263,8 @@ export type FluigWhereInput = {
   costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
-  userId?: Prisma.StringNullableFilter<"Fluig"> | string | null
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  userId?: Prisma.StringFilter<"Fluig"> | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type FluigOrderByWithRelationInput = {
@@ -278,7 +278,7 @@ export type FluigOrderByWithRelationInput = {
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -296,8 +296,8 @@ export type FluigWhereUniqueInput = Prisma.AtLeast<{
   costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
-  userId?: Prisma.StringNullableFilter<"Fluig"> | string | null
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  userId?: Prisma.StringFilter<"Fluig"> | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type FluigOrderByWithAggregationInput = {
@@ -311,7 +311,7 @@ export type FluigOrderByWithAggregationInput = {
   costTotal?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   _count?: Prisma.FluigCountOrderByAggregateInput
   _avg?: Prisma.FluigAvgOrderByAggregateInput
   _max?: Prisma.FluigMaxOrderByAggregateInput
@@ -333,7 +333,7 @@ export type FluigScalarWhereWithAggregatesInput = {
   costTotal?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Fluig"> | Date | string
-  userId?: Prisma.StringNullableWithAggregatesFilter<"Fluig"> | string | null
+  userId?: Prisma.StringWithAggregatesFilter<"Fluig"> | string
 }
 
 export type FluigCreateInput = {
@@ -347,7 +347,7 @@ export type FluigCreateInput = {
   costTotal: string
   date: Date | string
   createdAt?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutFluigsInput
+  user: Prisma.UserCreateNestedOneWithoutFluigsInput
 }
 
 export type FluigUncheckedCreateInput = {
@@ -361,7 +361,7 @@ export type FluigUncheckedCreateInput = {
   costTotal: string
   date: Date | string
   createdAt?: Date | string
-  userId?: string | null
+  userId: string
 }
 
 export type FluigUpdateInput = {
@@ -375,7 +375,7 @@ export type FluigUpdateInput = {
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutFluigsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutFluigsNestedInput
 }
 
 export type FluigUncheckedUpdateInput = {
@@ -389,7 +389,7 @@ export type FluigUncheckedUpdateInput = {
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FluigCreateManyInput = {
@@ -403,7 +403,7 @@ export type FluigCreateManyInput = {
   costTotal: string
   date: Date | string
   createdAt?: Date | string
-  userId?: string | null
+  userId: string
 }
 
 export type FluigUpdateManyMutationInput = {
@@ -430,7 +430,7 @@ export type FluigUncheckedUpdateManyInput = {
   costTotal?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FluigCountOrderByAggregateInput = {
@@ -511,10 +511,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type FluigCreateNestedManyWithoutUserInput = {
@@ -625,7 +621,7 @@ export type FluigScalarWhereInput = {
   costTotal?: Prisma.StringFilter<"Fluig"> | string
   date?: Prisma.DateTimeFilter<"Fluig"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Fluig"> | Date | string
-  userId?: Prisma.StringNullableFilter<"Fluig"> | string | null
+  userId?: Prisma.StringFilter<"Fluig"> | string
 }
 
 export type FluigCreateManyUserInput = {
@@ -694,7 +690,7 @@ export type FluigSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   date?: boolean
   createdAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fluig"]>
 
 export type FluigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -709,7 +705,7 @@ export type FluigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   date?: boolean
   createdAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fluig"]>
 
 export type FluigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -724,7 +720,7 @@ export type FluigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   date?: boolean
   createdAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fluig"]>
 
 export type FluigSelectScalar = {
@@ -743,19 +739,19 @@ export type FluigSelectScalar = {
 
 export type FluigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "product" | "code" | "nFluig" | "quantity" | "cost" | "costTotal" | "date" | "createdAt" | "userId", ExtArgs["result"]["fluig"]>
 export type FluigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type FluigIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type FluigIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.Fluig$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $FluigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Fluig"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -768,7 +764,7 @@ export type $FluigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     costTotal: string
     date: Date
     createdAt: Date
-    userId: string | null
+    userId: string
   }, ExtArgs["result"]["fluig"]>
   composites: {}
 }
@@ -1163,7 +1159,7 @@ readonly fields: FluigFieldRefs;
  */
 export interface Prisma__FluigClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.Fluig$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fluig$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1602,25 +1598,6 @@ export type FluigDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Fluigs to delete.
    */
   limit?: number
-}
-
-/**
- * Fluig.user
- */
-export type Fluig$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

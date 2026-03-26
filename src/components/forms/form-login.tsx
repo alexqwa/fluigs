@@ -1,15 +1,11 @@
 'use client'
 
-import z from 'zod'
-import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { Controller } from 'react-hook-form'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, Controller } from 'react-hook-form'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronRight, Loader2, Mail } from 'lucide-react'
 
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectItem,
@@ -42,119 +38,11 @@ import {
 } from '@/components/ui/field'
 
 import data from '@/hooks/data.json'
-import { authClient } from '@/lib/auth/client'
-
-const signInSchema = z.object({
-  value: z.string().min(4, 'Insira uma filial válida.'),
-  email: z.email('Insira um endereço de e-mail válido.'),
-  name: z
-    .string()
-    .min(4, 'O nome da loja deve ter pelo menos 4 caracteres.')
-    .max(32, 'O nome da loja deve ter no máximo 32 caracteres.'),
-  otp: z
-    .string()
-    .length(6, 'O código de verificação deve ter pelo menos 6 caracteres.'),
-})
-
-type SignInSchema = z.infer<typeof signInSchema>
+import { useFormLogin } from '@/hooks/use-form-login'
 
 export function FormLogin() {
-  const router = useRouter()
-  const [cooldown, setCooldown] = useState(0)
-  const [sending, setSending] = useState(false)
-  const [codeHasSend, setCodeHasSend] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const {
-    reset,
-    control,
-    trigger,
-    setValue,
-    getValues,
-    formState,
-    handleSubmit,
-  } = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      value: '',
-      otp: '',
-    },
-  })
-
-  useEffect(() => {
-    if (cooldown <= 0) return
-
-    const timer = setInterval(() => {
-      setCooldown((c) => c - 1)
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [cooldown])
-
-  async function sendEmailOTPVerification() {
-    setError(null)
-    setSending(true)
-
-    const email = getValues('email')
-    const isValid = trigger(['email', 'value'])
-
-    if (!isValid) return
-
-    try {
-      const { error } = await authClient.emailOtp.sendVerificationOtp({
-        email,
-        type: 'sign-in',
-      })
-
-      if (error) {
-        setError(error.message!)
-        setSending(false)
-        return
-      }
-
-      setCooldown(30)
-      setCodeHasSend(true)
-    } catch (err) {
-      console.error(err)
-      setError('Erro ao enviar código de verificação.')
-    }
-
-    setSending(false)
-  }
-
-  async function onSubmit({ email, otp }: SignInSchema) {
-    setError(null)
-
-    try {
-      const { error } = await authClient.signIn.emailOtp({
-        email,
-        otp,
-      })
-
-      if (error) {
-        setError(error?.message! || 'Algo deu errado.')
-        return
-      }
-
-      router.push('/dashboard')
-      ResetFields()
-    } catch (error: any) {
-      console.error('Erro ao verificar OTP:', error)
-      setError(
-        error?.message ||
-          'Erro inesperado ao validar o código. Tente novamente.'
-      )
-    }
-  }
-
-  function ResetFields() {
-    setCodeHasSend(false)
-    setCooldown(0)
-    setError(null)
-    reset()
-  }
+  const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
+    useFormLogin()
 
   return (
     <Card>
@@ -167,11 +55,11 @@ export function FormLogin() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-rhf-select" onSubmit={handleSubmit(onSubmit)}>
+        <form id="form-rhf-select" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup className="flex-col! gap-6!">
             <Controller
               name="value"
-              control={control}
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Field
                   orientation="responsive"
@@ -192,11 +80,11 @@ export function FormLogin() {
                         )
 
                         if (selected) {
-                          setValue('email', selected.email)
-                          setValue('name', selected.label)
+                          form.setValue('email', selected.email)
+                          form.setValue('name', selected.label)
                         }
                       }}
-                      disabled={codeHasSend || sending}
+                      disabled={codeHasSend}
                     >
                       <SelectTrigger
                         id="form-rhf-select-store"
@@ -230,8 +118,8 @@ export function FormLogin() {
                     )}
                     <Button
                       variant="outline"
-                      onClick={sendEmailOTPVerification}
-                      disabled={codeHasSend || sending || cooldown > 0}
+                      onClick={sendCode}
+                      disabled={codeHasSend || cooldown > 0}
                       className="bg-muted border-border flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border transition-all hover:brightness-125"
                     >
                       <AnimatePresence mode="wait">
@@ -271,7 +159,7 @@ export function FormLogin() {
             />
             <Controller
               name="otp"
-              control={control}
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Field
                   orientation="responsive"
@@ -338,13 +226,13 @@ export function FormLogin() {
           <Button
             type="submit"
             form="form-rhf-select"
-            disabled={formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
             className="group/button bg-foreground group text-background relative inline-flex min-h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
-            {formState.isSubmitting && (
+            {form.formState.isSubmitting && (
               <Loader2 className="size-4 animate-spin" />
             )}
-            {!formState.isSubmitting && (
+            {!form.formState.isSubmitting && (
               <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
                 Entrar
               </span>
@@ -355,7 +243,7 @@ export function FormLogin() {
           </Button>
           <Button
             variant="link"
-            onClick={ResetFields}
+            onClick={reset}
             disabled={cooldown > 0}
             className="text-muted-foreground mx-auto mt-3 w-fit cursor-pointer text-sm"
           >
@@ -363,6 +251,7 @@ export function FormLogin() {
           </Button>
         </div>
       </CardFooter>
+      {error && <p className="text-sm text-red-400">{error}</p>}
     </Card>
   )
 }
