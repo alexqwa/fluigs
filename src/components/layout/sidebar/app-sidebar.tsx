@@ -1,5 +1,3 @@
-import React from 'react'
-import { User } from 'better-auth'
 import { FilePenLine } from 'lucide-react'
 
 import {
@@ -9,8 +7,9 @@ import {
   SidebarContent,
 } from '@/components/ui/sidebar'
 
-import data from '@/hooks/data.json'
 import { getServerSession } from '@/actions/auth/session'
+
+import data from '@/hooks/data.json'
 import { NavMain } from '@/components/layout/nav/nav-main'
 import { NavUser } from '@/components/layout/nav/nav-user'
 

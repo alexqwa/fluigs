@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -19,12 +18,9 @@ model Fluig {
   costTotal String
   date      DateTime
   createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([code])
-  @@index([date])
   @@index([userId])
   @@map("fluig")
 }
@@ -37,8 +33,8 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  accounts      Account[]
   fluigs        Fluig[]
+  accounts      Account[]
   sessions      Session[]
 
   @@map("user")
@@ -92,9 +88,9 @@ model Verification {
 }
 
 enum Status {
-  Approved @map("approved")
+  Approved     @map("approved")
   Not_Approved @map("not_approved")
-  Pending @map("pending")
+  Pending      @map("pending")
 }
 
 model RateLimit {
@@ -105,14 +101,4 @@ model RateLimit {
 
   @@unique([key])
   @@map("rateLimit")
-}
-
-model Jwks {
-  id         String    @id
-  publicKey  String
-  privateKey String
-  createdAt  DateTime
-  expiresAt  DateTime?
-
-  @@map("jwks")
 }
