@@ -118,7 +118,7 @@ export function ReportPDFTemplate({
           align-items: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
-          border-bottom: 2px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
         }
 
         .header-left {

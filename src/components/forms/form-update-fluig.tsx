@@ -2,9 +2,8 @@
 
 import z from 'zod'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { ptBR } from 'react-day-picker/locale'
-import { IconPencilMinus } from '@tabler/icons-react'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDownIcon, Loader2 } from 'lucide-react'
@@ -25,7 +24,6 @@ import {
   DialogTitle,
   DialogHeader,
   DialogFooter,
-  DialogTrigger,
   DialogContent,
   DialogDescription,
 } from '@/components/ui/dialog'
@@ -41,7 +39,6 @@ import {
   DrawerTitle,
   DrawerHeader,
   DrawerFooter,
-  DrawerTrigger,
   DrawerContent,
   DrawerDescription,
 } from '@/components/ui/drawer'
@@ -63,33 +60,39 @@ type FluigSchema = z.infer<typeof fluigSchema>
 type FluigInput = Omit<FluigSchema, 'date'> & { date: Date | string }
 
 interface FormUpdateFluigProps {
-  defaultValues: FluigInput
+  defaultValues?: FluigInput | null
+  open: boolean
   onSubmit: (data: FluigSchema) => void
+  onOpenChange: (open: boolean) => void
 }
 
 export function FormUpdateFluig({
+  open,
   onSubmit,
+  onOpenChange,
   defaultValues,
 }: FormUpdateFluigProps) {
   const isMobile = useIsMobile()
   const { getProduct } = useProductAutoFill()
-  const [open, setOpen] = useState(false)
 
   const form = useForm<FluigSchema>({
     resolver: zodResolver(fluigSchema),
-    defaultValues: {
-      ...defaultValues,
-      date: new Date(defaultValues.date),
-    },
+    defaultValues: defaultValues
+      ? {
+          ...defaultValues,
+          date: new Date(defaultValues.date),
+        }
+      : undefined,
   })
 
   function handleSubmit(data: FluigSchema) {
     onSubmit(data)
-    setOpen(false)
-    form.reset()
+    onOpenChange(false)
   }
 
   useEffect(() => {
+    if (!defaultValues) return
+
     form.reset({
       ...defaultValues,
       date: new Date(defaultValues.date),
@@ -98,16 +101,16 @@ export function FormUpdateFluig({
 
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={setOpen} direction="bottom">
-        <DrawerTrigger asChild>
-          <Button
-            className="hover:bg-muted flex w-full cursor-pointer justify-start px-2! py-1.5!"
-            variant="ghost"
-          >
-            <IconPencilMinus className="text-muted-foreground" />
-            <span className="text-foreground text-sm">Editar</span>
-          </Button>
-        </DrawerTrigger>
+      <Drawer
+        open={open}
+        onOpenChange={(open) => {
+          if (!open) {
+            form.reset()
+          }
+          onOpenChange(open)
+        }}
+        direction="bottom"
+      >
         <DrawerContent className="border-border bg-card border-t p-0!">
           <form
             onSubmit={form.handleSubmit(handleSubmit, (errors) =>
@@ -332,7 +335,6 @@ export function FormUpdateFluig({
               <DialogClose asChild>
                 <Button
                   variant="outline"
-                  onClick={() => form.reset()}
                   className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
                 >
                   Cancelar
@@ -346,16 +348,15 @@ export function FormUpdateFluig({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          className="hover:bg-muted flex w-full cursor-pointer justify-start px-2! py-1.5!"
-          variant="ghost"
-        >
-          <IconPencilMinus className="text-muted-foreground" />
-          <span className="text-foreground text-sm">Editar</span>
-        </Button>
-      </DialogTrigger>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        if (!open) {
+          form.reset()
+        }
+        onOpenChange(open)
+      }}
+    >
       <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
         <form
           onSubmit={form.handleSubmit(handleSubmit, (errors) =>
@@ -565,7 +566,6 @@ export function FormUpdateFluig({
             <DialogClose asChild>
               <Button
                 variant="outline"
-                onClick={() => form.reset()}
                 className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
               >
                 Cancelar

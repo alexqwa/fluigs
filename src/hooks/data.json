@@ -9,6 +9,11 @@
       "title": "Relatórios",
       "url": "/reports",
       "icon": "file-chart-pie"
+    },
+    {
+      "title": "Custos",
+      "url": "/costs",
+      "icon": "circle-dollar-sign"
     }
   ],
   "stores": [

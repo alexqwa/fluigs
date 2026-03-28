@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { ptBR } from 'react-day-picker/locale'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronDownIcon, Loader2 } from 'lucide-react'
+import { ChevronDownIcon, Loader2, LayersPlus } from 'lucide-react'
 
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -45,7 +45,6 @@ import {
   DrawerDescription,
 } from '@/components/ui/drawer'
 
-import { Create } from '@/actions/fluig/create'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { useProductAutoFill } from '@/hooks/use-product-autofill'
 
@@ -98,6 +97,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
       <Drawer open={open} onOpenChange={setOpen} direction="bottom">
         <DrawerTrigger asChild>
           <Button variant="default" className="w-full text-sm font-medium">
+            <LayersPlus size={18} className="text-black" />
             Adicionar fluig
           </Button>
         </DrawerTrigger>
@@ -339,6 +339,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
           variant="default"
           className="cursor-pointer text-sm font-medium transition-all hover:brightness-125"
         >
+          <LayersPlus size={18} className="text-black" />
           Adicionar fluig
         </Button>
       </DialogTrigger>

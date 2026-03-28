@@ -94,7 +94,7 @@ export default async function Dashboard() {
   const fluigs = await Queries()
 
   return (
-    <>
+    <main>
       <div className="space-y-1">
         <h1 className="text-foreground text-xl font-bold md:text-3xl">
           Dashboard
@@ -117,6 +117,6 @@ export default async function Dashboard() {
       <Suspense fallback={<DataTableSkeleton />}>
         <CachedDataTable fluigs={fluigs} />
       </Suspense>
-    </>
+    </main>
   )
 }

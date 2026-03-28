@@ -5,7 +5,7 @@ export default function Account() {
         Minha conta
       </h1>
       <p className="text-muted-foreground text-sm md:text-base">
-        Simplifique a gestão dos seus relatórios em um só lugar
+        Gerencie sua conta com segurança e praticidade
       </p>
     </div>
   )

@@ -31,6 +31,7 @@ import {
   IconTrashX,
   IconReload,
   IconChevronLeft,
+  IconPencilMinus,
   IconDotsVertical,
   IconChevronRight,
   IconChevronsLeft,
@@ -135,6 +136,7 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
   } = useFluigOptimistic(initialData)
 
   const [rowSelection, setRowSelection] = useState({})
+  const [editingRow, setEditingRow] = useState<FluigSchema | null>(null)
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
@@ -329,10 +331,14 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
                   align="end"
                   className="bg-card border-border w-36 border"
                 >
-                  <FormUpdateFluig
-                    defaultValues={row.original}
-                    onSubmit={(formData) => handleUpdate(id, formData)}
-                  />
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => setEditingRow(row.original)}
+                    className="hover:bg-muted cursor-pointer"
+                  >
+                    <IconPencilMinus className="text-muted-foreground" />
+                    <span className="text-foreground text-sm">Editar</span>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     variant="destructive"
@@ -405,7 +411,7 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
 
       <div className="border-border overflow-hidden rounded-lg border">
         <Table>
-          <TableHeader className="bg-muted border-border sticky top-0 z-10 border-b">
+          <TableHeader className="bg-muted border-border sticky top-0 border-b">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -529,6 +535,19 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
           </div>
         </div>
       </div>
+      <FormUpdateFluig
+        defaultValues={editingRow}
+        open={!!editingRow}
+        onOpenChange={(open) => {
+          if (!open) setEditingRow(null)
+        }}
+        onSubmit={(formData) => {
+          if (!editingRow) return
+
+          handleUpdate(editingRow.id, formData)
+          setEditingRow(null)
+        }}
+      />
     </div>
   )
 }

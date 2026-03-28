@@ -5,7 +5,7 @@ export default function Notifications() {
         Notificações
       </h1>
       <p className="text-muted-foreground text-sm md:text-base">
-        Simplifique a gestão dos seus relatórios em um só lugar
+        Centralize suas notificações em um só lugar
       </p>
     </div>
   )

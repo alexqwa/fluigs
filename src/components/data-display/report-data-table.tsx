@@ -408,7 +408,7 @@ export function ReportDataTable({
 
       <div className="border-border overflow-hidden rounded-lg border">
         <Table>
-          <TableHeader className="bg-muted border-border sticky top-0 z-10 border-b">
+          <TableHeader className="bg-muted border-border sticky top-0 border-b">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
