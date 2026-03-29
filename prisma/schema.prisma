@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -88,9 +89,9 @@ model Verification {
 }
 
 enum Status {
-  Approved     @map("approved")
+  Approved @map("approved")
   Not_Approved @map("not_approved")
-  Pending      @map("pending")
+  Pending @map("pending")
 }
 
 model RateLimit {
@@ -101,4 +102,14 @@ model RateLimit {
 
   @@unique([key])
   @@map("rateLimit")
+}
+
+model Jwks {
+  id         String    @id
+  publicKey  String
+  privateKey String
+  createdAt  DateTime
+  expiresAt  DateTime?
+
+  @@map("jwks")
 }

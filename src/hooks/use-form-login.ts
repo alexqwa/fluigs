@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { authClient } from '@/lib/auth/client'
+import { authClient } from '@/lib/auth-client'
 
 const signInSchema = z.object({
   value: z.string().min(4, 'Insira uma filial válida.'),

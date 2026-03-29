@@ -21,7 +21,7 @@ import {
   SidebarMenuButton,
 } from '@/components/ui/sidebar'
 
-import { authClient } from '@/lib/auth/client'
+import { authClient } from '@/lib/auth-client'
 
 interface NavUserProps {
   user: User

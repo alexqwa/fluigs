@@ -6,7 +6,7 @@ import {
   inferAdditionalFields,
 } from 'better-auth/client/plugins'
 
-import { auth } from '@/lib/auth/server'
+import { auth } from '@/lib/auth'
 
 export const authClient = createAuthClient({
   plugins: [
