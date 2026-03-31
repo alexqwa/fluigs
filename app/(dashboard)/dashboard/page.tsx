@@ -62,12 +62,12 @@ async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
         prospect={
           averageFluigs === 100
             ? 'Todas as solicitações em dias'
-            : 'Solicitações com lentidão neste período'
+            : 'Fluigs aguardando por aprovação'
         }
         discover={
           averageFluigs === 100
             ? 'Parabéns continue assim'
-            : 'As solicitações requer atenção'
+            : 'Os Fluigs requer atenção'
         }
         icon={averageFluigs === 100 ? 'trending-up' : 'trending-down'}
       />

@@ -93,7 +93,7 @@ async function seed() {
       },
       {
         email: 'gerencia.smb2@atacadaodiaadia.com.br',
-        name: 'Furnas',
+        name: 'Samambaia Furnas',
       },
       {
         email: 'gerencia.novogama@atacadaodiaadia.com.br',
@@ -109,7 +109,7 @@ async function seed() {
       },
       {
         email: 'gerencia.itb@atacadaodiaadia.com.br',
-        name: 'Itumbiara',
+        name: 'Itumbiara GO',
       },
       {
         email: 'gerencia.vcp2@atacadaodiaadia.com.br',
@@ -125,7 +125,7 @@ async function seed() {
       },
       {
         email: 'gerencia.smb@atacadaodiaadia.com.br',
-        name: 'Samambaia',
+        name: 'Samambaia Norte',
       },
       {
         email: 'gerencia.lem@atacadaodiaadia.com.br',
@@ -140,7 +140,7 @@ async function seed() {
         name: 'Luziânia 2',
       },
       {
-        name: 'Luziânia',
+        name: 'Luziânia 1',
         email: 'gerencia.luz@atacadaodiaadia.com.br',
       },
     ],

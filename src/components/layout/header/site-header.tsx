@@ -31,10 +31,6 @@ const data = [
     title: 'Minha conta',
     url: '/account',
   },
-  {
-    title: 'Custos',
-    url: '/costs',
-  },
 ]
 
 export function SiteHeader({

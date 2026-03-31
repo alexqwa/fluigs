@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { betterAuth } from 'better-auth'
-import { emailOTP, jwt, bearer } from 'better-auth/plugins'
+import { emailOTP } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 
 import { prisma } from '@/lib/prisma'
@@ -29,23 +29,9 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 300,
-      strategy: 'jwt',
     },
   },
   plugins: [
-    jwt({
-      jwt: {
-        expirationTime: '5m',
-      },
-      jwks: {
-        rotationInterval: 60 * 60 * 24 * 30,
-        gracePeriod: 60 * 60 * 24 * 30,
-        keyPairConfig: {
-          alg: 'RS256',
-        },
-      },
-    }),
-    bearer(),
     emailOTP({
       expiresIn: 300,
       async sendVerificationOTP({ email, otp }) {
