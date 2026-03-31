@@ -25,10 +25,10 @@ Facilitar o controle e a análise de dados operacionais, permitindo que gestores
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/controle-de-fluigs.git
+git clone https://github.com/alexqwa/fluigs.git
 
 # Acesse a pasta
-cd controle-de-fluigs
+cd fluigs
 
 # Instale as dependências
 npm install
