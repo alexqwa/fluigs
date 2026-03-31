@@ -125,7 +125,7 @@
     {
       "value": "1060",
       "email": "gerencia.smb2@atacadaodiaadia.com.br",
-      "label": "Furnas"
+      "label": "Samambaia Furnas"
     },
     {
       "value": "1025",
@@ -145,7 +145,7 @@
     {
       "value": "1064",
       "email": "gerencia.itb@atacadaodiaadia.com.br",
-      "label": "Itumbiara"
+      "label": "Itumbiara GO"
     },
     {
       "value": "1038",
@@ -165,7 +165,7 @@
     {
       "value": "1034",
       "email": "gerencia.smb@atacadaodiaadia.com.br",
-      "label": "Samambaia"
+      "label": "Samambaia Norte"
     },
     {
       "value": "1030",
@@ -184,7 +184,7 @@
     },
     {
       "value": "1013",
-      "label": "Luziânia",
+      "label": "Luziânia 1",
       "email": "gerencia.luz@atacadaodiaadia.com.br"
     }
   ]
