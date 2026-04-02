@@ -1,415 +1,147 @@
 [
-  { "code": "1124", "product": "ABACATE KG", "cost": "0.004303" },
-  { "code": "1123", "product": "ABACATE VD KG", "cost": "0" },
-  { "code": "1120", "product": "ABACATE 500G", "cost": "0" },
-  { "code": "1121", "product": "ABACATE 800G", "cost": "0" },
-  { "code": "1125", "product": "ABACAXI", "cost": "4.849957" },
+  { "code": "1124", "product": "ABACATE KG", "cost": "0.002623" },
+  { "code": "1125", "product": "ABACAXI", "cost": "5.993809" },
   { "code": "1126", "product": "ABACAXI SUPER PECA", "cost": "5.78" },
-  { "code": "1129", "product": "ABOBORA ITALIA KG", "cost": "0.006302" },
+  { "code": "1129", "product": "ABOBORA ITALIA KG", "cost": "0.006145" },
   {
     "code": "1128",
-    "product": "ABOBORA ITALIA SO FOLHAS BDJ 300G",
-    "cost": "5.99794"
+    "product": "ABOBORA ITALIA SO FOLHAS BDJ 300G ",
+    "cost": "7.80"
   },
-  { "code": "1130", "product": "ABOBORA JAPONESA KG", "cost": "0.001606" },
+  { "code": "1130", "product": "ABOBORA JAPONESA KG ", "cost": "0.002634" },
   {
     "code": "1131",
     "product": "ABOBORA JAPONESA KG PARTIDA",
     "cost": "0.001544"
   },
   {
-    "code": "1132",
-    "product": "ABOBORA JAPONESA MACHADINHO 400G",
-    "cost": "0"
-  },
-  {
-    "code": "1133",
-    "product": "ABOBORA JAPONESA ORG MALUNGA 600G",
-    "cost": "0"
-  },
-  {
     "code": "1136",
-    "product": "ABOBORA MENINA SO FOLHAS BDJ 300G",
-    "cost": "7.8"
+    "product": "ABOBORA MENINA SO FOLHAS BDJ 300G ",
+    "cost": "7.80"
   },
-  { "code": "1134", "product": "ABOBORA MORANGA KG", "cost": "0.00151" },
-  { "code": "1135", "product": "ABOBORA MORANGA VD KG PARTIDA", "cost": "0" },
-  {
-    "code": "1137",
-    "product": "ABOBRINHA ITALIA ORG MALUNGA 600G",
-    "cost": "0"
-  },
-  { "code": "1139", "product": "ABOBRINHA MENINA SO VERDE 500G", "cost": "0" },
-  {
-    "code": "1140",
-    "product": "ABOBRINHA VERDINHA SO VERDE 500G",
-    "cost": "0"
-  },{ "code": "1219", "product": "ACELGA MALUNGA 180G HIG", "cost": "0" },
-  { "code": "1220", "product": "ACELGA ORG MALUNGA", "cost": "0" },
-  { "code": "1221", "product": "ACELGA SO FOLHAS", "cost": "4.299971" },
-  { "code": "31", "product": "AGRIAO ALFA VERDE", "cost": "0" },
-  { "code": "32", "product": "AGRIAO HORTAGUA HIDROP", "cost": "0" },
-  { "code": "33", "product": "AGRIAO SO FOLHAS", "cost": "4.1" },
-  { "code": "34", "product": "AGRIAO VIA VERDE HIDROP", "cost": "0" },
-  { "code": "173", "product": "ALECRIM SO FOLHAS", "cost": "4.291352" },
-  { "code": "175", "product": "ALECRIM VIA VERDE HIDROP", "cost": "0" },
-  { "code": "176", "product": "ALFACE ALFA VERDE VERDE", "cost": "0" },
-  { "code": "186", "product": "ALFACE AMER HIG MALUNGA 180G", "cost": "0" },
-  { "code": "183", "product": "ALFACE AMER MACHADINHO 150G", "cost": "0" },
-  { "code": "196", "product": "ALFACE AMER SO FOLHAS", "cost": "3.944444" },
+  { "code": "1134", "product": "ABOBORA MORANGA KG", "cost": "0.001844" },
+  { "code": "1221", "product": "ACELGA SO FOLHAS", "cost": "4.30" },
+  { "code": "33", "product": "AGRIAO SO FOLHAS ", "cost": "4.10" },
+  { "code": "173", "product": "ALECRIM SO FOLHAS ", "cost": "4.30" },
+  { "code": "196", "product": "ALFACE AMER SO FOLHAS ", "cost": "4.50" },
   {
     "code": "195",
     "product": "ALFACE AMER SO FOLHAS BDJ AMERICANA",
-    "cost": "6.2"
+    "cost": "8.50"
   },
-  { "code": "180", "product": "ALFACE AMERICANA DUARDO", "cost": "0" },
-  {
-    "code": "188",
-    "product": "ALFACE AMERICANA MALUNGA ORGANICA",
-    "cost": "0"
-  },
-  { "code": "179", "product": "ALFACE CRESPA EDUARDO", "cost": "0" },
-  { "code": "182", "product": "ALFACE CRESPA HORTAGUA ROXA", "cost": "0" },
-  { "code": "181", "product": "ALFACE CRESPA HORTAGUA VERDE", "cost": "0" },
-  { "code": "190", "product": "ALFACE CRESPA MALUNGA ORG UN", "cost": "0" },
-  { "code": "185", "product": "ALFACE CRESPA MALUNGA 180G HIG", "cost": "0" },
-  { "code": "197", "product": "ALFACE CRESPA SO FOLHAS", "cost": "3.598986" },
-  { "code": "178", "product": "ALFACE LISA EDUARDO", "cost": "0" },
-  { "code": "189", "product": "ALFACE LISA MALUNGA ORGANICO", "cost": "0" },
-  { "code": "199", "product": "ALFACE LISA SO FOLHAS", "cost": "0" },
-  { "code": "184", "product": "ALFACE MACHADINHO 200G MIX", "cost": "0" },
-  { "code": "191", "product": "ALFACE MIMOSA MALUNGA UN", "cost": "0" },
-  { "code": "200", "product": "ALFACE MIMOSA SO FOLHAS", "cost": "0" },
-  {
-    "code": "192",
-    "product": "ALFACE MINI-ROMANA MALUNGA UN MINI ROMANA",
-    "cost": "0"
-  },
-  { "code": "177", "product": "ALFACE ROXA EDUARDO", "cost": "0" },
-  { "code": "187", "product": "ALFACE ROXA MALUNGA ORGANICA", "cost": "0" },
-  { "code": "198", "product": "ALFACE ROXA SO FOLHAS", "cost": "3.399999" },
+  { "code": "197", "product": "ALFACE CRESPA SO FOLHAS ", "cost": "3.60" },
+  { "code": "198", "product": "ALFACE ROXA SO FOLHAS ", "cost": "3.40" },
   {
     "code": "193",
     "product": "ALFACE SALANOVA MALUGA ORGANICA UN SALANOVA",
-    "cost": "0"
+    "cost": "0.01"
   },
+  { "code": "239", "product": "ALHO CAMPEAO 200G", "cost": "5.514228" },
+  { "code": "240", "product": "ALHO CAMPEAO 500G", "cost": "13.20" },
+  { "code": "242", "product": "ALHO KG 5", "cost": "0.011515" },
+  { "code": "251", "product": "ALHO PORO SO FOLHAS ", "cost": "5.632222" },
+  { "code": "744", "product": "AMEIXA BDJ 500G", "cost": "6.751085" },
+  { "code": "739", "product": "AMEIXA KG", "cost": "0.013964" },
+  { "code": "537", "product": "BANANA MACA KG", "cost": "0.007562" },
+  { "code": "538", "product": "BANANA NANICA KG", "cost": "0.004383" },
+  { "code": "541", "product": "BANANA PRATA KG", "cost": "0.005191" },
+  { "code": "543", "product": "BANANA TERRA KG", "cost": "0.007099" },
+  { "code": "655", "product": "BATATA BAROA MACHADINHO 300G ", "cost": "0.01" },
+  { "code": "657", "product": "BATATA BOLINHA 1KG", "cost": "3.70" },
+  { "code": "681", "product": "BATATA DOCE KG", "cost": "0.00452" },
+  { "code": "688", "product": "BATATA KG ", "cost": "0.004198" },
+  { "code": "15458", "product": "BATATA SACO 25KG", "cost": "101.519" },
   {
-    "code": "194",
-    "product": "ALFACE SNACK ORG MALUNGA UN SNACK",
-    "cost": "0"
+    "code": "7712",
+    "product": "BERINJELA SO FOLHAS BDJ 300G ",
+    "cost": "4.80"
   },
-  { "code": "201", "product": "ALFACE VIA VERDE HIDROP", "cost": "0" },
-  { "code": "239", "product": "ALHO CAMPEAO 200G", "cost": "7.02538" },
-  { "code": "240", "product": "ALHO CAMPEAO 500G", "cost": "17.6" },
-  { "code": "241", "product": "ALHO CAMPEAO 500G DESCASCADO", "cost": "0" },
-  { "code": "242", "product": "ALHO KG 5", "cost": "0.011479" },
-  { "code": "244", "product": "ALHO ORG MALUNGA 150G", "cost": "0" },
-  { "code": "249", "product": "ALHO PORO MACHADINHO 100G", "cost": "0" },
-  { "code": "250", "product": "ALHO PORO ORG MALUNGA", "cost": "0" },
-  { "code": "251", "product": "ALHO PORO SO FOLHAS", "cost": "5.577329" },
-  { "code": "252", "product": "ALHO REI PREM 200G DESCASCADO", "cost": "0" },
-  { "code": "260", "product": "ALHO ROXO TREBESCHI 200G", "cost": "0" },
-  { "code": "294", "product": "ALMEIRAO SO FOLHAS UN", "cost": "0" },
-  { "code": "744", "product": "AMEIXA BDJ 500G", "cost": "3.805" },
-  { "code": "739", "product": "AMEIXA KG", "cost": "0.008009" },
-  { "code": "812", "product": "AMORA 80G", "cost": "0" },
-  {
-    "code": "956",
-    "product": "ASPARGO BERRYGOOD 450G FRESCO BCO",
-    "cost": "0"
-  },
-  { "code": "959", "product": "ASPARGO UN VERDE", "cost": "0" },
-  { "code": "537", "product": "BANANA MACA KG", "cost": "0.006838" },
-  { "code": "538", "product": "BANANA NANICA KG", "cost": "0.003894" },
-  { "code": "541", "product": "BANANA PRATA KG", "cost": "0.005052" },
-  { "code": "543", "product": "BANANA TERRA KG", "cost": "0.0075" },
-  { "code": "655", "product": "BATATA BAROA MACHADINHO 300G", "cost": "0" },
-  { "code": "657", "product": "BATATA BOLINHA 1KG", "cost": "2.899943" },
-  { "code": "681", "product": "BATATA DOCE KG", "cost": "0.003577" },
-  { "code": "682", "product": "BATATA DOCE MALUNGA ORG 600G", "cost": "0" },
-  { "code": "683", "product": "BATATA DOCE TREBESCHI 350G", "cost": "0" },
-  { "code": "688", "product": "BATATA KG", "cost": "0.0038" },
-  { "code": "421", "product": "BATATA SO VERDE 1KG", "cost": "0" },
-  { "code": "7711", "product": "BERINJELA ORG MALUNGA", "cost": "0" },
-  { "code": "7712", "product": "BERINJELA SO FOLHAS BDJ 300G", "cost": "4.2" },
-  { "code": "7713", "product": "BERTALHA MALUNGA ORG UN", "cost": "0" },
-  { "code": "7714", "product": "BETERRABA KG", "cost": "0.003688" },
-  { "code": "7715", "product": "BETERRABA MALUNGA ORGANICA", "cost": "0" },
-  { "code": "8135", "product": "BROCOLIS AMER MACHADINHO 250G", "cost": "0" },
-  { "code": "8142", "product": "BROCOLIS EDUARDO", "cost": "0" },
-  { "code": "8145", "product": "BROCOLIS JAPONES", "cost": "4.719253" },
-  {
-    "code": "8144",
-    "product": "BROCOLIS JAPONES MALUNGA HIGIEN 200 HIGIEN",
-    "cost": "0"
-  },
-  { "code": "8137", "product": "BROCOLIS MALUNGA", "cost": "0" },
-  { "code": "8146", "product": "BROCOLIS SO FOLHAS", "cost": "4.5" },
-  { "code": "8136", "product": "BROCOLIS SO FOLHAS AMERICANO", "cost": "6.8" },
-  { "code": "8147", "product": "BROCOLIS SO VERDE", "cost": "0" },
-  {
-    "code": "8150",
-    "product": "BROTO REI DOS BROTOS 100G ALFAFA",
-    "cost": "0"
-  },
-  {
-    "code": "11970",
-    "product": "BROTO REI DOS BROTOS 100G GIRASSOL",
-    "cost": "0"
-  },
-  { "code": "8151", "product": "BROTO REI DOS BROTOS 100G TREVO", "cost": "0" },
-  { "code": "8153", "product": "BROTO REI DOS BROTOS 100G TRIGO", "cost": "0" },
-  {
-    "code": "8152",
-    "product": "BROTO REI DOS BROTOS 150G ALFAFA",
-    "cost": "0"
-  },
-  {
-    "code": "8155",
-    "product": "BROTO REI DOS BROTOS 200G LENTILHA",
-    "cost": "0"
-  },
-  {
-    "code": "8149",
-    "product": "BROTO REI DOS BROTOS 250G FEIJAO",
-    "cost": "0"
-  },
-  {
-    "code": "8154",
-    "product": "BROTO REI DOS BROTOS 500G FEIJAO",
-    "cost": "0"
-  },
-  { "code": "8459", "product": "CAQUI BDJ 500G", "cost": "5.923135" },
-  { "code": "8461", "product": "CARA KG", "cost": "0.009196" },
-  { "code": "8462", "product": "CARAMBOLA DOCE BDJ", "cost": "0" },
-  { "code": "8528", "product": "CAST COCO VD KG SECO", "cost": "0" },
-  { "code": "8572", "product": "CEBOLA KG", "cost": "0.001856" },
-  { "code": "8573", "product": "CEBOLA ORG MALUNGA UN", "cost": "0" },
-  { "code": "8574", "product": "CEBOLA ROXA KG", "cost": "0.005387" },
-  { "code": "8575", "product": "CEBOLA ROXA MALUNGA ORG 600G", "cost": "0" },
-  { "code": "8570", "product": "CEBOLA SO VERDE 1KG CONSERVA", "cost": "0" },
-  { "code": "8568", "product": "CEBOLA 1KG", "cost": "0" },
-  { "code": "8579", "product": "CEBOLINHA HORTAGUA", "cost": "0" },
-  {
-    "code": "8582",
-    "product": "CEBOLINHA MACHADINHO 200G CRISTAL",
-    "cost": "0"
-  },
-  { "code": "8583", "product": "CEBOLINHA MALUNGA ORGANICA UN", "cost": "0" },
-  { "code": "8585", "product": "CEBOLINHA SO FOLHAS", "cost": "3.4" },
-  { "code": "8578", "product": "CEBOLINHA VIA VERDE HIDROP", "cost": "0" },
-  { "code": "8589", "product": "CENOURA KG", "cost": "0.002785" },
-  { "code": "8591", "product": "CENOURA MACHADINHO 250G RALADA", "cost": "0" },
-  { "code": "8590", "product": "CENOURA MACHADINHO 400G CUBO", "cost": "0" },
-  { "code": "8592", "product": "CENOURA ORG MALUNGA", "cost": "0" },
-  { "code": "8588", "product": "CENOURA ORG MALUNGA 150G TIRAS", "cost": "0" },
-  {
-    "code": "8587",
-    "product": "CENOURA ORG MALUNGA 200G CATETINHO",
-    "cost": "0"
-  },
-  { "code": "8594", "product": "CENOURETE MALUNGA ORG 200GR", "cost": "0" },
+  { "code": "7714", "product": "BETERRABA KG", "cost": "0.005107" },
+  { "code": "8145", "product": "BROCOLIS JAPONES ", "cost": "4.719253" },
+  { "code": "8146", "product": "BROCOLIS SO FOLHAS", "cost": "4.80" },
+  { "code": "8136", "product": "BROCOLIS SO FOLHAS AMERICANO", "cost": "8.50" },
+  { "code": "8459", "product": "CAQUI BDJ 500G", "cost": "4.30" },
+  { "code": "8461", "product": "CARA KG", "cost": "0.008994" },
+  { "code": "8572", "product": "CEBOLA KG", "cost": "0.003235" },
+  { "code": "8574", "product": "CEBOLA ROXA KG", "cost": "0.005043" },
+  { "code": "15459", "product": "CEBOLA SACO 20KG", "cost": "62.7142" },
+  { "code": "8568", "product": "CEBOLA 1KG", "cost": "0.01" },
+  { "code": "8585", "product": "CEBOLINHA SO FOLHAS ", "cost": "3.40" },
+  { "code": "8589", "product": "CENOURA KG", "cost": "0.004243" },
   { "code": "17608", "product": "CEREJA BDJ 250G", "cost": "7.899957" },
-  { "code": "7359", "product": "CHEIRO VERDE ALFA VERDE", "cost": "0" },
-  { "code": "7360", "product": "CHEIRO VERDE EDUARDO", "cost": "0" },
-  {
-    "code": "7363",
-    "product": "CHEIRO VERDE MALUNGA ORGANICA UN",
-    "cost": "0"
-  },
-  {
-    "code": "7362",
-    "product": "CHEIRO VERDE ORG MALUNGA 50G HIG",
-    "cost": "0"
-  },
-  { "code": "7364", "product": "CHEIRO VERDE SO FOLHAS", "cost": "3.599336" },
-  { "code": "7361", "product": "CHEIRO VERDE VIA VERDE HIDROP", "cost": "0" },
-  { "code": "7389", "product": "CHICORIA SO FOLHAS UN", "cost": "0" },
-  { "code": "7547", "product": "CHUCHU KG", "cost": "0.004325" },
-  { "code": "7548", "product": "CHUCHU MACHADINHO 400G PICADO", "cost": "0" },
-  { "code": "7549", "product": "CHUCHU ORG MALUNGA 600G", "cost": "0" },
-  { "code": "7620", "product": "COCO SECO KG INT", "cost": "0.00289" },
+  { "code": "7364", "product": "CHEIRO VERDE SO FOLHAS ", "cost": "3.60" },
+  { "code": "7547", "product": "CHUCHU KG", "cost": "0.002998" },
+  { "code": "7620", "product": "COCO SECO KG INT", "cost": "0.002192" },
   { "code": "7621", "product": "COCO SECO VD KG QUEBRADO", "cost": "0.003057" },
-  { "code": "7622", "product": "COCO VERDE", "cost": "3.729365" },
-  { "code": "7625", "product": "COENTRO CEBOLINHA HORTAGUA", "cost": "0" },
-  { "code": "7627", "product": "COENTRO HORTAGUA", "cost": "0" },
-  { "code": "7628", "product": "COENTRO MACHADINHO 50G PICADO", "cost": "0" },
-  { "code": "7631", "product": "COENTRO SO FOLHAS", "cost": "3.4" },
-  { "code": "7626", "product": "COENTRO VIA VERDE HIDROP", "cost": "0" },
-  { "code": "7650", "product": "COGUMELO TM 200G SHIMOFURI", "cost": "0" },
-  { "code": "7651", "product": "COGUMELO TM 500G SHITAKE BABY", "cost": "0" },
-  {
-    "code": "19907",
-    "product": "COUVE BELA PICADA 200G ICADA 200G",
-    "cost": "0"
-  },
-  { "code": "9461", "product": "COUVE EDUARDO", "cost": "0" },
-  { "code": "9462", "product": "COUVE FLOR BDJ", "cost": "10.438106" },
-  { "code": "9463", "product": "COUVE FLOR EDUARDO", "cost": "0" },
-  { "code": "9464", "product": "COUVE FLOR ORG MALUNGA 350G", "cost": "0" },
-  { "code": "9465", "product": "COUVE FLOR SO VERDE", "cost": "0" },
-  { "code": "9466", "product": "COUVE FOLHA HORTAGUA", "cost": "0" },
-  { "code": "9467", "product": "COUVE HIDROP", "cost": "0" },
-  { "code": "9469", "product": "COUVE MACHADINHO 200G PICADO", "cost": "0" },
-  {
-    "code": "9470",
-    "product": "COUVE MANT MALUNGA ORGANICA MANT",
-    "cost": "0"
-  },
-  {
-    "code": "9460",
-    "product": "COUVE PICADO MALUNGA ORG 150GR PICADA",
-    "cost": "0"
-  },
-  { "code": "9471", "product": "COUVE SO FOLHAS", "cost": "3.4" },
-  { "code": "9459", "product": "COUVE SO FOLHAS PICADA", "cost": "4" },
-  { "code": "9468", "product": "COUVE VIA VERDE HIDROP", "cost": "0" },
-  { "code": "10192", "product": "ESPINAFRE MALUNGA ORGANICA", "cost": "0" },
-  { "code": "10191", "product": "ESPINAFRE ORG MALUNGA 180G HIG", "cost": "0" },
-  { "code": "10193", "product": "ESPINAFRE SO FOLHAS", "cost": "4.2" },
-  { "code": "9022", "product": "FEIJAO MACHADINHO 400G CORDA", "cost": "0" },
-  { "code": "5022", "product": "GENGIBRE KG", "cost": "0.013165" },
-  { "code": "5143", "product": "GUARIROBA ALVES 440G PRE COZIDA", "cost": "0" },
-  { "code": "5144", "product": "GUARIROBA ALVES 440G TEMP", "cost": "0" },
-  { "code": "5204", "product": "HORTELA EDUARDO", "cost": "0" },
-  { "code": "5207", "product": "HORTELA MALUNGA ORGANICA", "cost": "0" },
-  { "code": "5206", "product": "HORTELA ORG MALUNGA 50G HIG", "cost": "0" },
-  { "code": "5208", "product": "HORTELA SO FOLHAS", "cost": "3.2" },
-  { "code": "5205", "product": "HORTELA VIA VERDE HIDROP", "cost": "0" },
-  { "code": "5213", "product": "INHAME KG", "cost": "0.007466" },
-  { "code": "5214", "product": "INHAME ORG MALUNGA 600G", "cost": "0" },
-  { "code": "5436", "product": "JILO MACHADINHO 250G", "cost": "0" },
-  { "code": "5439", "product": "JILO SO FOLHAS BDJ 350G", "cost": "5.990658" },
-  { "code": "5438", "product": "JILO SO VERDE 300G", "cost": "0" },
-  { "code": "5437", "product": "JILO SO VERDE 300G BCO", "cost": "0" },
+  { "code": "7622", "product": "COCO VERDE", "cost": "3.60" },
+  { "code": "7631", "product": "COENTRO SO FOLHAS ", "cost": "3.40" },
+  { "code": "9462", "product": "COUVE FLOR BDJ ", "cost": "14.00" },
+  { "code": "9471", "product": "COUVE SO FOLHAS ", "cost": "3.40" },
+  { "code": "9459", "product": "COUVE SO FOLHAS PICADA", "cost": "4.00" },
+  { "code": "10193", "product": "ESPINAFRE SO FOLHAS", "cost": "4.20" },
+  { "code": "5022", "product": "GENGIBRE KG", "cost": "0.011121" },
+  { "code": "5208", "product": "HORTELA SO FOLHAS ", "cost": "3.20" },
+  { "code": "5213", "product": "INHAME KG", "cost": "0.009793" },
+  { "code": "5439", "product": "JILO SO FOLHAS BDJ 350G ", "cost": "7.50" },
   { "code": "5473", "product": "KIWI BDJ 600G", "cost": "13.409091" },
-  { "code": "5474", "product": "KIWI KG", "cost": "0.0255" },
-  { "code": "5475", "product": "KIWI SUNGOLD ZESPRI 440G", "cost": "0" },
-  {
-    "code": "15562",
-    "product": "KIWI ZESPRI GREEN CX 460G EN CX 460G",
-    "cost": "0"
-  },
-  { "code": "5556", "product": "LARANJA BAHIA KG", "cost": "0.010276" },
-  { "code": "5558", "product": "LARANJA PERA KG", "cost": "0.002119" },
-  { "code": "5559", "product": "LARANJA PERA PCT 5KG", "cost": "0" },
-  { "code": "15305", "product": "LARANJA SACO 20KG SACO 20KG", "cost": "0" },
+  { "code": "5474", "product": "KIWI KG ", "cost": "0.02012" },
+  { "code": "5475", "product": "KIWI SUNGOLD ZESPRI 440G", "cost": "0.01" },
+  { "code": "15562", "product": "KIWI ZESPRI GREEN CX 460G", "cost": "0.01" },
+  { "code": "5556", "product": "LARANJA BAHIA KG", "cost": "0.0065" },
+  { "code": "5558", "product": "LARANJA PERA KG ", "cost": "0.002422" },
+  { "code": "15305", "product": "LARANJA PERA SACO 20KG", "cost": "48.8763" },
   { "code": "19503", "product": "LICHIA BDJ UN", "cost": "9.127083" },
-  { "code": "4362", "product": "LIMAO KG", "cost": "0.002884" },
-  { "code": "4363", "product": "LIMAO ORG MALUNGA 500G", "cost": "0" },
-  { "code": "4365", "product": "LIMAO TAHITI 1 KG", "cost": "0" },
-  { "code": "10750", "product": "MACA FUJI KG", "cost": "0.010123" },
-  { "code": "3280", "product": "MACA GALA KG NAC", "cost": "0.010774" },
-  { "code": "3283", "product": "MACA ORG MALUNGA 400G", "cost": "0" },
-  { "code": "3284", "product": "MACA PCT 1KG", "cost": "9.189799" },
-  { "code": "3343", "product": "MAMAO FORMOSA KG", "cost": "0.006661" },
+  { "code": "4362", "product": "LIMAO KG", "cost": "0.002791" },
+  { "code": "15461", "product": "LIMAO SACO 20KG", "cost": "57.578" },
+  { "code": "10750", "product": "MACA FUJI KG", "cost": "0.008611" },
+  { "code": "3280", "product": "MACA GALA NAC KG", "cost": "0.005767" },
+  { "code": "3284", "product": "MACA PCT 1KG", "cost": "5.323889" },
+  { "code": "3343", "product": "MAMAO FORMOSA KG", "cost": "0.004735" },
   { "code": "3342", "product": "MAMAO FORMOSA VD KG FAT", "cost": "0.006573" },
-  { "code": "3346", "product": "MAMAO PAPAYA KG", "cost": "0.006997" },
+  { "code": "3346", "product": "MAMAO PAPAYA KG", "cost": "0.005974" },
   { "code": "3345", "product": "MAMAO PAPAYA VD KG FAT", "cost": "0.004813" },
   {
     "code": "16529",
     "product": "MANDIOCA A VACUO SO FOLHAS 700G",
-    "cost": "6.7"
+    "cost": "6.689473"
   },
-  { "code": "3356", "product": "MANDIOCA CACAU GOIAS 800G", "cost": "0" },
-  { "code": "3359", "product": "MANDIOCA ITAIPIM 1KG VACUO", "cost": "0" },
   {
     "code": "17607",
     "product": "MANDIOCA KISABOR 1KG ISABOR 1KG",
-    "cost": "7"
+    "cost": "7.00"
   },
-  {
-    "code": "3360",
-    "product": "MANDIOCA MACHADINHO 1KG DESCASCADA",
-    "cost": "0"
-  },
-  { "code": "3361", "product": "MANDIOCA ORG MALUNGA 600G", "cost": "0" },
-  {
-    "code": "3358",
-    "product": "MANDIOCA PIRENOPOLIS 1KG DESCASCADA",
-    "cost": "0"
-  },
-  { "code": "3362", "product": "MANDIOCA RESF CACAU GOIAS 1KG", "cost": "0" },
   {
     "code": "3363",
     "product": "MANDIOCA SERVE BEM 700G AMARELINHA",
-    "cost": "0"
+    "cost": "0.01"
   },
-  { "code": "3357", "product": "MANDIOCA TREBESCHI 400G COZIDA", "cost": "0" },
-  { "code": "3366", "product": "MANDIOQUINHA BATATA BAROA 500G", "cost": "0" },
-  { "code": "3368", "product": "MANDIOQUINHA ORG MALUNGA 400G", "cost": "0" },
-  { "code": "3369", "product": "MANGA PALMER KG", "cost": "0.004217" },
-  { "code": "3370", "product": "MANGA TOMMY KG", "cost": "0.004311" },
-  { "code": "3371", "product": "MANJERICAO EDUARDO", "cost": "0" },
-  { "code": "3373", "product": "MANJERICAO MALUNGA ORGANICO UN", "cost": "0" },
-  { "code": "3374", "product": "MANJERICAO SO FOLHAS", "cost": "3.2" },
-  { "code": "3422", "product": "MARACUJA AZEDO KG", "cost": "0.009033" },
-  { "code": "3528", "product": "MAXIXE BDJ", "cost": "0" },
-  { "code": "3529", "product": "MAXIXE MACHADINHO 250G", "cost": "0" },
-  { "code": "3531", "product": "MAXIXE SO FOLHAS 350G", "cost": "6.568888" },
-  { "code": "3530", "product": "MAXIXE SO VERDE 400G", "cost": "0" },
+  { "code": "3369", "product": "MANGA PALMER KG", "cost": "0.004121" },
+  { "code": "3370", "product": "MANGA TOMMY KG", "cost": "0.004673" },
+  { "code": "3374", "product": "MANJERICAO SO FOLHAS ", "cost": "3.20" },
+  { "code": "3422", "product": "MARACUJA AZEDO KG", "cost": "0.005503" },
+  { "code": "3531", "product": "MAXIXE SO FOLHAS 350G ", "cost": "8.50" },
   {
     "code": "3558",
     "product": "MELANCIA AMARELA PINGO DOCE KG",
     "cost": "0.00291"
   },
-  {
-    "code": "3562",
-    "product": "MELANCIA AMARELA PINGO DOCE KG FAT",
-    "cost": "0"
-  },
-  { "code": "3560", "product": "MELANCIA KG", "cost": "0.002124" },
-  { "code": "3563", "product": "MELANCIA PINGO DOCE KG", "cost": "0.003779" },
-  { "code": "3561", "product": "MELANCIA PINGO DOCE VD KG FAT", "cost": "0" },
-  { "code": "3559", "product": "MELANCIA VD KG", "cost": "0.001539" },
-  { "code": "3565", "product": "MELAO AMARELO KG", "cost": "0.003428" },
+  { "code": "3560", "product": "MELANCIA KG", "cost": "0.002681" },
+  { "code": "3563", "product": "MELANCIA PINGO DOCE KG", "cost": "0.00449" },
+  { "code": "3559", "product": "MELANCIA VD KG ", "cost": "0.001539" },
+  { "code": "3565", "product": "MELAO AMARELO KG", "cost": "0.004512" },
   { "code": "3564", "product": "MELAO AMARELO KG FAT", "cost": "0.004586" },
   { "code": "3568", "product": "MELAO DINO KG", "cost": "0.006269" },
-  { "code": "3572", "product": "MELAO REI KG", "cost": "0.011368" },
-  { "code": "3571", "product": "MELAO REI VD KG FAT", "cost": "0" },
-  { "code": "3573", "product": "MELAO SAPO KG", "cost": "0.004513" },
-  { "code": "3592", "product": "MILHO DOCE TREBESCHI 450G", "cost": "0" },
-  { "code": "3585", "product": "MILHO VERDE BDJ 5UN", "cost": "4.5" },
-  { "code": "3599", "product": "MILHO VERDE MALUNGA ORGANICA", "cost": "0" },
-  {
-    "code": "3614",
-    "product": "MINI ALFACE NATHALIA 250G HIDROP",
-    "cost": "0"
-  },
-  {
-    "code": "12011",
-    "product": "MINI ALFACE NATHALIA 250G HIDROP FRIZEE ROXA",
-    "cost": "0"
-  },
-  {
-    "code": "12012",
-    "product": "MINI ALFACE NATHALIA 250G HIDROP FRIZEE VER",
-    "cost": "0"
-  },
-  { "code": "8593", "product": "MINI CENOURA MISTER RABBIT 250G", "cost": "0" },
-  {
-    "code": "3639",
-    "product": "MINI PIMENTAO TREBESCHI 150G COLORIDO",
-    "cost": "0"
-  },
-  {
-    "code": "3640",
-    "product": "MINI PIMENTAO TREBESCHI 350G COLORIDO",
-    "cost": "0"
-  },
-  { "code": "3643", "product": "MINI TANGERINA KG", "cost": "0" },
+  { "code": "3570", "product": "MELAO ORANGE KG", "cost": "0.00001" },
+  { "code": "3572", "product": "MELAO REI KG", "cost": "0.011403" },
+  { "code": "3573", "product": "MELAO SAPO KG ", "cost": "0.004513" },
+  { "code": "3582", "product": "MEXERICA PONKAN KG", "cost": "0.003297" },
+  { "code": "3585", "product": "MILHO VERDE BDJ 5UN", "cost": "4.80" },
   {
     "code": "3644",
     "product": "MINI TOMATE TURMA DA MONICA 180G",
-    "cost": "4.8"
+    "cost": "5.282676"
   },
-  { "code": "3648", "product": "MIRTILO FRESCO BERRYGOOD 125G", "cost": "0" },
-  { "code": "3707", "product": "MIX LEGUMES MACHADINHO 300G", "cost": "0" },
   { "code": "3927", "product": "MORANGO BDJ 250G", "cost": "4.750164" },
-  { "code": "17408", "product": "NECTARINA KG", "cost": "0.009785" },
-  { "code": "4045", "product": "NIRA ORG MALUNGA", "cost": "0" },
-  { "code": "5500", "product": "PACK MACHADINHO 400G BR EIRO", "cost": "0" },
-  { "code": "5501", "product": "PACK MACHADINHO 400G REGIONAL", "cost": "0" },
   {
     "code": "4285",
     "product": "PAMONHA CONG DIVINA PAMONHA DOCE 18 COCO",
@@ -421,294 +153,69 @@
     "cost": "5.626324"
   },
   {
+    "code": "4283",
+    "product": "PAMONHA CONG DIVINA PAMONHA SALG 18 LING",
+    "cost": "5.6264"
+  },
+  {
     "code": "4284",
     "product": "PAMONHA CONG DIVINA PAMONHA SALG 18 QJO",
     "cost": "5.6264"
   },
-  {
-    "code": "4283",
-    "product": "PAMONHA CONG DIVINA PAMONHA SALG 180G LING",
-    "cost": "5.6264"
-  },
-  { "code": "4286", "product": "PAMONHA SABORES", "cost": "0" },
-  { "code": "1753", "product": "PEIXINHO MALUNGA ORG", "cost": "0" },
-  { "code": "1766", "product": "PEPINO COMUM KG", "cost": "0.002862" },
-  { "code": "1768", "product": "PEPINO JAPONES KG", "cost": "0.007699" },
-  { "code": "1769", "product": "PEPINO JAPONES ORG MALUNGA 400G", "cost": "0" },
+  { "code": "1766", "product": "PEPINO COMUM KG", "cost": "0.003576" },
+  { "code": "1768", "product": "PEPINO JAPONES KG", "cost": "0.004952" },
   {
     "code": "1771",
-    "product": "PEPINO JAPONES SO FOLHAS BDJ 300G",
-    "cost": "7.015066"
+    "product": "PEPINO JAPONES SO FOLHAS BDJ 300G ",
+    "cost": "7.80"
   },
-  { "code": "1770", "product": "PEPINO JAPONES SO VERDE 500G", "cost": "0" },
-  { "code": "1774", "product": "PEPINO SO VERDE BDJ 500G", "cost": "0" },
-  { "code": "1776", "product": "PERA ERCOLINE BDJ KG", "cost": "0" },
-  { "code": "1778", "product": "PERA KG", "cost": "0.011988" },
+  { "code": "1778", "product": "PERA KG", "cost": "0.007552" },
   { "code": "1779", "product": "PERA PORTUGUESA KG", "cost": "0.017489" },
-  { "code": "1781", "product": "PERA PORTUGUESA 1KG", "cost": "0" },
-  { "code": "1780", "product": "PERA RED KG", "cost": "0" },
-  { "code": "17407", "product": "PESSEGO KG", "cost": "0.004277" },
-  { "code": "1823", "product": "PHISALYS 100G", "cost": "0" },
-  { "code": "1824", "product": "PHYSALIS FRESCO BERRYGOOD 100G", "cost": "0" },
   {
     "code": "1853",
-    "product": "PIMENTA BIQUINHO SO FOLHAS BDJ 60G",
-    "cost": "6.990233"
-  },
-  { "code": "1862", "product": "PIMENTA DE CHEIRO EDUARDO", "cost": "0" },
-  {
-    "code": "1863",
-    "product": "PIMENTA DE CHEIRO ORG MALUNGA 120G",
-    "cost": "0"
+    "product": "PIMENTA BIQUINHO SO FOLHAS BDJ 60G ",
+    "cost": "7.80"
   },
   {
     "code": "1865",
     "product": "PIMENTA DE CHEIRO SO FOLHAS BDJ100G",
-    "cost": "3.575993"
+    "cost": "4.20"
   },
-  { "code": "1864", "product": "PIMENTA DE CHEIRO SO VERDE 70G", "cost": "0" },
   {
     "code": "1867",
     "product": "PIMENTA DEDO MOCA SO FOLHAS BDJ 60G",
-    "cost": "5.6"
+    "cost": "7.20"
   },
-  { "code": "1866", "product": "PIMENTA DEDO MOCA SO VERDE 70G", "cost": "0" },
   {
     "code": "1879",
     "product": "PIMENTA MALAGUETA SO FOLHAS BDJ 60G",
-    "cost": "7.5"
+    "cost": "7.50"
   },
-  { "code": "1878", "product": "PIMENTA MALAGUETA SO VERDE 70G", "cost": "0" },
-  {
-    "code": "1881",
-    "product": "PIMENTA PALERMO SWEET TREBESCHI 300",
-    "cost": "0"
-  },
-  {
-    "code": "1898",
-    "product": "PIMENTAO BLOCK MASTER CHEF 150G DOCE",
-    "cost": "0"
-  },
-  {
-    "code": "1889",
-    "product": "PIMENTAO BLOCK TREBESCHI 150G AMARELO",
-    "cost": "0"
-  },
-  {
-    "code": "1890",
-    "product": "PIMENTAO BLOCK TREBESCHI 150G VERM",
-    "cost": "0"
-  },
-  { "code": "1891", "product": "PIMENTAO ESMERO 400G COLORIDO", "cost": "0" },
-  {
-    "code": "1897",
-    "product": "PIMENTAO ORG MALUNGA 400G AMARELO",
-    "cost": "0"
-  },
-  { "code": "1896", "product": "PIMENTAO ORG MALUNGA 400G VERM", "cost": "0" },
-  { "code": "1899", "product": "PIMENTAO REI 150G AMARELO", "cost": "0" },
-  { "code": "1900", "product": "PIMENTAO REI 150G VERM", "cost": "0" },
-  { "code": "1901", "product": "PIMENTAO SNACKPIM 200G COLORIDO", "cost": "0" },
   {
     "code": "1893",
     "product": "PIMENTAO SO FOLHAS BDJ COLORIDO",
-    "cost": "19.9"
+    "cost": "17.935112"
   },
-  { "code": "1892", "product": "PIMENTAO SO VERDE 500G COLORIDO", "cost": "0" },
-  { "code": "1895", "product": "PIMENTAO VERDE KG", "cost": "0.008172" },
-  { "code": "1905", "product": "PINHAO PCT KG", "cost": "0" },
-  { "code": "2582", "product": "QUIABO BDJ", "cost": "0" },
-  { "code": "2583", "product": "QUIABO MACHADINHO 250G", "cost": "0" },
-  { "code": "2584", "product": "QUIABO ORG MALUNGA 300G", "cost": "0" },
-  { "code": "2586", "product": "QUIABO SO FOLHAS 300G", "cost": "7.355017" },
-  { "code": "2585", "product": "QUIABO SO VERDE 300G", "cost": "0" },
-  { "code": "2596", "product": "RABANETE EDUARDO", "cost": "0" },
-  { "code": "2597", "product": "RABANETE MALUNGA ORGANICA", "cost": "0" },
-  { "code": "2598", "product": "RABANETE SO FOLHAS", "cost": "4.2" },
-  { "code": "1327", "product": "REPOLHO BCO KG", "cost": "0.003103" },
+  { "code": "1895", "product": "PIMENTAO VERDE KG", "cost": "0.008923" },
+  { "code": "2586", "product": "QUIABO SO FOLHAS 300G", "cost": "7.20" },
+  { "code": "2598", "product": "RABANETE SO FOLHAS ", "cost": "4.20" },
+  { "code": "1327", "product": "REPOLHO BCO KG", "cost": "0.006526" },
   { "code": "1326", "product": "REPOLHO BCO VD KG FAT", "cost": "0.001998" },
-  { "code": "1329", "product": "REPOLHO ROXO KG", "cost": "0.004553" },
-  { "code": "1330", "product": "REPOLHO ROXO ORG MALUNGA 400G", "cost": "0" },
+  { "code": "1329", "product": "REPOLHO ROXO KG", "cost": "0.008063" },
   { "code": "1328", "product": "REPOLHO ROXO VD KG FAT", "cost": "0.003011" },
-  { "code": "1438", "product": "RUCULA ALFA VERDE", "cost": "0" },
-  { "code": "1439", "product": "RUCULA EDUARDO", "cost": "0" },
-  { "code": "1440", "product": "RUCULA HORTAGUA HIDROP", "cost": "0" },
-  { "code": "1444", "product": "RUCULA MALUNGA ORGANICA", "cost": "0" },
-  {
-    "code": "1443",
-    "product": "RUCULA ORG MALUNGA 180G HIGIENIZADA",
-    "cost": "0"
-  },
-  {
-    "code": "1442",
-    "product": "RUCULA SELECIONADA MACHADINHO 150G",
-    "cost": "0"
-  },
-  { "code": "1445", "product": "RUCULA SO FOLHAS", "cost": "3.8" },
-  { "code": "1441", "product": "RUCULA VIA VERDE HIDROP", "cost": "0" },
-  { "code": "1683", "product": "SALADA MACHADINHO 200G BR IENSE", "cost": "0" },
-  {
-    "code": "1696",
-    "product": "SALADA MACHADINHO 200G MIX GABRIEL",
-    "cost": "0"
-  },
-  {
-    "code": "1697",
-    "product": "SALADA MACHADINHO 200G MIX LEANDRO",
-    "cost": "0"
-  },
-  { "code": "1687", "product": "SALADA MAIONESE MACHADINHO 400G", "cost": "0" },
-  {
-    "code": "1688",
-    "product": "SALADA MALUNGA CANDANGA ORGANICA CANDANGA",
-    "cost": "0"
-  },
-  {
-    "code": "1689",
-    "product": "SALADA MALUNGA CRISTINA ORGANICA CRISTINA",
-    "cost": "0"
-  },
-  {
-    "code": "1690",
-    "product": "SALADA MALUNGA DOIS AMORES ORGANICA DOIS AMORES",
-    "cost": "0"
-  },
-  {
-    "code": "1691",
-    "product": "SALADA MALUNGA HIGIENIZADA ORG 180 HIG",
-    "cost": "0"
-  },
-  {
-    "code": "1694",
-    "product": "SALADA MALUNGA QUATRO AMORES ORGANI QUATRO AMORES",
-    "cost": "0"
-  },
-  {
-    "code": "1695",
-    "product": "SALADA MALUNGA TRES AMORES ORGANIC TRES AMORES",
-    "cost": "0"
-  },
-  {
-    "code": "1692",
-    "product": "SALADA ORG MALUNGA 180G MARAVILHA",
-    "cost": "0"
-  },
-  { "code": "1693", "product": "SALADA ORG MALUNGA 180G MIMOSA", "cost": "0" },
-  {
-    "code": "1686",
-    "product": "SALADA PRIMAVERA MALUNGA ORGANICA 1 PRIMAVERA",
-    "cost": "0"
-  },
-  { "code": "6256", "product": "SALSA EDUARDO", "cost": "0" },
-  { "code": "6258", "product": "SALSA MALUNGA ORGANICA", "cost": "0" },
-  {
-    "code": "6259",
-    "product": "SALSA PICADA MALUNGA ORGANICA 50GR PICADA",
-    "cost": "0"
-  },
-  { "code": "6260", "product": "SALSA SO FOLHAS", "cost": "3.4" },
-  { "code": "6257", "product": "SALSA VIA VERDE HIDROP", "cost": "0" },
-  { "code": "6262", "product": "SALSAO SO FOLHAS", "cost": "0" },
-  { "code": "6397", "product": "SELETA LEGUMES MACHADINHO 400G", "cost": "0" },
-  { "code": "6457", "product": "SEMENTE BERRYGOOD 125G ROMA", "cost": "0" },
-  { "code": "6405", "product": "SEMENTE FELTRIN ABOB ITALIANA", "cost": "0" },
-  { "code": "6427", "product": "SEMENTE FELTRIN ABOB MENINA", "cost": "0" },
-  { "code": "6408", "product": "SEMENTE FELTRIN ALECRIM ORVALHO", "cost": "0" },
-  { "code": "6447", "product": "SEMENTE FELTRIN ALFACE AMER", "cost": "0" },
-  { "code": "6445", "product": "SEMENTE FELTRIN ALFACE ELISABET", "cost": "0" },
-  { "code": "6446", "product": "SEMENTE FELTRIN ALFACE MANTEIGA", "cost": "0" },
-  { "code": "6444", "product": "SEMENTE FELTRIN ALFACE MONICA", "cost": "0" },
-  { "code": "6449", "product": "SEMENTE FELTRIN AMOR PERF", "cost": "0" },
-  { "code": "6404", "product": "SEMENTE FELTRIN BET KATRINA", "cost": "0" },
-  { "code": "6411", "product": "SEMENTE FELTRIN CAMOMILA", "cost": "0" },
-  { "code": "6435", "product": "SEMENTE FELTRIN CEBOLINHA", "cost": "0" },
-  { "code": "6442", "product": "SEMENTE FELTRIN CEBOLINHA", "cost": "0" },
-  { "code": "6448", "product": "SEMENTE FELTRIN CENOURA", "cost": "0" },
-  { "code": "6407", "product": "SEMENTE FELTRIN COENTRO", "cost": "0" },
-  { "code": "6406", "product": "SEMENTE FELTRIN COENTRO", "cost": "0" },
-  { "code": "6421", "product": "SEMENTE FELTRIN COUVE MANTEIGA", "cost": "0" },
-  { "code": "6417", "product": "SEMENTE FELTRIN CRAVO CHABAUD", "cost": "0" },
-  { "code": "6414", "product": "SEMENTE FELTRIN ERVA CIDR", "cost": "0" },
-  { "code": "6443", "product": "SEMENTE FELTRIN GIRASSOL SUNBR", "cost": "0" },
-  { "code": "6430", "product": "SEMENTE FELTRIN HORT", "cost": "0" },
-  { "code": "6436", "product": "SEMENTE FELTRIN JILO", "cost": "0" },
-  { "code": "6425", "product": "SEMENTE FELTRIN MAMAO FORMOSA", "cost": "0" },
-  { "code": "6415", "product": "SEMENTE FELTRIN MANJERICAO", "cost": "0" },
-  { "code": "6429", "product": "SEMENTE FELTRIN MARAC AMARELO", "cost": "0" },
-  { "code": "6416", "product": "SEMENTE FELTRIN MARGARIDA BCA", "cost": "0" },
-  { "code": "6422", "product": "SEMENTE FELTRIN MAXIXE DO NORTE", "cost": "0" },
-  { "code": "6420", "product": "SEMENTE FELTRIN MELANCIA CRIMS", "cost": "0" },
-  { "code": "6419", "product": "SEMENTE FELTRIN MELANCIA FAIRF", "cost": "0" },
-  { "code": "6441", "product": "SEMENTE FELTRIN MOR RUGE", "cost": "0" },
-  { "code": "6440", "product": "SEMENTE FELTRIN ONZE HORAS", "cost": "0" },
-  { "code": "6450", "product": "SEMENTE FELTRIN OREGANO", "cost": "0" },
-  { "code": "6423", "product": "SEMENTE FELTRIN PEPINO COMPRIDO", "cost": "0" },
-  { "code": "6418", "product": "SEMENTE FELTRIN PEPINO WISC", "cost": "0" },
-  { "code": "6451", "product": "SEMENTE FELTRIN PETUNIA ANA", "cost": "0" },
-  { "code": "6438", "product": "SEMENTE FELTRIN PIM BICO", "cost": "0" },
-  { "code": "6431", "product": "SEMENTE FELTRIN PIM CHAPEU", "cost": "0" },
-  { "code": "6410", "product": "SEMENTE FELTRIN PIM LUPITA", "cost": "0" },
-  { "code": "6437", "product": "SEMENTE FELTRIN PIM MALAGUETA", "cost": "0" },
-  { "code": "6433", "product": "SEMENTE FELTRIN PIM MALAGUETA", "cost": "0" },
-  { "code": "6432", "product": "SEMENTE FELTRIN PIMENTAO IKEDA", "cost": "0" },
-  { "code": "6428", "product": "SEMENTE FELTRIN QUIABO", "cost": "0" },
-  { "code": "6424", "product": "SEMENTE FELTRIN RUCULA", "cost": "0" },
-  { "code": "6453", "product": "SEMENTE FELTRIN SALSA LISA", "cost": "0" },
-  { "code": "6452", "product": "SEMENTE FELTRIN SALSA PORT", "cost": "0" },
-  { "code": "6413", "product": "SEMENTE FELTRIN SEMPRE VIVA", "cost": "0" },
-  { "code": "6409", "product": "SEMENTE FELTRIN TOM CAROLINA", "cost": "0" },
-  { "code": "6439", "product": "SEMENTE FELTRIN TOMATE BARTO", "cost": "0" },
-  { "code": "6434", "product": "SEMENTE FELTRIN TOMATE STA CRUZ", "cost": "0" },
-  { "code": "6412", "product": "SEMENTE FELTRIN TOMILHO", "cost": "0" },
-  { "code": "6426", "product": "SEMENTE FELTRIN ZINNIA DOBRADA", "cost": "0" },
-  { "code": "6641", "product": "SOPAO RESF MACHADINHO 400G", "cost": "0" },
-  { "code": "6801", "product": "TAMARA 200G", "cost": "3.248894" },
-  { "code": "7012", "product": "TOMATE CEREJA MALUNGA ORG 250G", "cost": "0" },
-  { "code": "7013", "product": "TOMATE CEREJA MASTER CHEF 200G", "cost": "0" },
-  { "code": "7015", "product": "TOMATE CEREJA SO VERDE 250G", "cost": "0" },
-  { "code": "7014", "product": "TOMATE CEREJA TREBESCHI 200G", "cost": "0" },
-  { "code": "7016", "product": "TOMATE COQUETEL ESMERO 450G", "cost": "0" },
-  { "code": "7019", "product": "TOMATE GRAPE ESMERO 250G", "cost": "0" },
-  { "code": "7020", "product": "TOMATE GRAPE ESMERO 450G", "cost": "0" },
-  { "code": "7021", "product": "TOMATE GRAPE KG", "cost": "0.006332" },
-  { "code": "7022", "product": "TOMATE GRAPE MACHADINHO 250G", "cost": "0" },
-  { "code": "7023", "product": "TOMATE GRAPE MASTER CHEF 250G", "cost": "0" },
-  { "code": "7018", "product": "TOMATE GRAPE 180G", "cost": "1.812934" },
-  {
-    "code": "7025",
-    "product": "TOMATE HOLANDES MASTER CHEF 600G",
-    "cost": "0"
-  },
+  { "code": "1445", "product": "RUCULA SO FOLHAS ", "cost": "3.80" },
+  { "code": "6260", "product": "SALSA SO FOLHAS ", "cost": "3.40" },
+  { "code": "6801", "product": "TAMARA 200G", "cost": "3.48139" },
+  { "code": "7021", "product": "TOMATE GRAPE KG", "cost": "0.011771" },
+  { "code": "7018", "product": "TOMATE GRAPE 180G", "cost": "3.435394" },
   { "code": "7027", "product": "TOMATE ITALIANO KG", "cost": "0.005242" },
+  { "code": "7028", "product": "TOMATE KG ", "cost": "0.006284" },
   {
-    "code": "7026",
-    "product": "TOMATE ITALIANO TREBESCHI PREM 400G",
-    "cost": "0"
+    "code": "7049",
+    "product": "TOMATE MEL TREBESCHI 180G",
+    "cost": "4.253639"
   },
-  { "code": "7028", "product": "TOMATE KG", "cost": "0.006124" },
-  {
-    "code": "7030",
-    "product": "TOMATE MALUNGA ITALIANO ORGANICO",
-    "cost": "0"
-  },
-  {
-    "code": "7029",
-    "product": "TOMATE MALUNGA SWEET GRAPE ORGANICA",
-    "cost": "0"
-  },
-  { "code": "7049", "product": "TOMATE MEL TREBESCHI 180G", "cost": "3" },
-  { "code": "7050", "product": "TOMATE MEL TREBESCHI 500G", "cost": "0" },
-  { "code": "7040", "product": "TOMATE SALADA MALUNGA ORG 500G", "cost": "0" },
-  {
-    "code": "7048",
-    "product": "TOMATE SALADA TREBESCHI SENSATION 3",
-    "cost": "0"
-  },
-  {
-    "code": "7051",
-    "product": "TOMATE UVA GRAPE SWEET TREBESCHI 18",
-    "cost": "0"
-  },
+  { "code": "7050", "product": "TOMATE MEL TREBESCHI 500G", "cost": "0.01" },
   {
     "code": "7175",
     "product": "UVA GREEN MIMO 500G S SEMENTE",
@@ -729,43 +236,25 @@
     "product": "UVA INFINITY TURMA DA MONICA 500G S SEMENTE",
     "cost": "8.926"
   },
-  { "code": "17430", "product": "UVA NIAGARA BDJ 500G", "cost": "8" },
-  {
-    "code": "7091",
-    "product": "UVA PTA TURMA DA MONICA 250G S SEMENTE",
-    "cost": "0"
-  },
-  { "code": "7174", "product": "UVA PTA 500G C SEMENTE", "cost": "5.49" },
-  { "code": "7090", "product": "UVA PTA 500G S SEMENTE", "cost": "5.399778" },
-  {
-    "code": "7093",
-    "product": "UVA SABLE MIMO SELECAO 400G S SEMENTE",
-    "cost": "0"
-  },
-  {
-    "code": "7092",
-    "product": "UVA VERDE TURMA DA MONICA 250G S SEMENTE",
-    "cost": "0"
-  },
-  { "code": "7172", "product": "UVA VERDE 500G C SEMENTE", "cost": "0" },
-  { "code": "7089", "product": "UVA VERDE 500G S SEMENTE", "cost": "6.406822" },
-  { "code": "7173", "product": "UVA VERM 500G C SEMENTE", "cost": "0" },
-  { "code": "7088", "product": "UVA VERM 500G S SEMENTE", "cost": "5.1225" },
+  { "code": "17430", "product": "UVA NIAGARA BDJ 500G", "cost": "8.00" },
+  { "code": "7174", "product": "UVA PTA 500G C SEMENTE", "cost": "6.45" },
+  { "code": "7090", "product": "UVA PTA 500G S SEMENTE", "cost": "7.826687" },
+  { "code": "7089", "product": "UVA VERDE 500G S SEMENTE", "cost": "8.378125" },
+  { "code": "7088", "product": "UVA VERM 500G S SEMENTE", "cost": "8.009" },
   {
     "code": "7094",
     "product": "UVA VITORIA MIMO SELECAO 400G S SEMENTE",
-    "cost": "6.263333"
+    "cost": "9.294583"
   },
   {
     "code": "7095",
     "product": "UVA VITORIA TURMA DA MONICA 500G S SEMENTE",
     "cost": "7.5579"
   },
-  { "code": "7097", "product": "VAGEM MAC MACHADINHO 250G", "cost": "0" },
-  { "code": "7099", "product": "VAGEM MANGALO ORG MANGALO", "cost": "0" },
-  { "code": "7098", "product": "VAGEM ORG MALUNGA 300G EXT FINA", "cost": "0" },
-  { "code": "7100", "product": "VAGEM RASTEIRA SO FOLHAS 250G", "cost": "9.8" },
-  { "code": "7102", "product": "VAGEM SO FOLHAS 250G BCA", "cost": "7.863995" },
-  { "code": "7101", "product": "VAGEM SO VERDE 300G", "cost": "0" },
-  { "code": "10314", "product": "YAKISSOBA MACHADINHO 300G", "cost": "0" }
+  {
+    "code": "7100",
+    "product": "VAGEM RASTEIRA SO FOLHAS 250G ",
+    "cost": "10.482857"
+  },
+  { "code": "7102", "product": "VAGEM SO FOLHAS 250G BCA", "cost": "10.50" }
 ]

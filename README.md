@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 Controle de Fluigs
 
-## Getting Started
+Sistema de gestão e análise de fluigs com foco em fornecer dados estratégicos para apoio à tomada de decisão. A aplicação conta com um dashboard moderno e intuitivo, permitindo visualização em tempo real, geração de relatórios e controle eficiente dos registros.
 
-First, run the development server:
+## 🚀 Funcionalidades
+
+- 📈 Dashboard com métricas em tempo real
+- 📊 Visualização de custos, quantidade e status dos fluigs
+- 🔍 Filtros por código e período
+- 📑 Listagem detalhada dos fluigs
+- ➕ Cadastro de novos fluigs
+- 📤 Geração de relatórios analíticos
+
+## 🛠️ Tecnologias
+
+- **Next.js** – Framework React para aplicações modernas
+- **TypeScript** – Tipagem estática para maior segurança
+- **Tailwind CSS** – Estilização rápida e responsiva
+
+## 🎯 Objetivo
+
+Facilitar o controle e a análise de dados operacionais, permitindo que gestores tenham uma visão clara e estratégica do setor, otimizando decisões e aumentando a eficiência.
+
+## 📦 Instalação
 
 ```bash
+# Clone o repositório
+git clone https://github.com/alexqwa/fluigs.git
+
+# Acesse a pasta
+cd fluigs
+
+# Instale as dependências
+npm install
+
+# Execute o projeto
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧠 Uso
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Acesse o dashboard para visualizar os dados consolidados e utilize os filtros disponíveis para análises específicas. Novos fluigs podem ser adicionados diretamente pela interface.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📌 Status do Projeto
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Em andamento

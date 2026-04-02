@@ -234,7 +234,7 @@ export type FluigGroupByOutputType = {
   _max: FluigMaxAggregateOutputType | null
 }
 
-export type GetFluigGroupByPayload<T extends FluigGroupByArgs> = Prisma.PrismaPromise<
+type GetFluigGroupByPayload<T extends FluigGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<FluigGroupByOutputType, T['by']> &
       {
