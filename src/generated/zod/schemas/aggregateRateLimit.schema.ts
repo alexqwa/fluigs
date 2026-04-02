@@ -1,0 +1,14 @@
+import type { Prisma } from '../../prisma/client';
+import * as z from 'zod';
+import { RateLimitOrderByWithRelationInputObjectSchema as RateLimitOrderByWithRelationInputObjectSchema } from './objects/RateLimitOrderByWithRelationInput.schema';
+import { RateLimitWhereInputObjectSchema as RateLimitWhereInputObjectSchema } from './objects/RateLimitWhereInput.schema';
+import { RateLimitWhereUniqueInputObjectSchema as RateLimitWhereUniqueInputObjectSchema } from './objects/RateLimitWhereUniqueInput.schema';
+import { RateLimitCountAggregateInputObjectSchema as RateLimitCountAggregateInputObjectSchema } from './objects/RateLimitCountAggregateInput.schema';
+import { RateLimitMinAggregateInputObjectSchema as RateLimitMinAggregateInputObjectSchema } from './objects/RateLimitMinAggregateInput.schema';
+import { RateLimitMaxAggregateInputObjectSchema as RateLimitMaxAggregateInputObjectSchema } from './objects/RateLimitMaxAggregateInput.schema';
+import { RateLimitAvgAggregateInputObjectSchema as RateLimitAvgAggregateInputObjectSchema } from './objects/RateLimitAvgAggregateInput.schema';
+import { RateLimitSumAggregateInputObjectSchema as RateLimitSumAggregateInputObjectSchema } from './objects/RateLimitSumAggregateInput.schema';
+
+export const RateLimitAggregateSchema: z.ZodType<Prisma.RateLimitAggregateArgs> = z.object({ orderBy: z.union([RateLimitOrderByWithRelationInputObjectSchema, RateLimitOrderByWithRelationInputObjectSchema.array()]).optional(), where: RateLimitWhereInputObjectSchema.optional(), cursor: RateLimitWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), RateLimitCountAggregateInputObjectSchema ]).optional(), _min: RateLimitMinAggregateInputObjectSchema.optional(), _max: RateLimitMaxAggregateInputObjectSchema.optional(), _avg: RateLimitAvgAggregateInputObjectSchema.optional(), _sum: RateLimitSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.RateLimitAggregateArgs>;
+
+export const RateLimitAggregateZodSchema = z.object({ orderBy: z.union([RateLimitOrderByWithRelationInputObjectSchema, RateLimitOrderByWithRelationInputObjectSchema.array()]).optional(), where: RateLimitWhereInputObjectSchema.optional(), cursor: RateLimitWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), RateLimitCountAggregateInputObjectSchema ]).optional(), _min: RateLimitMinAggregateInputObjectSchema.optional(), _max: RateLimitMaxAggregateInputObjectSchema.optional(), _avg: RateLimitAvgAggregateInputObjectSchema.optional(), _sum: RateLimitSumAggregateInputObjectSchema.optional() }).strict();
