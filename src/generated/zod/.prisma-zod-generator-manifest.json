@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "0.1.0",
-  "generatedAt": "2026-04-02T14:41:41.518Z",
+  "generatedAt": "2026-04-02T15:43:28.222Z",
   "outputPath": "C:\\www\\fluigs\\src\\generated\\zod",
   "files": [
     "schemas\\enums\\TransactionIsolationLevel.schema.ts",
