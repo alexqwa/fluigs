@@ -1,7 +1,11 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "../src/generated/zod"
 }
 
 datasource db {
@@ -89,9 +93,9 @@ model Verification {
 }
 
 enum Status {
-  Approved @map("approved")
+  Approved     @map("approved")
   Not_Approved @map("not_approved")
-  Pending @map("pending")
+  Pending      @map("pending")
 }
 
 model RateLimit {

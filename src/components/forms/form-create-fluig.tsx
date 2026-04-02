@@ -46,9 +46,16 @@ import {
 } from '@/components/ui/drawer'
 
 import { useIsMobile } from '@/hooks/use-mobile'
+import { FluigInputSchema } from '@/generated/zod/schemas'
 import { useProductAutoFill } from '@/hooks/use-product-autofill'
 
-const fluigSchema = z.object({
+const fluigSchema = FluigInputSchema.omit({
+  id: true,
+  user: true,
+  userId: true,
+  createdAt: true,
+  costTotal: true,
+}).extend({
   date: z.date(),
   code: z.string().min(1, 'Código é obrigatório.'),
   product: z.string().min(1, 'Produto é obrigatório.'),

@@ -2,90 +2,9 @@ import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
-import type { Fluig } from '@/generated/prisma/client'
-import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
-import { AnalyticsCard } from '@/components/data-display/analytics-card'
-import { FluigDataTable } from '@/components/data-display/fluig-data-table'
+import { DashboardClient } from '@/components/data-display/dashboard-client'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
-import { AnalyticsSkeletonCard } from '@/components/data-display/analytics-skeleton-card'
-
-async function CachedDataTable({ fluigs }: { fluigs: Fluig[] }) {
-  return <FluigDataTable data={fluigs} />
-}
-
-async function CachedAnalytics({ fluigs }: { fluigs: Fluig[] }) {
-  const {
-    totalCost,
-    formatWeight,
-    totalQuantity,
-    pendingFluigs,
-    averageFluigs,
-    averageGrowth,
-    formatCurrency,
-    todayCostTotal,
-    currentMonthAverage,
-  } = useDashboardAnalytics(fluigs)
-
-  return (
-    <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-      <AnalyticsCard
-        title="Quantidade Total"
-        value={`${formatWeight(totalQuantity)} KG`}
-        indicator={`${fluigs.length} Fluigs`}
-        prospect={
-          totalQuantity >= 500 ? 'Em alta neste mês' : 'Em queda neste mês'
-        }
-        discover="Total consolidado de produtos"
-        icon={totalQuantity >= 500 ? 'trending-up' : 'trending-down'}
-      />
-      <AnalyticsCard
-        title="Custo Médio"
-        value={formatCurrency(currentMonthAverage)}
-        indicator={`${averageGrowth.toFixed(1)}% Este Mês`}
-        prospect={
-          averageGrowth >= 0
-            ? 'Aumento no custo médio'
-            : 'Redução no custo médio'
-        }
-        discover={
-          averageGrowth >= 0
-            ? 'Comparativo mensal com tendência de crescimento'
-            : 'Comparativo mensal com tendência de redução'
-        }
-        icon={averageGrowth >= 0 ? 'trending-up' : 'trending-down'}
-      />
-      <AnalyticsCard
-        title="Fluigs Pendentes"
-        value={String(pendingFluigs)}
-        indicator={`${averageFluigs.toFixed(0)}% Processados`}
-        prospect={
-          averageFluigs === 100
-            ? 'Todas as solicitações em dias'
-            : 'Fluigs aguardando por aprovação'
-        }
-        discover={
-          averageFluigs === 100
-            ? 'Parabéns continue assim'
-            : 'Os Fluigs requer atenção'
-        }
-        icon={averageFluigs === 100 ? 'trending-up' : 'trending-down'}
-      />
-      <AnalyticsCard
-        title="Custo Total"
-        value={formatCurrency(totalCost)}
-        indicator={`${formatCurrency(todayCostTotal)} Hoje`}
-        prospect={totalCost >= 500 ? 'Em alta neste mês' : 'Em queda neste mês'}
-        discover={
-          totalCost >= 500
-            ? 'Crescimento de despesas neste mês'
-            : 'Redução de despesas neste mês'
-        }
-        icon={totalCost >= 500 ? 'trending-up' : 'trending-down'}
-      />
-    </div>
-  )
-}
 
 export default async function Dashboard() {
   'use cache'
@@ -103,19 +22,8 @@ export default async function Dashboard() {
           Tenha uma visão completa e em tempo real dos seus fluigs
         </p>
       </div>
-      <Suspense
-        fallback={
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <AnalyticsSkeletonCard key={i} />
-            ))}
-          </div>
-        }
-      >
-        <CachedAnalytics fluigs={fluigs} />
-      </Suspense>
       <Suspense fallback={<DataTableSkeleton />}>
-        <CachedDataTable fluigs={fluigs} />
+        <DashboardClient fluigs={fluigs} />
       </Suspense>
     </main>
   )

@@ -2,17 +2,12 @@
 
 import z from 'zod'
 import dayjs from 'dayjs'
-import { type DateRange } from 'react-day-picker'
 import { useState, useMemo, ElementType } from 'react'
 
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { DatePicker } from '@/components/data-display/date-picker'
-import { FormCreateFluig } from '@/components/forms/form-create-fluig'
 import { FormUpdateFluig } from '@/components/forms/form-update-fluig'
-import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
 import {
   flexRender,
   useReactTable,
@@ -64,28 +59,32 @@ import {
 
 import { Delete } from '@/actions/fluig/delete'
 import { Update } from '@/actions/fluig/update'
-import { Create } from '@/actions/fluig/create'
-import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
 
-// ── Tipos ──────────────────────────────────────────────────────────────────────
+import { FluigInputSchema } from '@/generated/zod/schemas'
+import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
 
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
-const fluigSchema = z.object({
-  id: z.string(),
+const fluigSchema = FluigInputSchema.omit({
+  user: true,
+  userId: true,
+  createdAt: true,
+}).extend({
   date: z.date(),
   code: z.string().min(1, 'Código é obrigatório.'),
   product: z.string().min(1, 'Produto é obrigatório.'),
   quantity: z.string().min(1, 'Quantidade é obrigatório.'),
   nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
-  costTotal: z.string().min(1, 'Custo do produto é obrigatório.'),
   cost: z.string().min(1, 'Custo do produto é obrigatório.'),
   status: z.enum(['Approved', 'Pending', 'Not_Approved']),
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
 
-// ── Status map ─────────────────────────────────────────────────────────────────
+type FluigDataTableProps = {
+  data: FluigSchema[]
+  optimistic: ReturnType<typeof useFluigOptimistic<FluigSchema>>
+}
 
 const statusMap: Record<
   FluigStatus,
@@ -112,28 +111,8 @@ const statusMap: Record<
   },
 }
 
-// ── CostTotal ─────────────────────────────────────────────────────────────────
-
-function calculateCostTotal(cost: string, quantity: string): string {
-  const costNumber = Number(cost)
-  const quantityNumber = Number(quantity.replaceAll(/,/g, '.'))
-  const normalizedCost = costNumber < 1 ? costNumber * 1000 : costNumber
-  return (normalizedCost * quantityNumber).toFixed(2)
-}
-
-// ── Componente ─────────────────────────────────────────────────────────────────
-
-export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
-  const {
-    data,
-    add,
-    update,
-    remove,
-    rollback,
-    confirmCreate,
-    confirmUpdate,
-    confirmDelete,
-  } = useFluigOptimistic(initialData)
+export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
+  const { update, remove, rollback, confirmUpdate, confirmDelete } = optimistic
 
   const [rowSelection, setRowSelection] = useState({})
   const [editingRow, setEditingRow] = useState<FluigSchema | null>(null)
@@ -144,42 +123,6 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
     pageIndex: 0,
     pageSize: 10,
   })
-
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined)
-
-  // ── Filtro por período ─────────────────────────────────────────────────────
-
-  const filteredData = useMemo(() => {
-    if (!dateRange?.from) return data
-
-    const from = dayjs(dateRange.from).startOf('day')
-    const to = dateRange.to ? dayjs(dateRange.to).startOf('day') : from
-
-    return data.filter((item) => {
-      const d = dayjs(item.date)
-      return d.isAfter(from.subtract(1, 'day')) && d.isBefore(to.add(1, 'day'))
-    })
-  }, [data, dateRange])
-
-  // ── Handlers ──────────────────────────────────────────────────────────────────
-
-  // Criar: insere uma linha temporária imediatamente.
-  async function handleCreate(formData: Omit<FluigSchema, 'id' | 'costTotal'>) {
-    const tempId = add({
-      ...formData,
-      id: '',
-      quantity: formData.quantity.replaceAll(/,/g, '.'),
-      costTotal: calculateCostTotal(formData.cost, formData.quantity),
-    })
-
-    try {
-      const realItem = await Create(formData)
-
-      confirmCreate(tempId, realItem)
-    } catch {
-      rollback()
-    }
-  }
 
   // Editar: aplica as mudanças na linha antes da resposta do servidor.
   async function handleUpdate(
@@ -209,8 +152,6 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
       rollback()
     }
   }
-
-  // ── Colunas ───────────────────────────────────────────────────────────────────
 
   const columns = useMemo<ColumnDef<FluigSchema>[]>(
     () => [
@@ -359,7 +300,7 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
   )
 
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
     state: {
       sorting,
@@ -385,30 +326,6 @@ export function FluigDataTable({ data: initialData }: { data: FluigSchema[] }) {
 
   return (
     <div className="relative flex flex-1 flex-col gap-4 overflow-auto">
-      <div className="mt-10 flex flex-col items-end gap-4 md:flex-row md:justify-between">
-        <FieldGroup className="w-full">
-          <Field orientation="vertical">
-            <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
-            <Input
-              id="fieldgroup-code"
-              placeholder="Buscar pelo código"
-              className="border-border bg-card border"
-              value={
-                (table.getColumn('code')?.getFilterValue() as string) ?? ''
-              }
-              onChange={(event) =>
-                table.getColumn('code')?.setFilterValue(event.target.value)
-              }
-            />
-          </Field>
-          <Field orientation="vertical">
-            <FieldLabel htmlFor="fieldgroup-date">Período</FieldLabel>
-            <DatePicker value={dateRange} onChange={setDateRange} />
-          </Field>
-        </FieldGroup>
-        <FormCreateFluig onSubmit={handleCreate} />
-      </div>
-
       <div className="border-border overflow-hidden rounded-lg border">
         <Table>
           <TableHeader className="bg-muted border-border sticky top-0 border-b">

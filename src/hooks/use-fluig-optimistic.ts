@@ -1,32 +1,24 @@
-import z from 'zod'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-const fluigSchema = z.object({
-  id: z.string(),
-  date: z.date(),
-  code: z.string().min(1, 'Código é obrigatório.'),
-  product: z.string().min(1, 'Produto é obrigatório.'),
-  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
-  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
-  costTotal: z.string().min(1, 'Custo do produto é obrigatório.'),
-  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
-  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
-})
+export type OptimisticStatus = 'idle' | 'creating' | 'updating' | 'deleting'
 
-type FluigSchema = z.infer<typeof fluigSchema>
-
-type OptimisticStatus = 'idle' | 'creating' | 'updating' | 'deleting'
-
-type FluigOptimistic = FluigSchema & {
+export type FluigOptimistic<T> = T & {
   _optimistic?: OptimisticStatus
   _temp?: boolean
 }
 
-export function useFluigOptimistic(initialData: FluigSchema[]) {
-  const [data, setData] = useState<FluigOptimistic[]>(initialData)
+export function useFluigOptimistic<T extends { id: string }>(initialData: T[]) {
+  const [data, setData] = useState<FluigOptimistic<T>[]>(initialData)
+  const historyRef = useRef<FluigOptimistic<T>[][]>([])
 
-  // Histórico automático para rollback
-  const historyRef = useRef<FluigOptimistic[][]>([])
+  function reset(newData: T[]) {
+    setData(newData)
+    historyRef.current = []
+  }
+
+  useEffect(() => {
+    reset(initialData)
+  }, [initialData])
 
   const saveHistory = () => {
     historyRef.current.push(data)
@@ -37,12 +29,14 @@ export function useFluigOptimistic(initialData: FluigSchema[]) {
     if (prev) setData(prev)
   }
 
-  const add = (item: FluigSchema) => {
+  // ── Create ──────────────────────────────────────────────────────────────────
+
+  const add = (item: T) => {
     saveHistory()
 
     const tempId = `temp-${Date.now()}`
 
-    const optimisticItem: FluigOptimistic = {
+    const optimisticItem: FluigOptimistic<T> = {
       ...item,
       id: tempId,
       _optimistic: 'creating',
@@ -54,7 +48,7 @@ export function useFluigOptimistic(initialData: FluigSchema[]) {
     return tempId
   }
 
-  const confirmCreate = (tempId: string, realItem: FluigSchema) => {
+  const confirmCreate = (tempId: string, realItem: T) => {
     setData((prev) =>
       prev.map((item) =>
         item.id === tempId
@@ -64,7 +58,9 @@ export function useFluigOptimistic(initialData: FluigSchema[]) {
     )
   }
 
-  const update = (id: string, newData: Partial<FluigSchema>) => {
+  // ── Update ──────────────────────────────────────────────────────────────────
+
+  const update = (id: string, newData: Partial<T>) => {
     saveHistory()
 
     setData((prev) =>
@@ -74,13 +70,15 @@ export function useFluigOptimistic(initialData: FluigSchema[]) {
     )
   }
 
-  const confirmUpdate = (id: string, newData: FluigSchema) => {
+  const confirmUpdate = (id: string, newData: T) => {
     setData((prev) =>
       prev.map((item) =>
         item.id === id ? { ...newData, _optimistic: 'idle' } : item
       )
     )
   }
+
+  // ── Delete ──────────────────────────────────────────────────────────────────
 
   const remove = (id: string) => {
     saveHistory()
@@ -96,14 +94,36 @@ export function useFluigOptimistic(initialData: FluigSchema[]) {
     setData((prev) => prev.filter((item) => item.id !== id))
   }
 
+  // ── Sync Data ──────────────────────────────────────────────────────────────────
+
+  async function sync(fetcher: () => Promise<T[]>) {
+    try {
+      const freshData = await fetcher()
+      reset(freshData)
+    } catch (err) {
+      rollback()
+    }
+  }
+
+  // ── Paginate ──────────────────────────────────────────────────────────────────
+
+  function paginate(page: number, pageSize: number) {
+    const start = page * pageSize
+    const end = start + pageSize
+    return data.slice(start, end)
+  }
+
   return {
     data,
     add,
     update,
     remove,
-    rollback,
     confirmCreate,
     confirmUpdate,
     confirmDelete,
+    rollback,
+    reset,
+    sync,
+    paginate,
   }
 }

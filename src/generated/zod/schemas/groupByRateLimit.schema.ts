@@ -1,0 +1,15 @@
+import type { Prisma } from '../../prisma/client';
+import * as z from 'zod';
+import { RateLimitWhereInputObjectSchema as RateLimitWhereInputObjectSchema } from './objects/RateLimitWhereInput.schema';
+import { RateLimitOrderByWithAggregationInputObjectSchema as RateLimitOrderByWithAggregationInputObjectSchema } from './objects/RateLimitOrderByWithAggregationInput.schema';
+import { RateLimitScalarWhereWithAggregatesInputObjectSchema as RateLimitScalarWhereWithAggregatesInputObjectSchema } from './objects/RateLimitScalarWhereWithAggregatesInput.schema';
+import { RateLimitScalarFieldEnumSchema } from './enums/RateLimitScalarFieldEnum.schema';
+import { RateLimitCountAggregateInputObjectSchema as RateLimitCountAggregateInputObjectSchema } from './objects/RateLimitCountAggregateInput.schema';
+import { RateLimitMinAggregateInputObjectSchema as RateLimitMinAggregateInputObjectSchema } from './objects/RateLimitMinAggregateInput.schema';
+import { RateLimitMaxAggregateInputObjectSchema as RateLimitMaxAggregateInputObjectSchema } from './objects/RateLimitMaxAggregateInput.schema';
+import { RateLimitAvgAggregateInputObjectSchema as RateLimitAvgAggregateInputObjectSchema } from './objects/RateLimitAvgAggregateInput.schema';
+import { RateLimitSumAggregateInputObjectSchema as RateLimitSumAggregateInputObjectSchema } from './objects/RateLimitSumAggregateInput.schema';
+
+export const RateLimitGroupBySchema: z.ZodType<Prisma.RateLimitGroupByArgs> = z.object({ where: RateLimitWhereInputObjectSchema.optional(), orderBy: z.union([RateLimitOrderByWithAggregationInputObjectSchema, RateLimitOrderByWithAggregationInputObjectSchema.array()]).optional(), having: RateLimitScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(RateLimitScalarFieldEnumSchema), _count: z.union([ z.literal(true), RateLimitCountAggregateInputObjectSchema ]).optional(), _min: RateLimitMinAggregateInputObjectSchema.optional(), _max: RateLimitMaxAggregateInputObjectSchema.optional(), _avg: RateLimitAvgAggregateInputObjectSchema.optional(), _sum: RateLimitSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.RateLimitGroupByArgs>;
+
+export const RateLimitGroupByZodSchema = z.object({ where: RateLimitWhereInputObjectSchema.optional(), orderBy: z.union([RateLimitOrderByWithAggregationInputObjectSchema, RateLimitOrderByWithAggregationInputObjectSchema.array()]).optional(), having: RateLimitScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(RateLimitScalarFieldEnumSchema), _count: z.union([ z.literal(true), RateLimitCountAggregateInputObjectSchema ]).optional(), _min: RateLimitMinAggregateInputObjectSchema.optional(), _max: RateLimitMaxAggregateInputObjectSchema.optional(), _avg: RateLimitAvgAggregateInputObjectSchema.optional(), _sum: RateLimitSumAggregateInputObjectSchema.optional() }).strict();

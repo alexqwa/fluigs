@@ -4,18 +4,18 @@ Sistema de gestão e análise de fluigs com foco em fornecer dados estratégicos
 
 ## 🚀 Funcionalidades
 
-- 📈 Dashboard com métricas em tempo real  
-- 📊 Visualização de custos, quantidade e status dos fluigs  
-- 🔍 Filtros por código e período  
-- 📑 Listagem detalhada dos fluigs  
-- ➕ Cadastro de novos fluigs  
-- 📤 Geração de relatórios analíticos  
+- 📈 Dashboard com métricas em tempo real
+- 📊 Visualização de custos, quantidade e status dos fluigs
+- 🔍 Filtros por código e período
+- 📑 Listagem detalhada dos fluigs
+- ➕ Cadastro de novos fluigs
+- 📤 Geração de relatórios analíticos
 
 ## 🛠️ Tecnologias
 
-- **Next.js** – Framework React para aplicações modernas  
-- **TypeScript** – Tipagem estática para maior segurança  
-- **Tailwind CSS** – Estilização rápida e responsiva  
+- **Next.js** – Framework React para aplicações modernas
+- **TypeScript** – Tipagem estática para maior segurança
+- **Tailwind CSS** – Estilização rápida e responsiva
 
 ## 🎯 Objetivo
 
