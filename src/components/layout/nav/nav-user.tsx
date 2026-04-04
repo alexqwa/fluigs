@@ -56,7 +56,9 @@ export function NavUser({ user }: NavUserProps) {
             >
               <Avatar className="h-8 w-10 rounded-lg">
                 <AvatarImage src={user?.image!} alt={user.name} />
-                <AvatarFallback className="rounded-lg">GRP</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {user.name.toUpperCase().slice(0, 3)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="text-foreground truncate text-sm font-medium">
@@ -93,15 +95,6 @@ export function NavUser({ user }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                asChild
-                className="hover:bg-muted cursor-pointer"
-              >
-                <Link href="/account">
-                  <BadgeCheck />
-                  Conta
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem
                 asChild
                 className="hover:bg-muted cursor-pointer"

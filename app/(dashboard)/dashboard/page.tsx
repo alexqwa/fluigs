@@ -6,10 +6,15 @@ import { Queries } from '@/actions/fluig/queries'
 import { DashboardClient } from '@/components/data-display/dashboard-client'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 
+export const metadata = {
+  title: 'Dashboard',
+  description: 'Tenha uma visão completa e em tempo real dos seus fluigs',
+}
+
 export default async function Dashboard() {
   'use cache'
   cacheTag('fluigs')
-  cacheLife('minutes')
+  cacheLife('hours')
   const fluigs = await Queries()
 
   return (

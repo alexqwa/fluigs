@@ -6,7 +6,7 @@ interface StatsCardProps {
   value: string
   prospect: string
   discover: string
-  indicator: string
+  indicator?: string
 }
 
 export function AnalyticsCard({
@@ -23,9 +23,11 @@ export function AnalyticsCard({
         <span className="text-muted-foreground text-sm leading-tight font-medium md:text-base">
           {title}
         </span>
-        <div className="border-border flex items-center gap-1 rounded-lg border px-1.5 py-0.5">
-          <span className="text-xs">{indicator}</span>
-        </div>
+        {indicator && (
+          <div className="border-border flex items-center gap-1 rounded-lg border px-1.5 py-0.5">
+            <span className="text-xs">{indicator}</span>
+          </div>
+        )}
       </div>
       <h2 className="text-foreground mb-6 text-2xl font-semibold">{value}</h2>
       <div className="flex-col items-start gap-1.5">
