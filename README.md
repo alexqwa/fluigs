@@ -15,6 +15,7 @@ Sistema de gestão e análise de fluigs com foco em fornecer dados estratégicos
 
 - **Next.js** – Framework React para aplicações modernas
 - **TypeScript** – Tipagem estática para maior segurança
+- **Zod** – Validar dados entre front-end e back-end 
 - **Tailwind CSS** – Estilização rápida e responsiva
 
 ## 🎯 Objetivo
