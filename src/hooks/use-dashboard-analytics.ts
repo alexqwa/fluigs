@@ -11,27 +11,15 @@ export function useDashboardAnalytics(fluigs: any) {
   const startOfToday = today.startOf('day')
   const endOfToday = today.endOf('day')
 
-  const startOfCurrentMonth = today.startOf('month')
-  const endOfCurrentMonth = today.endOf('month')
-
-  const startOfLastMonth = today.subtract(1, 'month').startOf('month')
-  const endOfLastMonth = today.subtract(1, 'month').endOf('month')
-
   let totalCost = 0
   let totalQuantity = 0
   let pendingFluigs = 0
   let todayCostTotal = 0
 
-  let currentMonthCost = 0
-  let currentMonthCount = 0
-
-  let lastMonthCost = 0
-  let lastMonthCount = 0
-
   for (const fluig of fluigs) {
-    const quantity = Number(fluig.quantity.replaceAll(',', '.'))
     const cost = Number(fluig.costTotal)
     const date = dayjs.utc(fluig.date).tz('America/Sao_Paulo')
+    const quantity = Number(fluig.quantity.replaceAll(',', '.'))
 
     totalQuantity += quantity
     totalCost += cost
@@ -40,21 +28,8 @@ export function useDashboardAnalytics(fluigs: any) {
       pendingFluigs++
     }
 
-    // Today
     if (date >= startOfToday && date <= endOfToday) {
       todayCostTotal += cost
-    }
-
-    // Current Month
-    if (date >= startOfCurrentMonth && date <= endOfCurrentMonth) {
-      currentMonthCost += cost
-      currentMonthCount++
-    }
-
-    // Last Month
-    if (date >= startOfLastMonth && date <= endOfLastMonth) {
-      lastMonthCost += cost
-      lastMonthCount++
     }
   }
 
@@ -62,13 +37,7 @@ export function useDashboardAnalytics(fluigs: any) {
     ? ((fluigs.length - pendingFluigs) / fluigs.length) * 100
     : 0
 
-  const currentMonthAverage = currentMonthCost / (currentMonthCount || 1)
-  const lastMonthAverage = lastMonthCost / (lastMonthCount || 1)
-
-  const averageGrowth =
-    lastMonthAverage > 0
-      ? ((currentMonthAverage - lastMonthAverage) / lastMonthAverage) * 100
-      : 0
+  const averageCost = fluigs.length ? totalCost / fluigs.length : 0
 
   const formatCurrency = (value: number) =>
     new Intl.NumberFormat('pt-BR', {
@@ -84,13 +53,12 @@ export function useDashboardAnalytics(fluigs: any) {
 
   return {
     totalCost,
+    averageCost,
     formatWeight,
     totalQuantity,
     pendingFluigs,
-    todayCostTotal,
     averageFluigs,
-    averageGrowth,
+    todayCostTotal,
     formatCurrency,
-    currentMonthAverage,
   }
 }

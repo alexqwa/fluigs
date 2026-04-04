@@ -53,7 +53,10 @@ type FluigCreateInput = z.infer<typeof fluigCreateSchema>
 type Fluig = z.infer<typeof fluigSchema>
 
 export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>()
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: dayjs().startOf('month').toDate(),
+    to: dayjs().add(7, 'day').toDate(),
+  })
   const [code, setCode] = useState('')
 
   const optimistic = useFluigOptimistic(fluigs)
@@ -65,7 +68,9 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
       if (!dateRange?.from) return matchCode
 
       const from = dayjs(dateRange.from).startOf('day')
-      const to = dateRange.to ? dayjs(dateRange.to).startOf('day') : from
+      const to = dateRange.to
+        ? dayjs(dateRange.to).endOf('day')
+        : from.endOf('day')
 
       const isInDate =
         dayjs(item.date).isAfter(from.subtract(1, 'day')) &&
@@ -84,7 +89,6 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
     }
   }
 
-  // Criar: insere uma linha temporária imediatamente.
   async function handleCreate(data: FluigCreateInput) {
     const optimisticItem = toFluig(data)
     const tempId = optimistic.add(optimisticItem)
@@ -99,14 +103,13 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
 
   const {
     totalCost,
+    averageCost,
     formatWeight,
     totalQuantity,
     pendingFluigs,
     averageFluigs,
-    averageGrowth,
     formatCurrency,
     todayCostTotal,
-    currentMonthAverage,
   } = useDashboardAnalytics(filteredFluigs)
 
   return (
@@ -124,19 +127,18 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
         />
         <AnalyticsCard
           title="Custo Médio"
-          value={formatCurrency(currentMonthAverage)}
-          indicator={`${averageGrowth.toFixed(1)}% Este Mês`}
+          value={formatCurrency(averageCost)}
           prospect={
-            averageGrowth >= 0
+            averageCost >= 200
               ? 'Aumento no custo médio'
               : 'Redução no custo médio'
           }
           discover={
-            averageGrowth >= 0
+            averageCost >= 200
               ? 'Comparativo mensal com tendência de crescimento'
               : 'Comparativo mensal com tendência de redução'
           }
-          icon={averageGrowth >= 0 ? 'trending-up' : 'trending-down'}
+          icon={averageCost >= 200 ? 'trending-up' : 'trending-down'}
         />
         <AnalyticsCard
           title="Fluigs Pendentes"

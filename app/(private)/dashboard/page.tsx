@@ -6,12 +6,21 @@ import { Queries } from '@/actions/fluig/queries'
 import { DashboardClient } from '@/components/data-display/dashboard-client'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 
-export default async function Dashboard() {
+export const metadata = {
+  title: 'Dashboard',
+  description: 'Tenha uma visão completa e em tempo real dos seus fluigs',
+}
+
+async function DashboardData() {
   'use cache'
   cacheTag('fluigs')
-  cacheLife('minutes')
+  cacheLife('hours')
   const fluigs = await Queries()
 
+  return <DashboardClient fluigs={fluigs} />
+}
+
+export default async function Dashboard() {
   return (
     <main>
       <div className="space-y-1">
@@ -23,7 +32,7 @@ export default async function Dashboard() {
         </p>
       </div>
       <Suspense fallback={<DataTableSkeleton />}>
-        <DashboardClient fluigs={fluigs} />
+        <DashboardData />
       </Suspense>
     </main>
   )

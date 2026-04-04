@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Notificações',
+  description: 'Centralize suas notificações em um só lugar',
+}
+
 export default function Notifications() {
   return (
     <div className="space-y-1">
