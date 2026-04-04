@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
-import type { Fluig } from '@/generated/prisma/client'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { ReportDataTable } from '@/components/data-display/report-data-table'
@@ -36,16 +35,16 @@ function DataTableSkeleton() {
   )
 }
 
-async function CachedDataTable({ fluigs }: { fluigs: Fluig[] }) {
-  return <ReportDataTable data={fluigs} />
-}
-
-export default async function Reports() {
+async function ReportData() {
   'use cache'
   cacheTag('fluigs')
   cacheLife('hours')
   const fluigs = await Queries()
 
+  return <ReportDataTable data={fluigs} />
+}
+
+export default async function Reports() {
   return (
     <main>
       <div className="space-y-1">
@@ -57,7 +56,7 @@ export default async function Reports() {
         </p>
       </div>
       <Suspense fallback={<DataTableSkeleton />}>
-        <CachedDataTable fluigs={fluigs} />
+        <ReportData />
       </Suspense>
     </main>
   )

@@ -11,12 +11,16 @@ export const metadata = {
   description: 'Tenha uma visão completa e em tempo real dos seus fluigs',
 }
 
-export default async function Dashboard() {
+async function DashboardData() {
   'use cache'
   cacheTag('fluigs')
   cacheLife('hours')
   const fluigs = await Queries()
 
+  return <DashboardClient fluigs={fluigs} />
+}
+
+export default async function Dashboard() {
   return (
     <main>
       <div className="space-y-1">
@@ -28,7 +32,7 @@ export default async function Dashboard() {
         </p>
       </div>
       <Suspense fallback={<DataTableSkeleton />}>
-        <DashboardClient fluigs={fluigs} />
+        <DashboardData />
       </Suspense>
     </main>
   )
