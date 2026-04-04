@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { User } from 'better-auth'
 import { useRouter } from 'next/navigation'
-import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from 'lucide-react'
+import { Bell, ChevronsUpDown, LogOut } from 'lucide-react'
 
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -55,7 +55,6 @@ export function NavUser({ user }: NavUserProps) {
               className="data-[state=open]:bg-muted ring-offset-background focus-visible:ring-ring hover:bg-muted cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               <Avatar className="h-8 w-10 rounded-lg">
-                <AvatarImage src={user?.image!} alt={user.name} />
                 <AvatarFallback className="rounded-lg">
                   {user.name.toUpperCase().slice(0, 3)}
                 </AvatarFallback>
@@ -80,8 +79,9 @@ export function NavUser({ user }: NavUserProps) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-10 rounded-lg">
-                  <AvatarImage src={user?.image!} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">GRP</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {user.name.toUpperCase().slice(0, 3)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="text-foreground truncate text-sm font-medium">
