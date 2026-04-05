@@ -15,5 +15,6 @@ export async function Delete(id: string) {
     where: { id },
   })
 
-  updateTag('fluigs')
+  updateTag(`fluigs-${session.user.id}`)
+  // updateTag('fluigs')
 }

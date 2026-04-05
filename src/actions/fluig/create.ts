@@ -45,6 +45,7 @@ export async function Create(data: FluigSchema) {
     },
   })
 
-  updateTag('fluigs')
+  updateTag(`fluigs-${session.user.id}`)
+  // updateTag('fluigs')
   return created
 }
