@@ -37,9 +37,10 @@ function DataTableSkeleton() {
 
 async function ReportData() {
   'use cache'
-  cacheTag('fluigs')
-  cacheLife('hours')
   const fluigs = await Queries()
+  const userId = fluigs.find((f) => f.userId)?.userId
+  cacheTag(`fluigs-${userId}`)
+  cacheLife('hours')
 
   return <ReportDataTable data={fluigs} />
 }

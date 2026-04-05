@@ -13,9 +13,10 @@ export const metadata = {
 
 async function DashboardData() {
   'use cache'
-  cacheTag('fluigs')
-  cacheLife('hours')
   const fluigs = await Queries()
+  const userId = fluigs.find((f) => f.userId)?.userId
+  cacheTag(`fluigs-${userId}`)
+  cacheLife('hours')
 
   return <DashboardClient fluigs={fluigs} />
 }
