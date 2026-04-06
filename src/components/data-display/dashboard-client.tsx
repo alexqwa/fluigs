@@ -178,10 +178,10 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
       <div className="flex flex-col items-end gap-4 md:flex-row md:justify-between">
         <FieldGroup className="w-full">
           <Field orientation="vertical">
-            <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
+            <FieldLabel htmlFor="fieldgroup-code">Produto</FieldLabel>
             <Input
               id="fieldgroup-code"
-              placeholder="Buscar pelo código"
+              placeholder="Buscar pelo produto"
               className="border-border bg-card border"
               value={product}
               onChange={(e) => setProduct(e.target.value)}
