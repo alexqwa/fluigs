@@ -90,7 +90,7 @@ export function ReportPDFTemplate({
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Relatório Fluig</title>
+      <title>Relatório de Fluigs - ${dayjs().format('DD/MM/YYYY')}</title>
       <style>
         * {
           margin: 0;

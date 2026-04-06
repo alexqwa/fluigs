@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { User } from 'better-auth'
 import { useRouter } from 'next/navigation'
-import { Bell, ChevronsUpDown, LogOut } from 'lucide-react'
+import { LogOut, ChartPie, FileChartPie, ChevronsUpDown } from 'lucide-react'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
@@ -99,9 +99,18 @@ export function NavUser({ user }: NavUserProps) {
                 asChild
                 className="hover:bg-muted cursor-pointer"
               >
-                <Link href="/notifications">
-                  <Bell />
-                  Notificações
+                <Link href="/dashboard">
+                  <ChartPie />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                asChild
+                className="hover:bg-muted cursor-pointer"
+              >
+                <Link href="/reports">
+                  <FileChartPie />
+                  Relatórios
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
