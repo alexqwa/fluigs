@@ -57,15 +57,19 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
     from: dayjs().startOf('month').toDate(),
     to: dayjs().add(7, 'day').toDate(),
   })
-  const [code, setCode] = useState('')
+  const [product, setProduct] = useState('')
 
   const optimistic = useFluigOptimistic(fluigs)
 
   const filteredFluigs = useMemo(() => {
     return optimistic.data.filter((item) => {
-      const matchCode = item.code.includes(code)
+      const search = product.toLowerCase().trim()
 
-      if (!dateRange?.from) return matchCode
+      const matchCodeOrProduct =
+        item.code.includes(search) ||
+        item.product.toLowerCase().includes(search)
+
+      if (!dateRange?.from) return matchCodeOrProduct
 
       const from = dayjs(dateRange.from).startOf('day')
       const to = dateRange.to
@@ -76,9 +80,9 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
         dayjs(item.date).isAfter(from.subtract(1, 'day')) &&
         dayjs(item.date).isBefore(to.add(1, 'day'))
 
-      return matchCode && isInDate
+      return matchCodeOrProduct && isInDate
     })
-  }, [optimistic.data, code, dateRange])
+  }, [optimistic.data, product, dateRange])
 
   function toFluig(input: FluigCreateInput): Fluig {
     return {
@@ -179,8 +183,8 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
               id="fieldgroup-code"
               placeholder="Buscar pelo código"
               className="border-border bg-card border"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+              value={product}
+              onChange={(e) => setProduct(e.target.value)}
             />
           </Field>
           <Field orientation="vertical">
