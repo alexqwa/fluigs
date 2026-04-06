@@ -135,8 +135,8 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
           }
           discover={
             averageCost >= 200
-              ? 'Comparativo mensal com tendência de crescimento'
-              : 'Comparativo mensal com tendência de redução'
+              ? 'Custo médio com tendência de crescimento'
+              : 'Custo médio com tendência de redução'
           }
           icon={averageCost >= 200 ? 'trending-up' : 'trending-down'}
         />
@@ -152,7 +152,7 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
           discover={
             averageFluigs === 100
               ? 'Parabéns continue assim'
-              : 'Os Fluigs requer atenção'
+              : 'Há fluigs que necessitam de atenção'
           }
           icon={averageFluigs === 100 ? 'trending-up' : 'trending-down'}
         />
