@@ -44,4 +44,4 @@ Acesse o dashboard para visualizar os dados consolidados e utilize os filtros di
 
 ## 📌 Status do Projeto
 
-Em andamento
+Concluído
