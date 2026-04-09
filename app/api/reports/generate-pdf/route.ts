@@ -1,3 +1,4 @@
+import z from 'zod'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import puppeteer from 'puppeteer-core'
@@ -8,24 +9,20 @@ import { NextRequest, NextResponse } from 'next/server'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
+import { FluigInputSchema } from '@/generated/zod/schemas'
 import { ReportPDFTemplate } from '@/templates/report-pdf-template'
 
+const fluigSchema = FluigInputSchema.omit({
+  user: true,
+  userId: true,
+  createdAt: true,
+})
+
+type FluigSchema = z.infer<typeof fluigSchema>
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
-interface ReportItem {
-  id: string
-  date: Date
-  code: string
-  product: string
-  quantity: string
-  nFluig: number
-  costTotal: string
-  cost: string
-  status: FluigStatus
-}
-
 interface GeneratePDFRequest {
-  data: ReportItem[]
+  data: FluigSchema[]
   filters: {
     status: FluigStatus | 'All'
     month: number | 'All'

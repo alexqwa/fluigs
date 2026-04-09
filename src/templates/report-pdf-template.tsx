@@ -1,26 +1,23 @@
+import z from 'zod'
 import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
 
 dayjs.locale('pt-br')
 
+import { FluigInputSchema } from '@/generated/zod/schemas'
 import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
+const fluigSchema = FluigInputSchema.omit({
+  user: true,
+  userId: true,
+  createdAt: true,
+})
+
+type FluigSchema = z.infer<typeof fluigSchema>
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
-interface ReportItem {
-  id: string
-  date: Date
-  code: string
-  product: string
-  quantity: string
-  nFluig: number
-  costTotal: string
-  cost: string
-  status: FluigStatus
-}
-
 interface ReportPDFTemplateProps {
-  data: ReportItem[]
+  data: FluigSchema[]
   filters: {
     status: FluigStatus | 'All'
     month: number | 'All'

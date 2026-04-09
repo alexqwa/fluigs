@@ -49,6 +49,5 @@ export async function Update(id: string, data: FluigSchema) {
   })
 
   updateTag(`fluigs-${session.user.id}`)
-  // updateTag('fluigs')
   return updated
 }

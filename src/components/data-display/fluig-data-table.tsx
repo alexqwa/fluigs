@@ -63,8 +63,6 @@ import { Update } from '@/actions/fluig/update'
 import { FluigInputSchema } from '@/generated/zod/schemas'
 import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
 
-type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
-
 const fluigSchema = FluigInputSchema.omit({
   user: true,
   userId: true,
@@ -80,6 +78,7 @@ const fluigSchema = FluigInputSchema.omit({
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
+type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
 type FluigDataTableProps = {
   data: FluigSchema[]
@@ -124,7 +123,6 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
     pageSize: 10,
   })
 
-  // Editar: aplica as mudanças na linha antes da resposta do servidor.
   async function handleUpdate(
     id: string,
     formData: Omit<FluigSchema, 'id' | 'costTotal'>
@@ -140,7 +138,6 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
     }
   }
 
-  // Deletar: remove a linha imediatamente.
   async function handleDelete(id: string) {
     remove(id)
 
