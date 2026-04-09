@@ -5,10 +5,6 @@ import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { type DateRange } from 'react-day-picker'
 
-import { FluigInputSchema } from '@/generated/zod/schemas'
-import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
-import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
-
 import { Input } from '@/components/ui/input'
 import { DatePicker } from '@/components/data-display/date-picker'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
@@ -17,6 +13,10 @@ import { AnalyticsCard } from '@/components/data-display/analytics-card'
 import { FluigDataTable } from '@/components/data-display/fluig-data-table'
 
 import { Create } from '@/actions/fluig/create'
+
+import { FluigInputSchema } from '@/generated/zod/schemas'
+import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
+import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
 function calculateCostTotal(cost: string, quantity: string): string {
   const costNumber = Number(cost)
@@ -178,10 +178,10 @@ export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
       <div className="flex flex-col items-end gap-4 md:flex-row md:justify-between">
         <FieldGroup className="w-full">
           <Field orientation="vertical">
-            <FieldLabel htmlFor="fieldgroup-code">Código</FieldLabel>
+            <FieldLabel htmlFor="fieldgroup-code">Produto</FieldLabel>
             <Input
               id="fieldgroup-code"
-              placeholder="Buscar pelo código"
+              placeholder="Buscar pelo produto"
               className="border-border bg-card border"
               value={product}
               onChange={(e) => setProduct(e.target.value)}

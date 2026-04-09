@@ -53,18 +53,13 @@ import {
   TableHeader,
 } from '@/components/ui/table'
 
+import { FluigInputSchema } from '@/generated/zod/schemas'
 type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
-const fluigSchema = z.object({
-  id: z.string(),
-  date: z.date(),
-  code: z.string().min(1, 'Código é obrigatório.'),
-  product: z.string().min(1, 'Produto é obrigatório.'),
-  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
-  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
-  costTotal: z.string().min(1, 'Custo do produto é obrigatório.'),
-  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
-  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+const fluigSchema = FluigInputSchema.omit({
+  user: true,
+  userId: true,
+  createdAt: true,
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
@@ -395,7 +390,7 @@ export function ReportDataTable({
           {isExporting ? (
             <>
               <IconLoader2 className="size-4 animate-spin" />
-              Gerando PDF...
+              Exportando relatório
             </>
           ) : (
             <>

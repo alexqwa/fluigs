@@ -1,9 +1,17 @@
 'use server'
 
-import { Fluig } from '@/generated/prisma/client'
+import z from 'zod'
+import { FluigModelSchema } from '@/generated/zod/schemas'
+
+const fluigSchema = FluigModelSchema.omit({
+  user: true,
+  createdAt: true,
+})
+
+type FluigSchema = z.infer<typeof fluigSchema>
 
 export async function Queries() {
   const response = await fetch(`${process.env.BETTER_AUTH_URL}/api/fluigs`)
-  const data: Fluig[] = await response.json()
+  const data: FluigSchema[] = await response.json()
   return data
 }
