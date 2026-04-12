@@ -39,14 +39,15 @@ export function useFormLogin() {
 
   async function sendCode() {
     setError(null)
-    setCodeHasSend(true)
-    setCooldown(30)
 
     const isValid = await form.trigger(['email', 'value'])
     if (!isValid) {
       setCodeHasSend(false)
       return
     }
+
+    setCodeHasSend(true)
+    setCooldown(30)
 
     const { error } = await authClient.emailOtp.sendVerificationOtp({
       email: form.getValues('email'),
