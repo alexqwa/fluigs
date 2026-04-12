@@ -93,17 +93,13 @@ export function FormLogin() {
                       >
                         <SelectValue placeholder="Selecionar Filial" />
                       </SelectTrigger>
-                      <SelectContent className="bg-card border-border border">
+                      <SelectContent className="dark:bg-card border-border border">
                         <SelectGroup>
                           <SelectLabel>Selecionar Filial</SelectLabel>
                           {data.stores
                             .sort((a, b) => Number(a.value) - Number(b.value))
                             .map((store) => (
-                              <SelectItem
-                                key={store.value}
-                                value={store.value}
-                                className="hover:bg-muted cursor-pointer text-sm"
-                              >
+                              <SelectItem key={store.value} value={store.value}>
                                 Filial {store.value} - {store.label}
                               </SelectItem>
                             ))}
@@ -117,10 +113,10 @@ export function FormLogin() {
                       />
                     )}
                     <Button
-                      variant="outline"
                       onClick={sendCode}
+                      variant={'default'}
                       disabled={codeHasSend || cooldown > 0}
-                      className="bg-muted border-border flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border transition-all hover:brightness-125"
+                      className="h-12 cursor-pointer"
                     >
                       <AnimatePresence mode="wait">
                         {!codeHasSend ? (
@@ -129,10 +125,10 @@ export function FormLogin() {
                             initial={{ x: 0, opacity: 1 }}
                             exit={{ x: 60, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="flex items-center gap-2"
+                            className="flex items-center gap-3"
                           >
-                            <Mail size={22} className="text-foreground" />
-                            <span className="text-foreground text-sm font-semibold">
+                            <Mail className="text-primary-foreground" />
+                            <span className="text-primary-foreground text-sm font-medium">
                               Enviar código para o e-mail
                             </span>
                           </motion.div>
@@ -143,10 +139,10 @@ export function FormLogin() {
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: 60, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="flex items-center gap-2"
+                            className="flex items-center gap-3"
                           >
-                            <Check size={22} className="text-foreground" />
-                            <span className="text-foreground text-sm font-semibold">
+                            <Check className="text-primary-foreground" />
+                            <span className="text-primary-foreground text-sm font-medium">
                               Código enviado com sucesso
                             </span>
                           </motion.div>
@@ -225,12 +221,13 @@ export function FormLogin() {
         <div className="flex w-full flex-col items-center">
           <Button
             type="submit"
+            variant={'default'}
             form="form-rhf-select"
             disabled={form.formState.isSubmitting}
-            className="group/button bg-foreground group text-background relative inline-flex min-h-12 w-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
+            className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
             {form.formState.isSubmitting && (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="text-primary-foreground size-4 animate-spin" />
             )}
             {!form.formState.isSubmitting && (
               <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
@@ -238,7 +235,7 @@ export function FormLogin() {
               </span>
             )}
             <div className="absolute top-1/2 right-12 -translate-y-1/2 opacity-0 transition-all duration-300 ease-in-out group-hover:right-4 group-hover:opacity-100">
-              <ChevronRight size={24} className="text-black" />
+              <ChevronRight size={24} className="text-primary-foreground" />
             </div>
           </Button>
           <Button
