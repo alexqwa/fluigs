@@ -258,11 +258,11 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
+                    className="text-muted-foreground flex size-8 cursor-pointer"
                     size="icon"
                   >
                     <IconDotsVertical />
-                    <span className="sr-only">Open menu</span>
+                    <span className="sr-only">Abrir menu</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -270,21 +270,21 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
                   className="bg-card border-border w-36 border"
                 >
                   <DropdownMenuItem
-                    variant="destructive"
+                    variant="default"
+                    className="focus:bg-ring/15 cursor-pointer"
                     onClick={() => setEditingRow(row.original)}
-                    className="hover:bg-muted cursor-pointer"
                   >
-                    <IconPencilMinus className="text-muted-foreground" />
-                    <span className="text-foreground text-sm">Editar</span>
+                    <IconPencilMinus />
+                    Editar
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     variant="destructive"
                     onClick={() => handleDelete(id)}
-                    className="hover:bg-muted cursor-pointer"
+                    className="cursor-pointer"
                   >
-                    <IconTrashX className="text-muted-foreground" />
-                    <span className="text-foreground text-sm">Deletar</span>
+                    <IconTrashX />
+                    Deletar
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

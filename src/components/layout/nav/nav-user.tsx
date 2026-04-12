@@ -52,7 +52,7 @@ export function NavUser({ user }: NavUserProps) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-muted ring-offset-background focus-visible:ring-ring hover:bg-muted cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              className="data-[state=open]:bg-ring/15 ring-offset-background focus-visible:ring-ring hover:bg-ring/15 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               <Avatar className="h-8 w-10 rounded-lg">
                 <AvatarFallback className="rounded-lg">
@@ -95,19 +95,13 @@ export function NavUser({ user }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                asChild
-                className="hover:bg-muted cursor-pointer"
-              >
+              <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href="/dashboard">
                   <ChartPie />
                   Dashboard
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem
-                asChild
-                className="hover:bg-muted cursor-pointer"
-              >
+              <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href="/reports">
                   <FileChartPie />
                   Relatórios
@@ -117,7 +111,7 @@ export function NavUser({ user }: NavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="hover:bg-muted cursor-pointer"
+              className="cursor-pointer"
             >
               <LogOut />
               Sair

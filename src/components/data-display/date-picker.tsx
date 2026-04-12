@@ -66,7 +66,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="bg-card border-border w-auto border p-0"
+        className="dark:bg-card border-border w-auto border p-0"
         align="start"
       >
         <Calendar

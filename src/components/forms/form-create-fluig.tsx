@@ -104,11 +104,11 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
       <Drawer open={open} onOpenChange={setOpen} direction="bottom">
         <DrawerTrigger asChild>
           <Button variant="default" className="w-full text-sm font-medium">
-            <LayersPlus size={18} className="text-black" />
+            <LayersPlus size={18} className="text-primary-foreground" />
             Adicionar fluig
           </Button>
         </DrawerTrigger>
-        <DrawerContent className="border-border bg-card border-t p-0!">
+        <DrawerContent className="border-border bg-card overflow-hidden border-t p-0!">
           <form
             onSubmit={form.handleSubmit(handleSubmit, (errors) =>
               console.log(errors)
@@ -224,7 +224,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant="outline"
+                            variant={'outline'}
                             className="data-[empty=true]:text-muted-foreground border-border bg-muted cursor-pointer justify-between border text-left font-normal"
                           >
                             {field.value ? (
@@ -238,7 +238,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent
-                          className="bg-card border-border w-auto border p-0"
+                          className="dark:bg-card border-border w-auto border p-0"
                           align="start"
                         >
                           <Calendar
@@ -270,23 +270,10 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                         >
                           <SelectValue placeholder="Selecione o status" />
                         </SelectTrigger>
-                        <SelectContent className="bg-card border-border border">
-                          <SelectItem
-                            value="Approved"
-                            className="hover:bg-muted cursor-pointer text-sm"
-                          >
-                            Aprovado
-                          </SelectItem>
-                          <SelectItem
-                            value="Pending"
-                            className="hover:bg-muted cursor-pointer text-sm"
-                          >
-                            Aguardando
-                          </SelectItem>
-                          <SelectItem
-                            value="Not_Approved"
-                            className="hover:bg-muted cursor-pointer text-sm"
-                          >
+                        <SelectContent className="dark:bg-card border-border border">
+                          <SelectItem value="Approved">Aprovado</SelectItem>
+                          <SelectItem value="Pending">Aguardando</SelectItem>
+                          <SelectItem value="Not_Approved">
                             Não Aprovado
                           </SelectItem>
                         </SelectContent>
@@ -344,13 +331,13 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
       <DialogTrigger asChild>
         <Button
           variant="default"
-          className="cursor-pointer text-sm font-medium transition-all hover:brightness-125"
+          className="cursor-pointer text-sm font-medium"
         >
-          <LayersPlus size={18} className="text-black" />
+          <LayersPlus size={18} className="text-primary-foreground" />
           Adicionar fluig
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
+      <DialogContent className="bg-card border-border w-full overflow-hidden border p-0! sm:max-w-sm lg:max-w-lg">
         <form
           onSubmit={form.handleSubmit(handleSubmit, (errors) =>
             console.log(errors)
@@ -466,7 +453,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
-                          variant="outline"
+                          variant={'outline'}
                           className="data-[empty=true]:text-muted-foreground border-border bg-muted cursor-pointer justify-between border text-left font-normal"
                         >
                           {field.value ? (
@@ -480,7 +467,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="bg-card border-border w-auto border p-0"
+                        className="dark:bg-card border-border w-auto border p-0"
                         align="start"
                       >
                         <Calendar
@@ -508,27 +495,14 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                     >
                       <SelectTrigger
                         id="status"
-                        className="bg-muted border-border h-9 w-full cursor-pointer border"
+                        className="h-9 w-full cursor-pointer"
                       >
                         <SelectValue placeholder="Selecione o status" />
                       </SelectTrigger>
-                      <SelectContent className="bg-card border-border border">
-                        <SelectItem
-                          value="Approved"
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
-                          Aprovado
-                        </SelectItem>
-                        <SelectItem
-                          value="Pending"
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
-                          Aguardando
-                        </SelectItem>
-                        <SelectItem
-                          value="Not_Approved"
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
+                      <SelectContent className="dark:bg-card border-border w-auto border">
+                        <SelectItem value="Approved">Aprovado</SelectItem>
+                        <SelectItem value="Pending">Aguardando</SelectItem>
+                        <SelectItem value="Not_Approved">
                           Não Aprovado
                         </SelectItem>
                       </SelectContent>
@@ -558,19 +532,20 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
             <DialogClose asChild>
               <Button
                 variant="outline"
+                className="cursor-pointer"
                 onClick={() => form.reset()}
-                className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
               >
                 Cancelar
               </Button>
             </DialogClose>
             <Button
               type="submit"
+              variant={'default'}
               disabled={form.formState.isSubmitting}
-              className="flex min-w-32 cursor-pointer items-center justify-center transition-all hover:brightness-125"
+              className="flex min-w-32 cursor-pointer items-center justify-center"
             >
               {form.formState.isSubmitting && (
-                <Loader2 className="size-4 animate-spin" />
+                <Loader2 className="text-primary-foreground size-4 animate-spin" />
               )}
               {!form.formState.isSubmitting && 'Adicionar fluig'}
             </Button>

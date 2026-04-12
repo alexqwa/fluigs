@@ -305,34 +305,14 @@ export function ReportDataTable({
               </SelectTrigger>
               <SelectContent
                 position="popper"
-                className="bg-card border-border border"
+                className="dark:bg-card border-border border"
               >
                 <SelectGroup>
                   <SelectLabel>Selecionar status</SelectLabel>
-                  <SelectItem
-                    value="All"
-                    className="hover:bg-muted cursor-pointer text-sm"
-                  >
-                    Todos
-                  </SelectItem>
-                  <SelectItem
-                    value="Approved"
-                    className="hover:bg-muted cursor-pointer text-sm"
-                  >
-                    Aprovado
-                  </SelectItem>
-                  <SelectItem
-                    value="Pending"
-                    className="hover:bg-muted cursor-pointer text-sm"
-                  >
-                    Aguardando
-                  </SelectItem>
-                  <SelectItem
-                    value="Not_Approved"
-                    className="hover:bg-muted cursor-pointer text-sm"
-                  >
-                    Não Aprovado
-                  </SelectItem>
+                  <SelectItem value="All">Todos</SelectItem>
+                  <SelectItem value="Approved">Aprovado</SelectItem>
+                  <SelectItem value="Pending">Aguardando</SelectItem>
+                  <SelectItem value="Not_Approved">Não Aprovado</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -351,14 +331,11 @@ export function ReportDataTable({
               </SelectTrigger>
               <SelectContent
                 position="popper"
-                className="bg-card border-border border"
+                className="dark:bg-card border-border border"
               >
                 <SelectGroup>
                   <SelectLabel>Selecionar mês</SelectLabel>
-                  <SelectItem
-                    value="All"
-                    className="hover:bg-muted cursor-pointer text-sm"
-                  >
+                  <SelectItem value="All" className="cursor-pointer text-sm">
                     Todos
                   </SelectItem>
                   {Array.from({ length: 12 }).map((_, i) => {
@@ -371,7 +348,7 @@ export function ReportDataTable({
                       <SelectItem
                         key={i}
                         value={i.toString()}
-                        className="hover:bg-muted cursor-pointer text-sm"
+                        className="cursor-pointer text-sm"
                       >
                         {month.charAt(0).toUpperCase() + month.slice(1)}
                       </SelectItem>
@@ -383,6 +360,7 @@ export function ReportDataTable({
           </Field>
         </FieldGroup>
         <Button
+          variant={'default'}
           onClick={handleExportPDF}
           disabled={isExporting || filteredData.length === 0}
           className="w-full cursor-pointer md:w-56"
