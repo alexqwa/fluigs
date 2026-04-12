@@ -22,7 +22,7 @@ export async function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="p-0">
-          <div className="bg-muted flex items-center gap-2 rounded-lg px-2 py-1.5 text-left">
+          <div className="bg-ring/15 flex items-center gap-2 rounded-lg px-2 py-1.5 text-left">
             <Avatar className="h-8 w-10 rounded-lg">
               <AvatarFallback className="bg-card rounded-lg">
                 {user.name.toUpperCase().slice(0, 3)}

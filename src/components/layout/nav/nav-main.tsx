@@ -36,9 +36,9 @@ export function NavMain({
               <SidebarMenuButton
                 asChild
                 className={clsx(
-                  'hover:bg-muted last:group-[side-item]:hidden',
+                  'bg-transparent last:group-[side-item]:hidden',
                   {
-                    ['bg-muted']: isActive,
+                    ['bg-primary hover:bg-primary/90']: isActive,
                   }
                 )}
               >
@@ -46,12 +46,12 @@ export function NavMain({
                   <DynamicIcon
                     name={item.icon as IconName}
                     className={clsx('text-muted-foreground', {
-                      ['text-foreground!']: isActive,
+                      ['text-primary-foreground!']: isActive,
                     })}
                   />
                   <span
                     className={clsx('text-muted-foreground text-sm', {
-                      ['text-foreground!']: isActive,
+                      ['text-primary-foreground!']: isActive,
                     })}
                   >
                     {item.title}

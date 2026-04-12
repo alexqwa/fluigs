@@ -245,7 +245,7 @@ export function FormUpdateFluig({
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent
-                          className="bg-card border-border w-auto border p-0"
+                          className="dark:bg-card border-border w-auto border p-0"
                           align="start"
                         >
                           <Calendar
@@ -277,23 +277,10 @@ export function FormUpdateFluig({
                         >
                           <SelectValue placeholder="Selecione o status" />
                         </SelectTrigger>
-                        <SelectContent className="bg-card border-border border">
-                          <SelectItem
-                            value="Approved"
-                            className="hover:bg-muted cursor-pointer text-sm"
-                          >
-                            Aprovado
-                          </SelectItem>
-                          <SelectItem
-                            value="Pending"
-                            className="hover:bg-muted cursor-pointer text-sm"
-                          >
-                            Aguardando
-                          </SelectItem>
-                          <SelectItem
-                            value="Not_Approved"
-                            className="hover:bg-muted cursor-pointer text-sm"
-                          >
+                        <SelectContent className="dark:bg-card border-border border">
+                          <SelectItem value="Approved">Aprovado</SelectItem>
+                          <SelectItem value="Pending">Aguardando</SelectItem>
+                          <SelectItem value="Not_Approved">
                             Não Aprovado
                           </SelectItem>
                         </SelectContent>
@@ -325,7 +312,7 @@ export function FormUpdateFluig({
                 disabled={
                   !form.formState.isDirty || form.formState.isSubmitting
                 }
-                className="flex min-w-36 cursor-pointer items-center justify-center transition-all hover:brightness-125"
+                className="flex min-w-36 cursor-pointer items-center justify-center"
               >
                 {form.formState.isSubmitting && (
                   <Loader2 className="size-4 animate-spin" />
@@ -333,10 +320,7 @@ export function FormUpdateFluig({
                 {!form.formState.isSubmitting && 'Salvar alterações'}
               </Button>
               <DialogClose asChild>
-                <Button
-                  variant="outline"
-                  className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
-                >
+                <Button variant="outline" className="cursor-pointer">
                   Cancelar
                 </Button>
               </DialogClose>
@@ -357,7 +341,7 @@ export function FormUpdateFluig({
         onOpenChange(open)
       }}
     >
-      <DialogContent className="bg-card border-border w-full border p-0! sm:max-w-sm lg:max-w-lg">
+      <DialogContent className="bg-card border-border w-full overflow-hidden border p-0! sm:max-w-sm lg:max-w-lg">
         <form
           onSubmit={form.handleSubmit(handleSubmit, (errors) =>
             console.log(errors)
@@ -491,7 +475,7 @@ export function FormUpdateFluig({
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="bg-card border-border w-auto border p-0"
+                        className="dark:bg-card border-border w-auto border p-0"
                         align="start"
                       >
                         <Calendar
@@ -520,23 +504,10 @@ export function FormUpdateFluig({
                       >
                         <SelectValue placeholder="Selecione o status" />
                       </SelectTrigger>
-                      <SelectContent className="bg-card border-border border">
-                        <SelectItem
-                          value="Approved"
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
-                          Aprovado
-                        </SelectItem>
-                        <SelectItem
-                          value="Pending"
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
-                          Aguardando
-                        </SelectItem>
-                        <SelectItem
-                          value="Not_Approved"
-                          className="hover:bg-muted cursor-pointer text-sm"
-                        >
+                      <SelectContent className="dark:bg-card border-border border">
+                        <SelectItem value="Approved">Aprovado</SelectItem>
+                        <SelectItem value="Pending">Aguardando</SelectItem>
+                        <SelectItem value="Not_Approved">
                           Não Aprovado
                         </SelectItem>
                       </SelectContent>
@@ -564,17 +535,14 @@ export function FormUpdateFluig({
           </div>
           <DialogFooter className="bg-muted p-4">
             <DialogClose asChild>
-              <Button
-                variant="outline"
-                className="bg-card border-border hover:bg-muted/30 cursor-pointer border transition-all"
-              >
+              <Button variant="outline" className="cursor-pointer">
                 Cancelar
               </Button>
             </DialogClose>
             <Button
               type="submit"
               disabled={!form.formState.isDirty || form.formState.isSubmitting}
-              className="flex min-w-36 cursor-pointer items-center justify-center transition-all hover:brightness-125"
+              className="flex min-w-36 cursor-pointer items-center justify-center"
             >
               {form.formState.isSubmitting && (
                 <Loader2 className="size-4 animate-spin" />
