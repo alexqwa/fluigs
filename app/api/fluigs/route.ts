@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma'
 
 async function runCors(request: NextRequest) {
   await NextCors(request as any, {} as any, {
-    origin: 'https://fluigs.vercel.app',
+    origin: process.env.BETTER_AUTH_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     optionsSuccessStatus: 200,
     credentials: true,
