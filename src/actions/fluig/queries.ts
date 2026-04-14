@@ -11,7 +11,9 @@ const fluigSchema = FluigModelSchema.omit({
 type FluigSchema = z.infer<typeof fluigSchema>
 
 export async function Queries() {
-  const response = await fetch(`${process.env.BETTER_AUTH_URL}/api/fluigs`)
+  const response = await fetch(`${process.env.BETTER_AUTH_URL}/api/fluigs`, {
+    credentials: 'include',
+  })
   const data: FluigSchema[] = await response.json()
   return data
 }
