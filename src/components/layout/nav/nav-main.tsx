@@ -36,7 +36,7 @@ export function NavMain({
               <SidebarMenuButton
                 asChild
                 className={clsx(
-                  'bg-transparent last:group-[side-item]:hidden',
+                  'hover:bg-ring/15 bg-transparent last:group-[side-item]:hidden',
                   {
                     ['bg-primary hover:bg-primary/90']: isActive,
                   }
