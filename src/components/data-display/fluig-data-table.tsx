@@ -271,10 +271,10 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
                 >
                   <DropdownMenuItem
                     variant="default"
-                    className="focus:bg-ring/15 cursor-pointer"
+                    className="focus:bg-ring/15 text-primary cursor-pointer"
                     onClick={() => setEditingRow(row.original)}
                   >
-                    <IconPencilMinus />
+                    <IconPencilMinus className="text-primary" />
                     Editar
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
