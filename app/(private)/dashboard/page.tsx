@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
+import { getServerSession } from '@/actions/auth/session'
 
 import { DashboardClient } from '@/components/data-display/dashboard-client'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
@@ -11,10 +12,10 @@ export const metadata = {
   description: 'Tenha uma visão completa e em tempo real dos seus fluigs',
 }
 
-async function DashboardData() {
+async function DashboardData({ userId }: { userId: string }) {
   'use cache'
-  const fluigs = await Queries()
-  const userId = fluigs.find((f) => f.userId)?.userId
+  const fluigs = await Queries(userId)
+
   cacheTag(`fluigs-${userId}`)
   cacheLife('hours')
 
@@ -22,6 +23,12 @@ async function DashboardData() {
 }
 
 export default async function Dashboard() {
+  const session = await getServerSession()
+
+  if (!session?.user?.id) {
+    return null
+  }
+
   return (
     <main>
       <div className="space-y-1">
@@ -33,7 +40,7 @@ export default async function Dashboard() {
         </p>
       </div>
       <Suspense fallback={<DataTableSkeleton />}>
-        <DashboardData />
+        <DashboardData userId={session.user.id} />
       </Suspense>
     </main>
   )
