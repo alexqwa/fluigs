@@ -2,10 +2,10 @@ import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
 import { Queries } from '@/actions/fluig/queries'
+import { getServerSession } from '@/actions/auth/session'
 
 import { DashboardClient } from '@/components/data-display/dashboard-client'
 import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
-import { getServerSession } from '@/actions/auth/session'
 
 export const metadata = {
   title: 'Dashboard',
