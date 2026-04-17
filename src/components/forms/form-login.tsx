@@ -232,7 +232,7 @@ export function FormLogin() {
             variant={'default'}
             form="form-rhf-select"
             disabled={form.formState.isSubmitting}
-            className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
+            className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
             {form.formState.isSubmitting && (
               <div className="relative">

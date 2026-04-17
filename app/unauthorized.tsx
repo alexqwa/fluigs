@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 export default function Unauthorized() {
   return (
-    <main className="flex min-h-svh w-full items-center justify-center px-4 text-center">
+    <main className="bg-ring/15 flex min-h-svh w-full items-center justify-center px-4 text-center">
       <div className="space-y-6">
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold">401 - Não Autorizado</h1>
