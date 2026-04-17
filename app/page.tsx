@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="bg-card inset-0 flex min-h-svh w-full items-center justify-center px-6">
+    <div className="bg-ring/15 inset-0 flex min-h-svh w-full items-center justify-center px-6">
       <div className="w-full max-w-lg">
         <FormLogin />
       </div>
