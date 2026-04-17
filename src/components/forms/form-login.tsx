@@ -41,16 +41,8 @@ import data from '@/hooks/data.json'
 import { useFormLogin } from '@/hooks/use-form-login'
 
 export function FormLogin() {
-  const {
-    form,
-    error,
-    reset,
-    sendCode,
-    cooldown,
-    onSubmit,
-    isPending,
-    codeHasSend,
-  } = useFormLogin()
+  const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
+    useFormLogin()
 
   return (
     <Card>
