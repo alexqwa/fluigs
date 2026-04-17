@@ -1,8 +1,8 @@
 import z from 'zod'
 import { useForm } from 'react-hook-form'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState, useEffect, useTransition } from 'react'
 
 import { authClient } from '@/lib/auth-client'
 
@@ -23,7 +23,6 @@ type SignInSchema = z.infer<typeof signInSchema>
 export function useFormLogin() {
   const router = useRouter()
   const [cooldown, setCooldown] = useState(0)
-  const [isPending, startTransition] = useTransition()
   const [codeHasSend, setCodeHasSend] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -71,11 +70,9 @@ export function useFormLogin() {
       return
     }
 
-    startTransition(() => {
-      router.replace('/dashboard')
-      router.refresh()
-      reset()
-    })
+    router.replace('/dashboard')
+    router.refresh()
+    reset()
   }
 
   function reset() {
@@ -92,7 +89,6 @@ export function useFormLogin() {
     cooldown,
     sendCode,
     onSubmit,
-    isPending,
     codeHasSend,
   }
 }
