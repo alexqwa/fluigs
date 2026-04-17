@@ -22,22 +22,6 @@ Sistema de gestão e análise de fluigs com foco em fornecer dados estratégicos
 
 Facilitar o controle e a análise de dados operacionais, permitindo que gestores tenham uma visão clara e estratégica do setor, otimizando decisões e aumentando a eficiência.
 
-## 📦 Instalação
-
-```bash
-# Clone o repositório
-git clone https://github.com/alexqwa/fluigs.git
-
-# Acesse a pasta
-cd fluigs
-
-# Instale as dependências
-npm install
-
-# Execute o projeto
-npm run dev
-```
-
 ## 🧠 Uso
 
 Acesse o dashboard para visualizar os dados consolidados e utilize os filtros disponíveis para análises específicas. Novos fluigs podem ser adicionados diretamente pela interface.
