@@ -234,9 +234,17 @@ export function FormLogin() {
             disabled={form.formState.isSubmitting || isPending}
             className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
-            <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
-              Entrar
-            </span>
+            {form.formState.isSubmitting && (
+              <div className="relative">
+                <Loader2 className="text-primary-foreground/80 absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2 animate-spin" />
+                <Loader2 className="text-primary-foreground/70 absolute top-1/2 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform animate-spin" />
+              </div>
+            )}
+            {!form.formState.isSubmitting && (
+              <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
+                Entrar
+              </span>
+            )}
             <div className="absolute top-1/2 right-12 -translate-y-1/2 opacity-0 transition-all duration-300 ease-in-out group-hover:right-4 group-hover:opacity-100">
               <ChevronRight size={24} className="text-primary-foreground" />
             </div>
