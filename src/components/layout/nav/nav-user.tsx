@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { User } from 'better-auth'
+import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { LogOut, ChartPie, FileChartPie, ChevronsUpDown } from 'lucide-react'
 
@@ -29,6 +30,7 @@ interface NavUserProps {
 
 export function NavUser({ user }: NavUserProps) {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   async function handleSignOut() {
     try {
@@ -39,7 +41,10 @@ export function NavUser({ user }: NavUserProps) {
         return
       }
 
-      router.push('/')
+      startTransition(() => {
+        router.replace('/')
+        router.refresh()
+      })
     } catch (error) {
       console.error(error)
     }
@@ -110,6 +115,7 @@ export function NavUser({ user }: NavUserProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
+              disabled={isPending}
               onClick={handleSignOut}
               className="cursor-pointer"
             >
