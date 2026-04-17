@@ -25,7 +25,3 @@ Facilitar o controle e a análise de dados operacionais, permitindo que gestores
 ## 🧠 Uso
 
 Acesse o dashboard para visualizar os dados consolidados e utilize os filtros disponíveis para análises específicas. Novos fluigs podem ser adicionados diretamente pela interface.
-
-## 📌 Status do Projeto
-
-Concluído
