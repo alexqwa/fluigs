@@ -18,7 +18,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="bg-primary dark:bg-primary relative flex h-8 w-16 items-center rounded-full px-1 transition-colors duration-300"
+      className="bg-primary dark:bg-primary relative flex h-8 w-16 cursor-pointer items-center rounded-full px-1 transition-colors duration-300"
     >
       <Sun className="text-primary-foreground absolute left-2 size-4" />
       <Moon className="text-primary-foreground absolute right-2 size-4" />

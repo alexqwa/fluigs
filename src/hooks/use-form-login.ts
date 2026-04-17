@@ -74,6 +74,7 @@ export function useFormLogin() {
     startTransition(() => {
       router.replace('/dashboard')
       router.refresh()
+      reset()
     })
   }
 
