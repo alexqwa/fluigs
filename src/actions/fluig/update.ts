@@ -1,18 +1,16 @@
 'use server'
 
 import z from 'zod'
-import { prisma } from '@/lib/prisma'
 import { updateTag } from 'next/cache'
-import { getServerSession } from '@/actions/auth/session'
 
-const fluigSchema = z.object({
-  date: z.date(),
-  code: z.string().min(1, 'Código é obrigatório'),
-  product: z.string().min(1, 'Produto é obrigatório'),
-  quantity: z.string().min(1, 'Quantidade é obrigatória'),
-  nFluig: z.number().min(1, 'Número de fluig é obrigatório'),
-  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
-  cost: z.string().min(1, 'Custo é obrigatório'),
+import { prisma } from '@/lib/prisma'
+import { getServerSession } from '@/actions/auth/session'
+import { FluigInputSchema } from '@/generated/zod/schemas'
+
+const fluigSchema = FluigInputSchema.omit({
+  id: true,
+  user: true,
+  createdAt: true,
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
