@@ -1,8 +1,9 @@
 'use server'
 
 import z from 'zod'
-import { prisma } from '@/lib/prisma'
 import { updateTag } from 'next/cache'
+
+import { prisma } from '@/lib/prisma'
 import { getServerSession } from '@/actions/auth/session'
 
 const fluigSchema = z.object({
