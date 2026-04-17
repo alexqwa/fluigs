@@ -41,8 +41,16 @@ import data from '@/hooks/data.json'
 import { useFormLogin } from '@/hooks/use-form-login'
 
 export function FormLogin() {
-  const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
-    useFormLogin()
+  const {
+    form,
+    error,
+    reset,
+    sendCode,
+    cooldown,
+    onSubmit,
+    isPending,
+    codeHasSend,
+  } = useFormLogin()
 
   return (
     <Card>
@@ -223,17 +231,12 @@ export function FormLogin() {
             type="submit"
             variant={'default'}
             form="form-rhf-select"
-            disabled={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting || isPending}
             className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden rounded-lg px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
-            {form.formState.isSubmitting && (
-              <Loader2 className="text-primary-foreground size-4 animate-spin" />
-            )}
-            {!form.formState.isSubmitting && (
-              <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
-                Entrar
-              </span>
-            )}
+            <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">
+              Entrar
+            </span>
             <div className="absolute top-1/2 right-12 -translate-y-1/2 opacity-0 transition-all duration-300 ease-in-out group-hover:right-4 group-hover:opacity-100">
               <ChevronRight size={24} className="text-primary-foreground" />
             </div>
