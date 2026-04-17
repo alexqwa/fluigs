@@ -5,12 +5,15 @@ import { updateTag } from 'next/cache'
 
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from '@/actions/auth/session'
-import { FluigInputSchema } from '@/generated/zod/schemas'
 
-const fluigSchema = FluigInputSchema.omit({
-  id: true,
-  user: true,
-  createdAt: true,
+const fluigSchema = z.object({
+  date: z.date(),
+  code: z.string().min(1, 'Código é obrigatório'),
+  product: z.string().min(1, 'Produto é obrigatório'),
+  quantity: z.string().min(1, 'Quantidade é obrigatória'),
+  nFluig: z.number().min(1, 'Número de fluig é obrigatório'),
+  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+  cost: z.string().min(1, 'Custo é obrigatório'),
 })
 
 type FluigSchema = z.infer<typeof fluigSchema>
