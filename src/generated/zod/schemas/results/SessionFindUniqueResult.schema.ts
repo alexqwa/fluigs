@@ -8,5 +8,6 @@ export const SessionFindUniqueResultSchema = z.nullable(z.object({
   ipAddress: z.string().optional(),
   userAgent: z.string().optional(),
   userId: z.string(),
-  user: z.unknown()
+  user: z.unknown(),
+  impersonatedBy: z.string().optional()
 }));

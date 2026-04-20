@@ -11,6 +11,11 @@ const makeSchema = () => z.object({
   emailVerified: z.boolean().optional(),
   image: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
+  branch: z.number().int().optional().nullable(),
+  role: z.string().optional().nullable(),
+  banned: z.boolean().optional().nullable(),
+  banReason: z.string().optional().nullable(),
+  banExpires: z.coerce.date().optional().nullable(),
   fluigs: z.lazy(() => FluigUncheckedCreateNestedManyWithoutUserInputObjectSchema).optional(),
   accounts: z.lazy(() => AccountUncheckedCreateNestedManyWithoutUserInputObjectSchema).optional(),
   sessions: z.lazy(() => SessionUncheckedCreateNestedManyWithoutUserInputObjectSchema).optional()

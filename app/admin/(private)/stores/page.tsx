@@ -3,7 +3,7 @@ export const metadata = {
   description: 'Gerencie todas as suas lojas com praticidade',
 }
 
-export default function Stores() {
+export default async function Stores() {
   return (
     <main>
       <div className="space-y-1">

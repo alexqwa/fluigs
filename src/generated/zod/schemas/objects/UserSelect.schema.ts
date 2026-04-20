@@ -16,6 +16,11 @@ const makeSchema = () => z.object({
   fluigs: z.union([z.boolean(), z.lazy(() => FluigFindManySchema)]).optional(),
   accounts: z.union([z.boolean(), z.lazy(() => AccountFindManySchema)]).optional(),
   sessions: z.union([z.boolean(), z.lazy(() => SessionFindManySchema)]).optional(),
+  branch: z.boolean().optional(),
+  role: z.boolean().optional(),
+  banned: z.boolean().optional(),
+  banReason: z.boolean().optional(),
+  banExpires: z.boolean().optional(),
   _count: z.union([z.boolean(), z.lazy(() => UserCountOutputTypeArgsObjectSchema)]).optional()
 }).strict();
 export const UserSelectObjectSchema: z.ZodType<Prisma.UserSelect> = makeSchema() as unknown as z.ZodType<Prisma.UserSelect>;

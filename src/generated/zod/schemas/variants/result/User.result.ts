@@ -10,7 +10,12 @@ export const UserResultSchema = z.object({
     updatedAt: z.date(),
     fluigs: z.array(z.unknown()),
     accounts: z.array(z.unknown()),
-    sessions: z.array(z.unknown())
+    sessions: z.array(z.unknown()),
+    branch: z.number().int().nullable(),
+    role: z.string().nullable(),
+    banned: z.boolean().nullable(),
+    banReason: z.string().nullable(),
+    banExpires: z.date().nullable()
 }).strict();
 
 export type UserResultType = z.infer<typeof UserResultSchema>;

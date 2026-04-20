@@ -112,7 +112,10 @@ export function useFormLoginAdmin() {
     setError(null)
 
     try {
-      const { error } = await authClient.signIn.email({ email, password })
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
+      })
 
       if (error) {
         setError(error.message || 'Algo deu errado.')

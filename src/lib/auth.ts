@@ -1,10 +1,11 @@
 import { Resend } from 'resend'
 import { betterAuth } from 'better-auth'
 import { i18n } from '@better-auth/i18n'
-import { emailOTP } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
+import { emailOTP, admin as adminPlugin } from 'better-auth/plugins'
 
 import { prisma } from '@/lib/prisma'
+import { ac, admin, user } from '@/lib/permissions'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
@@ -14,7 +15,7 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 4,
+    minPasswordLength: 8,
   },
   rateLimit: {
     storage: 'database',
@@ -32,9 +33,18 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    adminPlugin({
+      ac,
+      roles: {
+        user,
+        admin,
+      },
+    }),
     i18n({
       translations: {
         pt: {
+          YOU_ARE_NOT_ALLOWED_TO_LIST_USERS:
+            'Você não tem permissão para listar usuários',
           INVALID_EMAIL_OR_PASSWORD: 'E-mail ou senha inválidos',
           INVALID_OTP: 'Código de 6 dígitos inválido',
         },

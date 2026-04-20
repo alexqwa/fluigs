@@ -1,8 +1,18 @@
-import Link from 'next/link'
+'use client'
 
+import { useRouter } from 'next/navigation'
+
+import { authClient } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 
 export default function Unauthorized() {
+  const router = useRouter()
+
+  async function RevokeSessions() {
+    await authClient.revokeSessions()
+    router.push('/')
+  }
+
   return (
     <main className="bg-ring/15 flex min-h-svh w-full items-center justify-center px-4 text-center">
       <div className="space-y-6">
@@ -13,8 +23,12 @@ export default function Unauthorized() {
           </p>
         </div>
         <div>
-          <Button asChild>
-            <Link href="/">Voltar para o login</Link>
+          <Button
+            variant={'default'}
+            onClick={RevokeSessions}
+            className="cursor-pointer"
+          >
+            <span>Voltar para o login</span>
           </Button>
         </div>
       </div>

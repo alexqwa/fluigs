@@ -8,7 +8,8 @@ export const SessionAggregateResultSchema = z.object({  _count: z.object({
     ipAddress: z.number(),
     userAgent: z.number(),
     userId: z.number(),
-    user: z.number()
+    user: z.number(),
+    impersonatedBy: z.number()
   }).optional(),
   _min: z.object({
     id: z.string().nullable(),
@@ -18,7 +19,8 @@ export const SessionAggregateResultSchema = z.object({  _count: z.object({
     updatedAt: z.date().nullable(),
     ipAddress: z.string().nullable(),
     userAgent: z.string().nullable(),
-    userId: z.string().nullable()
+    userId: z.string().nullable(),
+    impersonatedBy: z.string().nullable()
   }).nullable().optional(),
   _max: z.object({
     id: z.string().nullable(),
@@ -28,5 +30,6 @@ export const SessionAggregateResultSchema = z.object({  _count: z.object({
     updatedAt: z.date().nullable(),
     ipAddress: z.string().nullable(),
     userAgent: z.string().nullable(),
-    userId: z.string().nullable()
+    userId: z.string().nullable(),
+    impersonatedBy: z.string().nullable()
   }).nullable().optional()});

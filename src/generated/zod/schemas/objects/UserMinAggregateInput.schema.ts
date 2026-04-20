@@ -9,7 +9,12 @@ const makeSchema = () => z.object({
   emailVerified: z.literal(true).optional(),
   image: z.literal(true).optional(),
   createdAt: z.literal(true).optional(),
-  updatedAt: z.literal(true).optional()
+  updatedAt: z.literal(true).optional(),
+  branch: z.literal(true).optional(),
+  role: z.literal(true).optional(),
+  banned: z.literal(true).optional(),
+  banReason: z.literal(true).optional(),
+  banExpires: z.literal(true).optional()
 }).strict();
 export const UserMinAggregateInputObjectSchema: z.ZodType<Prisma.UserMinAggregateInputType> = makeSchema() as unknown as z.ZodType<Prisma.UserMinAggregateInputType>;
 export const UserMinAggregateInputObjectZodSchema = makeSchema();
