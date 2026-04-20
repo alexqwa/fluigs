@@ -11,13 +11,18 @@ import { AppSidebar } from '@/components/layout/sidebar/app-sidebar'
 const data = [
   {
     title: 'Dashboard',
-    url: '/dashboard',
+    url: '/admin/dashboard',
     icon: 'chart-pie',
   },
   {
-    title: 'Relatórios',
-    url: '/reports',
-    icon: 'file-chart-pie',
+    title: 'Lojas',
+    url: '/admin/stores',
+    icon: 'store',
+  },
+  {
+    title: 'Configurações',
+    url: '/admin/settings',
+    icon: 'settings',
   },
 ]
 

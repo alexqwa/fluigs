@@ -1,3 +1,5 @@
+import { User } from 'better-auth'
+
 import {
   Sidebar,
   SidebarFooter,
@@ -5,19 +7,20 @@ import {
   SidebarContent,
 } from '@/components/ui/sidebar'
 
-import data from '@/hooks/data.json'
-import { getServerSession } from '@/actions/auth/session'
-
 import { NavMain } from '@/components/layout/nav/nav-main'
 import { NavUser } from '@/components/layout/nav/nav-user'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
-export async function AppSidebar() {
-  const session = await getServerSession()
-  const user = session?.user
+interface AppSidebarProps {
+  user: User
+  navMain: {
+    title: string
+    url: string
+    icon: string
+  }[]
+}
 
-  if (!user) return null
-
+export async function AppSidebar({ user, navMain }: AppSidebarProps) {
   return (
     <Sidebar>
       <SidebarHeader>
@@ -40,7 +43,7 @@ export async function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

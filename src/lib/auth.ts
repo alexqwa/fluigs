@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { betterAuth } from 'better-auth'
+import { i18n } from '@better-auth/i18n'
 import { emailOTP } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 
@@ -31,6 +32,14 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    i18n({
+      translations: {
+        pt: {
+          INVALID_EMAIL_OR_PASSWORD: 'E-mail ou senha inválidos',
+          INVALID_OTP: 'Código de 6 dígitos inválido',
+        },
+      },
+    }),
     emailOTP({
       expiresIn: 300,
       async sendVerificationOTP({ email, otp }) {

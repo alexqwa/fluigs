@@ -2,8 +2,9 @@
 
 import { Controller } from 'react-hook-form'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { IconLoader } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, ChevronRight, Loader2, Mail } from 'lucide-react'
+import { Check, ChevronRight, Mail } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -227,10 +228,7 @@ export function FormLogin() {
             className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
             {form.formState.isSubmitting && (
-              <div className="relative">
-                <Loader2 className="text-primary-foreground absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2 animate-spin" />
-                <Loader2 className="text-primary-foreground absolute top-1/2 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform animate-spin" />
-              </div>
+              <IconLoader className="text-primary-foreground animate-spin" />
             )}
             {!form.formState.isSubmitting && (
               <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">

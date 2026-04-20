@@ -18,7 +18,13 @@ const signInSchema = z.object({
     .length(6, 'O código de verificação deve ter pelo menos 6 caracteres.'),
 })
 
+const signInSchemaAdmin = z.object({
+  email: z.email('Digite um e-mail válido.'),
+  password: z.string().min(8, 'A senha deve conter pelo menos 8 caracteres.'),
+})
+
 type SignInSchema = z.infer<typeof signInSchema>
+type SignInSchemaAdmin = z.infer<typeof signInSchemaAdmin>
 
 export function useFormLogin() {
   const router = useRouter()
@@ -90,5 +96,46 @@ export function useFormLogin() {
     sendCode,
     onSubmit,
     codeHasSend,
+  }
+}
+
+export function useFormLoginAdmin() {
+  const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
+
+  const form = useForm<SignInSchemaAdmin>({
+    resolver: zodResolver(signInSchemaAdmin),
+    defaultValues: { email: '', password: '' },
+  })
+
+  async function onSubmit({ email, password }: SignInSchemaAdmin) {
+    setError(null)
+
+    try {
+      const { error } = await authClient.signIn.email({ email, password })
+
+      if (error) {
+        setError(error.message || 'Algo deu errado.')
+        return
+      }
+
+      router.replace('/admin/dashboard')
+      router.refresh()
+      reset()
+    } catch (error) {
+      console.log(error, 'Algo deu errado!')
+    }
+  }
+
+  function reset() {
+    setError(null)
+    form.reset()
+  }
+
+  return {
+    form,
+    error,
+    reset,
+    onSubmit,
   }
 }
