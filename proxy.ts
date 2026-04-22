@@ -19,7 +19,7 @@ const publicRoutes: readonly PublicRoute[] = [
 
 const adminRoutes: readonly AdminRoute[] = [
   { path: '/admin', whenAuthenticated: 'redirect' },
-  { path: '/admin/dashboard', whenAuthenticated: 'next' },
+  { path: '/admin/upload', whenAuthenticated: 'next' },
   { path: '/admin/settings', whenAuthenticated: 'next' },
   { path: '/admin/stores', whenAuthenticated: 'next' },
 ]
@@ -63,7 +63,7 @@ export async function proxy(request: NextRequest) {
     adminRoute.whenAuthenticated === 'redirect'
   ) {
     const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = '/admin/dashboard'
+    redirectUrl.pathname = '/admin/upload'
     return NextResponse.redirect(redirectUrl)
   }
 

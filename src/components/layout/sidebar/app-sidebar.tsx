@@ -46,7 +46,7 @@ export async function AppSidebar({ user, navMain }: AppSidebarProps) {
         <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser user={user} navMain={navMain} />
       </SidebarFooter>
     </Sidebar>
   )

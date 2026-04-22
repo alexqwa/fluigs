@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { unauthorized } from 'next/navigation'
+import { unauthorized, forbidden } from 'next/navigation'
 import { IconLoader } from '@tabler/icons-react'
 
 import { getServerSession } from '@/actions/auth/session'
@@ -11,7 +11,7 @@ import { AppSidebar } from '@/components/layout/sidebar/app-sidebar'
 const data = [
   {
     title: 'Dados',
-    url: '/admin/data',
+    url: '/admin/upload',
     icon: 'database-zap',
   },
   {
@@ -28,8 +28,10 @@ const data = [
 
 async function Sidebar({ children }: Readonly<{ children: React.ReactNode }>) {
   const session = await getServerSession()
+  const user = session?.user
 
-  if (!session?.user) return unauthorized()
+  if (!user) return unauthorized()
+  if (user.role !== 'admin') return forbidden()
 
   return (
     <SidebarProvider>

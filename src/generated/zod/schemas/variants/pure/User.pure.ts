@@ -11,7 +11,7 @@ export const UserModelSchema = z.object({
     fluigs: z.array(z.unknown()),
     accounts: z.array(z.unknown()),
     sessions: z.array(z.unknown()),
-    branch: z.number().int().nullable(),
+    branch: z.number().int(),
     role: z.string().nullable(),
     banned: z.boolean().nullable(),
     banReason: z.string().nullable(),

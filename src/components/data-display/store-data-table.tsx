@@ -1,13 +1,10 @@
 'use client'
 
 import z from 'zod'
-import dayjs from 'dayjs'
-import { useState, useMemo, ElementType } from 'react'
+import { useState, useMemo } from 'react'
 
-import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { FormUpdateFluig } from '@/components/forms/form-update-fluig'
 import {
   flexRender,
   useReactTable,
@@ -24,15 +21,12 @@ import {
 } from '@tanstack/react-table'
 import {
   IconTrashX,
-  IconReload,
   IconChevronLeft,
   IconPencilMinus,
   IconDotsVertical,
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
-  IconCircleCheckFilled,
-  IconExclamationCircleFilled,
 } from '@tabler/icons-react'
 import {
   DropdownMenu,
@@ -57,64 +51,33 @@ import {
   TableHeader,
 } from '@/components/ui/table'
 
-import { Delete } from '@/actions/fluig/delete'
-import { Update } from '@/actions/fluig/update'
-
-import { FluigInputSchema } from '@/generated/zod/schemas'
+import { authClient } from '@/lib/auth-client'
+import { UserInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
 
-const fluigSchema = FluigInputSchema.omit({
-  user: true,
-  userId: true,
+const userSchema = UserInputSchema.omit({
+  role: true,
+  image: true,
+  banned: true,
+  sessions: true,
+  accounts: true,
+  banReason: true,
+  updatedAt: true,
   createdAt: true,
-}).extend({
-  date: z.date(),
-  code: z.string().min(1, 'Código é obrigatório.'),
-  product: z.string().min(1, 'Produto é obrigatório.'),
-  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
-  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
-  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
-  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
+  banExpires: true,
+  emailVerified: true,
 })
 
-type FluigSchema = z.infer<typeof fluigSchema>
-type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
+type UserSchema = z.infer<typeof userSchema>
 
 type FluigDataTableProps = {
-  data: FluigSchema[]
-  optimistic: ReturnType<typeof useDataOptimistic<FluigSchema>>
+  data: UserSchema[]
+  optimistic: ReturnType<typeof useDataOptimistic<UserSchema>>
 }
 
-const statusMap: Record<
-  FluigStatus,
-  {
-    label: string
-    icon: ElementType
-    color: string
-  }
-> = {
-  Approved: {
-    label: 'Aprovado',
-    icon: IconCircleCheckFilled,
-    color: 'text-green-500',
-  },
-  Pending: {
-    label: 'Aguardando',
-    icon: IconReload,
-    color: 'text-yellow-400 animate-spin duration-300',
-  },
-  Not_Approved: {
-    label: 'Não Aprovado',
-    icon: IconExclamationCircleFilled,
-    color: 'text-red-400',
-  },
-}
-
-export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
-  const { update, remove, rollback, confirmUpdate, confirmDelete } = optimistic
-
+export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
   const [rowSelection, setRowSelection] = useState({})
-  const [editingRow, setEditingRow] = useState<FluigSchema | null>(null)
+  const [editingRow, setEditingRow] = useState<UserSchema | null>(null)
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
@@ -123,129 +86,51 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
     pageSize: 10,
   })
 
-  async function handleUpdate(
-    id: string,
-    formData: Omit<FluigSchema, 'id' | 'costTotal'>
-  ) {
-    update(id, formData)
-
-    try {
-      const updated = await Update(id, formData)
-
-      confirmUpdate(id, updated)
-    } catch {
-      rollback()
-    }
-  }
-
-  async function handleDelete(id: string) {
-    remove(id)
-
-    try {
-      await Delete(id)
-
-      confirmDelete(id)
-    } catch {
-      rollback()
-    }
-  }
-
-  const columns = useMemo<ColumnDef<FluigSchema>[]>(
+  const columns = useMemo<ColumnDef<UserSchema>[]>(
     () => [
       {
-        accessorKey: 'code',
-        header: 'Código',
+        accessorKey: 'branch',
+        header: 'Filial',
         cell: ({ row }) => (
-          <div className="w-24 md:w-fit">
+          <div className="w-fit pr-8 md:pr-0">
             <span className="text-muted-foreground pr-8 text-sm">
-              {row.original.code}
+              {row.original.branch}
             </span>
           </div>
         ),
       },
       {
-        accessorKey: 'product',
-        header: 'Produto',
+        accessorKey: 'store',
+        header: 'Loja',
         cell: ({ row }) => (
           <div className="w-fit pr-8 md:pr-0">
             <span className="text-muted-foreground text-sm">
-              {row.original.product}
+              {row.original.name}
             </span>
           </div>
         ),
-
-        enableHiding: false,
       },
       {
-        accessorKey: 'quantity',
-        header: 'Quantidade',
-        cell: ({ row }) => {
-          const quantity = Intl.NumberFormat('pt-BR', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-          }).format(Number(row.original.quantity))
-
-          return (
-            <div className="w-32 md:w-fit">
-              <span className="text-muted-foreground text-sm">{quantity}</span>
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: 'nFluig',
-        header: 'N Fluig',
+        accessorKey: 'email',
+        header: 'E-mail',
         cell: ({ row }) => (
-          <div className="w-28 md:w-fit">
+          <div className="w-fit pr-8 md:pr-0">
             <span className="text-muted-foreground text-sm">
-              {row.original.nFluig}
+              {row.original.email}
             </span>
           </div>
         ),
       },
       {
-        accessorKey: 'date',
-        header: 'Data',
+        accessorKey: 'fluigs',
+        header: 'Fluigs',
         cell: ({ row }) => (
-          <div className="w-28 md:w-fit">
+          <div className="w-fit pr-8 md:pr-0">
             <span className="text-muted-foreground text-sm">
-              {dayjs(row.original.date).format('DD/MM/YYYY')}
+              {row.original.fluigs.length}
             </span>
           </div>
         ),
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-          const status = statusMap[row.original.status]
-          const Icon = status.icon
-
-          return (
-            <div className="w-32 md:w-fit">
-              <Badge variant="outline" className="text-muted-foreground px-1.5">
-                <Icon className={status.color} />
-                {status.label}
-              </Badge>
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: 'costTotal',
-        header: 'Custo (R$)',
-        cell: ({ row }) => {
-          const costTotal = Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(Number(row.original.costTotal))
-
-          return (
-            <div className="w-28 md:w-fit">
-              <span className="text-muted-foreground text-sm">{costTotal}</span>
-            </div>
-          )
-        },
       },
       {
         id: 'actions',
@@ -280,7 +165,6 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     variant="destructive"
-                    onClick={() => handleDelete(id)}
                     className="cursor-pointer"
                   >
                     <IconTrashX />
@@ -449,19 +333,6 @@ export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
           </div>
         </div>
       </div>
-      <FormUpdateFluig
-        defaultValues={editingRow}
-        open={!!editingRow}
-        onOpenChange={(open) => {
-          if (!open) setEditingRow(null)
-        }}
-        onSubmit={(formData) => {
-          if (!editingRow) return
-
-          handleUpdate(editingRow.id, formData)
-          setEditingRow(null)
-        }}
-      />
     </div>
   )
 }

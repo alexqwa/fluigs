@@ -2,14 +2,14 @@ import { useState, useRef, useEffect } from 'react'
 
 export type OptimisticStatus = 'idle' | 'creating' | 'updating' | 'deleting'
 
-export type FluigOptimistic<T> = T & {
+export type DataOptimistic<T> = T & {
   _optimistic?: OptimisticStatus
   _temp?: boolean
 }
 
-export function useFluigOptimistic<T extends { id: string }>(initialData: T[]) {
-  const [data, setData] = useState<FluigOptimistic<T>[]>(initialData)
-  const historyRef = useRef<FluigOptimistic<T>[][]>([])
+export function useDataOptimistic<T extends { id: string }>(initialData: T[]) {
+  const [data, setData] = useState<DataOptimistic<T>[]>(initialData)
+  const historyRef = useRef<DataOptimistic<T>[][]>([])
 
   function reset(newData: T[]) {
     setData(newData)
@@ -36,7 +36,7 @@ export function useFluigOptimistic<T extends { id: string }>(initialData: T[]) {
 
     const tempId = `temp-${Date.now()}`
 
-    const optimisticItem: FluigOptimistic<T> = {
+    const optimisticItem: DataOptimistic<T> = {
       ...item,
       id: tempId,
       _optimistic: 'creating',

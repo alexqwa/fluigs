@@ -11,7 +11,7 @@ export const UserInputSchema = z.object({
     fluigs: z.array(z.unknown()),
     accounts: z.array(z.unknown()),
     sessions: z.array(z.unknown()),
-    branch: z.number().int().optional().nullable(),
+    branch: z.number().int(),
     role: z.string().optional().nullable(),
     banned: z.boolean().optional().nullable(),
     banReason: z.string().optional().nullable(),

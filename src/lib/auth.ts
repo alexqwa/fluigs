@@ -15,7 +15,7 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 8,
+    minPasswordLength: 4,
   },
   rateLimit: {
     storage: 'database',
@@ -32,8 +32,22 @@ export const auth = betterAuth({
       maxAge: 300,
     },
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: 'string',
+        input: false,
+      },
+      branch: {
+        type: 'number',
+        input: false,
+      },
+    },
+  },
   plugins: [
     adminPlugin({
+      adminRoles: ['admin'],
+      adminUserIds: ['JTcCPD9CRTOg5jDG5ggAUdbB2DhCFmE9'],
       ac,
       roles: {
         user,

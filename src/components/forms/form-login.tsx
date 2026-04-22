@@ -39,7 +39,7 @@ import {
 } from '@/components/ui/field'
 
 import data from '@/hooks/data.json'
-import { useFormLogin } from '@/hooks/use-form-login'
+import { useFormLogin } from '@/hooks/auth/use-form-login'
 
 export function FormLogin() {
   const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
@@ -59,7 +59,7 @@ export function FormLogin() {
         <form id="form-rhf-select" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup className="flex-col! gap-6!">
             <Controller
-              name="value"
+              name="email"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
@@ -71,18 +71,16 @@ export function FormLogin() {
                       Filial
                     </FieldLabel>
                     <Select
-                      name={field.name}
                       value={field.value}
                       onValueChange={(value) => {
                         field.onChange(value)
 
                         const selected = data.stores.find(
-                          (store) => store.value === value
+                          (store) => store.email === value
                         )
 
                         if (selected) {
                           form.setValue('email', selected.email)
-                          form.setValue('name', selected.label)
                         }
                       }}
                       disabled={codeHasSend}
@@ -100,7 +98,7 @@ export function FormLogin() {
                           {data.stores
                             .sort((a, b) => Number(a.value) - Number(b.value))
                             .map((store) => (
-                              <SelectItem key={store.value} value={store.value}>
+                              <SelectItem key={store.value} value={store.email}>
                                 Filial {store.value} - {store.label}
                               </SelectItem>
                             ))}

@@ -11,7 +11,7 @@ export const UserFindManyResultSchema = z.object({
   fluigs: z.array(z.unknown()),
   accounts: z.array(z.unknown()),
   sessions: z.array(z.unknown()),
-  branch: z.number().int().optional(),
+  branch: z.number().int(),
   role: z.string().optional(),
   banned: z.boolean().optional(),
   banReason: z.string().optional(),

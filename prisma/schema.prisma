@@ -41,7 +41,7 @@ model User {
   fluigs        Fluig[]
   accounts      Account[]
   sessions      Session[]
-  branch        Int?
+  branch        Int       @unique
 
   role       String?
   banned     Boolean?  @default(false)

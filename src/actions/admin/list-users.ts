@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma'
 
-export async function Users() {
+export async function ListUsers() {
   const users = await prisma.user.findMany({
     where: {
       role: 'user',
@@ -13,13 +13,14 @@ export async function Users() {
       banned: true,
       banReason: true,
       updatedAt: true,
+      createdAt: true,
       banExpires: true,
       emailVerified: true,
     },
     include: {
       fluigs: true,
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { branch: 'asc' },
   })
 
   return users

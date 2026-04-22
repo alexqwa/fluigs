@@ -1,16 +1,4 @@
 {
-  "navMain": [
-    {
-      "title": "Dashboard",
-      "url": "/dashboard",
-      "icon": "chart-pie"
-    },
-    {
-      "title": "Relatórios",
-      "url": "/reports",
-      "icon": "file-chart-pie"
-    }
-  ],
   "stores": [
     {
       "value": "1015",

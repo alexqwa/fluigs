@@ -10,7 +10,7 @@ const makeSchema = () => z.object({
   image: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  branch: z.number().int().optional().nullable(),
+  branch: z.number().int(),
   role: z.string().optional().nullable(),
   banned: z.boolean().optional().nullable(),
   banReason: z.string().optional().nullable(),
