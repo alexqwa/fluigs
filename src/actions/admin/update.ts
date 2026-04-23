@@ -13,7 +13,6 @@ const userInputSchema = UserInputSchema.omit({
   role: true,
   image: true,
   banned: true,
-  fluigs: true,
   sessions: true,
   accounts: true,
   banReason: true,
@@ -25,33 +24,25 @@ const userInputSchema = UserInputSchema.omit({
 
 type UserInputSchema = z.infer<typeof userInputSchema>
 
-export async function Create(data: UserInputSchema) {
+export async function Update(id: string, data: UserInputSchema) {
   const session = await getServerSession()
   const user = session?.user
 
   if (!user) throw new Error('Unauthorized')
 
-  const parsed = userInputSchema.safeParse(data)
-
-  if (!parsed.success) {
-    throw new Error('Dados inválidos')
-  }
-
-  const result = await auth.api.createUser({
+  const updated = await auth.api.adminUpdateUser({
     body: {
-      email: data.email,
-      password: String(data.branch),
-      name: data.name,
-      role: 'user',
-      data: { branch: data.branch },
+      userId: id,
+      data: {
+        name: data.name,
+        email: data.email,
+        branch: data.branch,
+        fluigs: data.fluigs,
+      },
     },
     headers: await headers(),
   })
 
-  if (!result?.user) {
-    throw new Error('Erro ao criar usuário')
-  }
-
   updateTag('stores')
-  return result.user
+  return updated
 }

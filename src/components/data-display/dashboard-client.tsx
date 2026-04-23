@@ -8,9 +8,9 @@ import { type DateRange } from 'react-day-picker'
 import { Input } from '@/components/ui/input'
 import { DatePicker } from '@/components/data-display/date-picker'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { FormCreateFluig } from '@/components/forms/form-create-fluig'
 import { AnalyticsCard } from '@/components/data-display/analytics-card'
 import { FluigDataTable } from '@/components/data-display/fluig-data-table'
+import { FormCreateFluig } from '@/components/forms/fluig/form-create-fluig'
 
 import { Create } from '@/actions/fluig/create'
 

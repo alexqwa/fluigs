@@ -1,4 +1,4 @@
-import FormLoginAdmin from '@/components/forms/form-login-admin'
+import { FormAuthAdmin } from '@/components/forms/auth/form-auth-admin'
 
 export const metadata = {
   title: 'Autenticação - Controle de Fluigs',
@@ -9,7 +9,7 @@ export default function HomeAdmin() {
   return (
     <div className="bg-ring/15 inset-0 flex min-h-svh w-full items-center justify-center px-6">
       <div className="w-full max-w-lg">
-        <FormLoginAdmin />
+        <FormAuthAdmin />
       </div>
     </div>
   )

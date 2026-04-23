@@ -9,8 +9,8 @@ import { useDataOptimistic } from '@/hooks/use-data-optimistic'
 
 import { Input } from '@/components/ui/input'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { FormCreateBranch } from '@/components/forms/form-create-branch'
 import { StoreDataTable } from '@/components/data-display/store-data-table'
+import { FormCreateBranch } from '@/components/forms/branch/form-create-branch'
 
 const userSchemaInput = UserInputSchema.omit({
   id: true,
@@ -92,7 +92,6 @@ export function StoresClient({ users }: { users: UserSchema[] }) {
     } catch {
       optimistic.rollback()
     }
-
   }
 
   return (

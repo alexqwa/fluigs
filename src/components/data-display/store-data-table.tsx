@@ -51,9 +51,12 @@ import {
   TableHeader,
 } from '@/components/ui/table'
 
-import { authClient } from '@/lib/auth-client'
+import { Delete } from '@/actions/admin/delete'
+import { Update } from '@/actions/admin/update'
+
 import { UserInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
+import { FormUpdateBranch } from '@/components/forms/branch/form-update-branch'
 
 const userSchema = UserInputSchema.omit({
   role: true,
@@ -69,6 +72,7 @@ const userSchema = UserInputSchema.omit({
 })
 
 type UserSchema = z.infer<typeof userSchema>
+type UserInputSchema = Omit<UserSchema, 'id'>
 
 type FluigDataTableProps = {
   data: UserSchema[]
@@ -76,6 +80,8 @@ type FluigDataTableProps = {
 }
 
 export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
+  const { update, remove, rollback, confirmUpdate, confirmDelete } = optimistic
+
   const [rowSelection, setRowSelection] = useState({})
   const [editingRow, setEditingRow] = useState<UserSchema | null>(null)
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -85,6 +91,43 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
     pageIndex: 0,
     pageSize: 10,
   })
+
+  function toUserSchema(
+    updatedUser: Awaited<ReturnType<typeof Update>>,
+    input: UserInputSchema
+  ) {
+    return {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      branch: input.branch,
+      fluigs: [],
+    }
+  }
+
+  async function handleUpdate(id: string, formData: UserInputSchema) {
+    update(id, formData)
+
+    try {
+      const updated = await Update(id, formData)
+
+      confirmUpdate(id, toUserSchema(updated, formData))
+    } catch {
+      rollback()
+    }
+  }
+
+  async function handleDelete(id: string) {
+    remove(id)
+
+    try {
+      await Delete(id)
+
+      confirmDelete(id)
+    } catch {
+      rollback()
+    }
+  }
 
   const columns = useMemo<ColumnDef<UserSchema>[]>(
     () => [
@@ -166,6 +209,7 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
                   <DropdownMenuItem
                     variant="destructive"
                     className="cursor-pointer"
+                    onClick={() => handleDelete(id)}
                   >
                     <IconTrashX />
                     Deletar
@@ -333,6 +377,19 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
           </div>
         </div>
       </div>
+      <FormUpdateBranch
+        defaultValues={editingRow}
+        open={!!editingRow}
+        onOpenChange={(open) => {
+          if (!open) setEditingRow(null)
+        }}
+        onSubmit={(formData) => {
+          if (!editingRow) return
+
+          handleUpdate(editingRow.id, formData)
+          setEditingRow(null)
+        }}
+      />
     </div>
   )
 }

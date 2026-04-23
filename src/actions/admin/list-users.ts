@@ -20,7 +20,7 @@ export async function ListUsers() {
     include: {
       fluigs: true,
     },
-    orderBy: { branch: 'asc' },
+    orderBy: { createdAt: 'desc' },
   })
 
   return users

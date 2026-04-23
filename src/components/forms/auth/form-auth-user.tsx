@@ -23,7 +23,7 @@ import {
   CardHeader,
   CardContent,
   CardDescription,
-} from '../ui/card'
+} from '../../ui/card'
 import {
   InputOTP,
   InputOTPSlot,
@@ -41,7 +41,7 @@ import {
 import data from '@/hooks/data.json'
 import { useFormLogin } from '@/hooks/auth/use-form-login'
 
-export function FormLogin() {
+export function FormAuthUser() {
   const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
     useFormLogin()
 

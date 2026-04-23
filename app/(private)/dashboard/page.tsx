@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
-import { Queries } from '@/actions/fluig/queries'
+import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
 import { DashboardClient } from '@/components/data-display/dashboard-client'
@@ -14,7 +14,7 @@ export const metadata = {
 
 async function DashboardData({ userId }: { userId: string }) {
   'use cache'
-  const fluigs = await Queries(userId)
+  const fluigs = await ListFluigs(userId)
 
   cacheTag(`fluigs-${userId}`)
   cacheLife('hours')

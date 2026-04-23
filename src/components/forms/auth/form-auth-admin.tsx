@@ -24,7 +24,7 @@ import { Button } from '@/components/ui/button'
 
 import { useFormLoginAdmin } from '@/hooks/auth/use-form-login-admin'
 
-export default function FormLoginAdmin() {
+export function FormAuthAdmin() {
   const { error, form, onSubmit } = useFormLoginAdmin()
 
   return (

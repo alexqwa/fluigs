@@ -7,7 +7,7 @@ import { useState, useMemo, ElementType } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { FormUpdateFluig } from '@/components/forms/form-update-fluig'
+import { FormUpdateFluig } from '@/components/forms/fluig/form-update-fluig'
 import {
   flexRender,
   useReactTable,

@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
-import { Queries } from '@/actions/fluig/queries'
+import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
 import { Skeleton } from '@/components/ui/skeleton'
@@ -38,7 +38,7 @@ function DataTableSkeleton() {
 
 async function ReportData({ userId }: { userId: string }) {
   'use cache'
-  const fluigs = await Queries(userId)
+  const fluigs = await ListFluigs(userId)
 
   cacheTag(`fluigs-${userId}`)
   cacheLife('days')

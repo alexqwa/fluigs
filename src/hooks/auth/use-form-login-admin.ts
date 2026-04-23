@@ -29,7 +29,7 @@ export function useFormLoginAdmin() {
         return
       }
 
-      router.replace('/admin/data')
+      router.replace('/admin/upload')
       router.refresh()
       reset()
     } catch (error) {

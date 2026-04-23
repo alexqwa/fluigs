@@ -61,8 +61,8 @@ type FluigSchema = z.infer<typeof fluigSchema>
 type FluigInput = Omit<FluigSchema, 'date'> & { date: Date | string }
 
 interface FormUpdateFluigProps {
-  defaultValues?: FluigInput | null
   open: boolean
+  defaultValues?: FluigInput | null
   onSubmit: (data: FluigSchema) => void
   onOpenChange: (open: boolean) => void
 }
