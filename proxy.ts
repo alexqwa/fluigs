@@ -6,13 +6,23 @@ type PublicRoute = {
   whenAuthenticated: 'redirect' | 'next'
 }
 
+type AdminRoute = {
+  path: string
+  whenAuthenticated: 'redirect' | 'next'
+}
+
 const publicRoutes: readonly PublicRoute[] = [
   { path: '/', whenAuthenticated: 'redirect' },
-  { path: '/account', whenAuthenticated: 'next' },
   { path: '/dashboard', whenAuthenticated: 'next' },
-  { path: '/notifications', whenAuthenticated: 'next' },
   { path: '/reports', whenAuthenticated: 'next' },
 ] as const
+
+const adminRoutes: readonly AdminRoute[] = [
+  { path: '/admin', whenAuthenticated: 'redirect' },
+  { path: '/admin/upload', whenAuthenticated: 'next' },
+  { path: '/admin/settings', whenAuthenticated: 'next' },
+  { path: '/admin/stores', whenAuthenticated: 'next' },
+]
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'
 
@@ -24,14 +34,14 @@ export async function proxy(request: NextRequest) {
 
   const isAuthenticated = !!session
 
-  // Verifica se a rota é pública
   const publicRoute = publicRoutes.find((route) => route.path === path)
+  const adminRoute = adminRoutes.find((route) => route.path === path)
 
-  if (!isAuthenticated && publicRoute) {
+  if (!isAuthenticated && publicRoute && adminRoute) {
     return NextResponse.next()
   }
 
-  if (!isAuthenticated && !publicRoute) {
+  if (!isAuthenticated && !publicRoute && !adminRoute) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE
     return NextResponse.redirect(redirectUrl)
@@ -44,6 +54,16 @@ export async function proxy(request: NextRequest) {
   ) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/dashboard'
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  if (
+    isAuthenticated &&
+    adminRoute &&
+    adminRoute.whenAuthenticated === 'redirect'
+  ) {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = '/admin/upload'
     return NextResponse.redirect(redirectUrl)
   }
 

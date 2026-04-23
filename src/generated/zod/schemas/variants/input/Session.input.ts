@@ -9,7 +9,8 @@ export const SessionInputSchema = z.object({
     ipAddress: z.string().optional().nullable(),
     userAgent: z.string().optional().nullable(),
     userId: z.string(),
-    user: z.unknown()
+    user: z.unknown(),
+    impersonatedBy: z.string().optional().nullable()
 }).strict();
 
 export type SessionInputType = z.infer<typeof SessionInputSchema>;

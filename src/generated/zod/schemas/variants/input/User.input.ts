@@ -10,7 +10,12 @@ export const UserInputSchema = z.object({
     updatedAt: z.date(),
     fluigs: z.array(z.unknown()),
     accounts: z.array(z.unknown()),
-    sessions: z.array(z.unknown())
+    sessions: z.array(z.unknown()),
+    branch: z.number().int(),
+    role: z.string().optional().nullable(),
+    banned: z.boolean().optional().nullable(),
+    banReason: z.string().optional().nullable(),
+    banExpires: z.date().optional().nullable()
 }).strict();
 
 export type UserInputType = z.infer<typeof UserInputSchema>;

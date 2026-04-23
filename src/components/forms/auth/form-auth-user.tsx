@@ -2,8 +2,9 @@
 
 import { Controller } from 'react-hook-form'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { IconLoader } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, ChevronRight, Loader2, Mail } from 'lucide-react'
+import { Check, ChevronRight, Mail } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,7 +23,7 @@ import {
   CardHeader,
   CardContent,
   CardDescription,
-} from '../ui/card'
+} from '@/components/ui/card'
 import {
   InputOTP,
   InputOTPSlot,
@@ -37,10 +38,15 @@ import {
   FieldContent,
 } from '@/components/ui/field'
 
-import data from '@/hooks/data.json'
-import { useFormLogin } from '@/hooks/use-form-login'
+import { useFormLogin } from '@/hooks/auth/use-form-login'
 
-export function FormLogin() {
+type FormAuthUserProps = {
+  name: string
+  email: string
+  branch: number
+}[]
+
+export function FormAuthUser({ data }: { data: FormAuthUserProps }) {
   const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
     useFormLogin()
 
@@ -58,7 +64,7 @@ export function FormLogin() {
         <form id="form-rhf-select" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup className="flex-col! gap-6!">
             <Controller
-              name="value"
+              name="email"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field
@@ -70,18 +76,14 @@ export function FormLogin() {
                       Filial
                     </FieldLabel>
                     <Select
-                      name={field.name}
                       value={field.value}
                       onValueChange={(value) => {
                         field.onChange(value)
 
-                        const selected = data.stores.find(
-                          (store) => store.value === value
-                        )
+                        const selected = data.find((org) => org.email === value)
 
                         if (selected) {
                           form.setValue('email', selected.email)
-                          form.setValue('name', selected.label)
                         }
                       }}
                       disabled={codeHasSend}
@@ -96,13 +98,11 @@ export function FormLogin() {
                       <SelectContent className="dark:bg-card border-border border">
                         <SelectGroup>
                           <SelectLabel>Selecionar Filial</SelectLabel>
-                          {data.stores
-                            .sort((a, b) => Number(a.value) - Number(b.value))
-                            .map((store) => (
-                              <SelectItem key={store.value} value={store.value}>
-                                Filial {store.value} - {store.label}
-                              </SelectItem>
-                            ))}
+                          {data.map((org) => (
+                            <SelectItem key={org.branch} value={org.email}>
+                              Filial {org.branch} - {org.name}
+                            </SelectItem>
+                          ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -227,10 +227,7 @@ export function FormLogin() {
             className="group/button group relative inline-flex min-h-12 w-full flex-1 overflow-hidden px-6 py-3 text-base font-semibold whitespace-nowrap transition-all select-none hover:cursor-pointer lg:min-w-fit"
           >
             {form.formState.isSubmitting && (
-              <div className="relative">
-                <Loader2 className="text-primary-foreground absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2 animate-spin" />
-                <Loader2 className="text-primary-foreground absolute top-1/2 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2 scale-x-[-1] transform animate-spin" />
-              </div>
+              <IconLoader className="text-primary-foreground animate-spin" />
             )}
             {!form.formState.isSubmitting && (
               <span className="mx-3.5 transition-all duration-400 group-hover:mx-0 group-hover:mr-6.5">

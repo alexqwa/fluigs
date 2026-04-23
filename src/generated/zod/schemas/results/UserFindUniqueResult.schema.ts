@@ -9,5 +9,10 @@ export const UserFindUniqueResultSchema = z.nullable(z.object({
   updatedAt: z.date(),
   fluigs: z.array(z.unknown()),
   accounts: z.array(z.unknown()),
-  sessions: z.array(z.unknown())
+  sessions: z.array(z.unknown()),
+  branch: z.number().int(),
+  role: z.string().optional(),
+  banned: z.boolean().optional(),
+  banReason: z.string().optional(),
+  banExpires: z.date().optional()
 }));

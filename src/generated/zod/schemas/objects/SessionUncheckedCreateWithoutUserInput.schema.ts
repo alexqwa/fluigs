@@ -9,7 +9,8 @@ const makeSchema = () => z.object({
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   ipAddress: z.string().optional().nullable(),
-  userAgent: z.string().optional().nullable()
+  userAgent: z.string().optional().nullable(),
+  impersonatedBy: z.string().optional().nullable()
 }).strict();
 export const SessionUncheckedCreateWithoutUserInputObjectSchema: z.ZodType<Prisma.SessionUncheckedCreateWithoutUserInput> = makeSchema() as unknown as z.ZodType<Prisma.SessionUncheckedCreateWithoutUserInput>;
 export const SessionUncheckedCreateWithoutUserInputObjectZodSchema = makeSchema();

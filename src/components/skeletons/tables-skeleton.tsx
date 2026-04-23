@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 
-export function DataTableSkeleton() {
+export function DashboardSkeleton() {
   return (
     <div className="mt-10 space-y-5">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -37,6 +37,30 @@ export function DataTableSkeleton() {
           {Array.from({ length: 96 }).map((_, i) => (
             <div key={i} className="p-2">
               <Skeleton className="h-6 w-full" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function ReportSkeleton() {
+  return (
+    <div className="mt-10 space-y-5">
+      <div className="block space-y-3 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
+        <div className="flex flex-col gap-3 md:flex-row">
+          <Skeleton className="bg-muted h-8 w-full md:w-42.5" />
+          <Skeleton className="bg-muted h-8 w-full md:w-42.5" />
+        </div>
+        <Skeleton className="bg-muted h-8 w-full md:w-42.5" />
+      </div>
+      <div className="border-border divide-border w-full flex-col divide-y overflow-hidden rounded-lg border">
+        <div className="bg-muted h-10 w-full" />
+        <div className="bg-card divide-border grid grid-cols-8 divide-x divide-y">
+          {Array.from({ length: 96 }).map((_, i) => (
+            <div key={i} className="p-2">
+              <Skeleton className="bg-muted h-6 w-full" />
             </div>
           ))}
         </div>

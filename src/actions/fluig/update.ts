@@ -27,10 +27,9 @@ function calculateCostTotal(cost: string, quantity: string): string {
 
 export async function Update(id: string, data: FluigSchema) {
   const session = await getServerSession()
+  const user = session?.user
 
-  if (!session?.user) {
-    throw new Error('Unauthorized')
-  }
+  if (!user) throw new Error('Unauthorized')
 
   const updated = await prisma.fluig.update({
     where: {

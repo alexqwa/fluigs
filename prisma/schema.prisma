@@ -41,6 +41,12 @@ model User {
   fluigs        Fluig[]
   accounts      Account[]
   sessions      Session[]
+  branch        Int       @unique
+
+  role       String?
+  banned     Boolean?  @default(false)
+  banReason  String?
+  banExpires DateTime?
 
   @@map("user")
 }
@@ -55,6 +61,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
 
   @@index([userId])
   @@map("session")

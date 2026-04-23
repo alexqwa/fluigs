@@ -10,7 +10,12 @@ export const UserModelSchema = z.object({
     updatedAt: z.date(),
     fluigs: z.array(z.unknown()),
     accounts: z.array(z.unknown()),
-    sessions: z.array(z.unknown())
+    sessions: z.array(z.unknown()),
+    branch: z.number().int(),
+    role: z.string().nullable(),
+    banned: z.boolean().nullable(),
+    banReason: z.string().nullable(),
+    banExpires: z.date().nullable()
 }).strict();
 
 export type UserPureType = z.infer<typeof UserModelSchema>;

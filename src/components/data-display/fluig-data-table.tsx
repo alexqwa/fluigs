@@ -7,7 +7,7 @@ import { useState, useMemo, ElementType } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { FormUpdateFluig } from '@/components/forms/form-update-fluig'
+import { FormUpdateFluig } from '@/components/forms/fluig/form-update-fluig'
 import {
   flexRender,
   useReactTable,
@@ -61,7 +61,7 @@ import { Delete } from '@/actions/fluig/delete'
 import { Update } from '@/actions/fluig/update'
 
 import { FluigInputSchema } from '@/generated/zod/schemas'
-import { useFluigOptimistic } from '@/hooks/use-fluig-optimistic'
+import { useDataOptimistic } from '@/hooks/use-data-optimistic'
 
 const fluigSchema = FluigInputSchema.omit({
   user: true,
@@ -82,7 +82,7 @@ type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
 type FluigDataTableProps = {
   data: FluigSchema[]
-  optimistic: ReturnType<typeof useFluigOptimistic<FluigSchema>>
+  optimistic: ReturnType<typeof useDataOptimistic<FluigSchema>>
 }
 
 const statusMap: Record<

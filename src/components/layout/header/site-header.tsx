@@ -15,32 +15,26 @@ import {
 import { useIsMobile } from '@/hooks/use-mobile'
 import { ThemeToggle } from '@/components/data-display/theme-toggle'
 
-const data = [
-  {
-    title: 'Dashboard',
-    url: '/dashboard',
-  },
-  {
-    title: 'Relatórios',
-    url: '/reports',
-  },
-  {
-    title: 'Notificações',
-    url: '/notifications',
-  },
-  {
-    title: 'Minha conta',
-    url: '/account',
-  },
-]
+type NavItem = {
+  title: string
+  url: string
+  icon?: string
+}
 
-export function SiteHeader({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+type SiteHeaderProps = Readonly<{
+  children: React.ReactNode
+  navMain: NavItem[]
+}>
+
+export function SiteHeader({ children, navMain }: SiteHeaderProps) {
   const isMobile = useIsMobile()
   const pathname = usePathname()
 
-  const pageTitle = data.find((item) => item.url === pathname)
+  const isAdminRoute = pathname.startsWith('/admin')
+  const pageTitle = navMain.find((item) => item.url === pathname)
+
+  const baseURL = isAdminRoute ? '/admin/data' : '/dashboard'
+  const baseLABEL = isAdminRoute ? 'Admin' : 'Principal'
 
   return (
     <SidebarInset>
@@ -59,10 +53,10 @@ export function SiteHeader({
             <BreadcrumbList>
               <BreadcrumbItem>
                 <Link
-                  href="/dashboard"
+                  href={baseURL}
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Principal
+                  {baseLABEL}
                 </Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

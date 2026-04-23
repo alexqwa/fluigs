@@ -1,6 +1,7 @@
 import { nextCookies } from 'better-auth/next-js'
 import { createAuthClient } from 'better-auth/react'
 import {
+  adminClient,
   emailOTPClient,
   inferAdditionalFields,
 } from 'better-auth/client/plugins'
@@ -9,6 +10,7 @@ import { auth } from '@/lib/auth'
 
 export const authClient = createAuthClient({
   plugins: [
+    adminClient(),
     nextCookies(),
     emailOTPClient(),
     inferAdditionalFields<typeof auth>(),

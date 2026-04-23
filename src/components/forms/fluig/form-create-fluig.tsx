@@ -38,6 +38,7 @@ import {
 import {
   Drawer,
   DrawerTitle,
+  DrawerClose,
   DrawerHeader,
   DrawerFooter,
   DrawerTrigger,
@@ -310,7 +311,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                 )}
                 {!form.formState.isSubmitting && 'Adicionar fluig'}
               </Button>
-              <DialogClose asChild>
+              <DrawerClose asChild>
                 <Button
                   variant="outline"
                   onClick={() => form.reset()}
@@ -318,7 +319,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                 >
                   Cancelar
                 </Button>
-              </DialogClose>
+              </DrawerClose>
             </DrawerFooter>
           </form>
         </DrawerContent>

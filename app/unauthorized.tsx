@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -13,8 +15,10 @@ export default function Unauthorized() {
           </p>
         </div>
         <div>
-          <Button asChild>
-            <Link href="/">Voltar para o login</Link>
+          <Button asChild variant={'default'} className="cursor-pointer">
+            <Link href="/">
+              <span>Voltar para o login</span>
+            </Link>
           </Button>
         </div>
       </div>

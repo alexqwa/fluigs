@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { User } from 'better-auth'
 import { useRouter } from 'next/navigation'
-import { LogOut, ChartPie, FileChartPie, ChevronsUpDown } from 'lucide-react'
+import { LogOut, ChevronsUpDown } from 'lucide-react'
+import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
@@ -25,9 +26,14 @@ import { authClient } from '@/lib/auth-client'
 
 interface NavUserProps {
   user: User
+  navMain: {
+    title: string
+    url: string
+    icon: string
+  }[]
 }
 
-export function NavUser({ user }: NavUserProps) {
+export function NavUser({ user, navMain }: NavUserProps) {
   const router = useRouter()
 
   async function handleSignOut() {
@@ -95,25 +101,25 @@ export function NavUser({ user }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/dashboard">
-                  <ChartPie />
-                  Dashboard
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/reports">
-                  <FileChartPie />
-                  Relatórios
-                </Link>
-              </DropdownMenuItem>
+              {navMain.map((item, i) => (
+                <DropdownMenuItem key={i} asChild className="cursor-pointer">
+                  <Link href={item.url}>
+                    <DynamicIcon
+                      size={24}
+                      name={item.icon as IconName}
+                      className="text-primary"
+                    />
+                    {item.title}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleSignOut}
               className="cursor-pointer"
             >
-              <LogOut />
+              <LogOut className="text-primary" size={24} />
               Sair
             </DropdownMenuItem>
           </DropdownMenuContent>

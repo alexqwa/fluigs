@@ -10,7 +10,12 @@ export const UserFindManyResultSchema = z.object({
   updatedAt: z.date(),
   fluigs: z.array(z.unknown()),
   accounts: z.array(z.unknown()),
-  sessions: z.array(z.unknown())
+  sessions: z.array(z.unknown()),
+  branch: z.number().int(),
+  role: z.string().optional(),
+  banned: z.boolean().optional(),
+  banReason: z.string().optional(),
+  banExpires: z.date().optional()
 })),
   pagination: z.object({
   page: z.number().int().min(1),

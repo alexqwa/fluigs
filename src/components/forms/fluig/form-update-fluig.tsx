@@ -2,7 +2,7 @@
 
 import z from 'zod'
 import dayjs from 'dayjs'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { ptBR } from 'react-day-picker/locale'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -37,6 +37,7 @@ import {
 import {
   Drawer,
   DrawerTitle,
+  DrawerClose,
   DrawerHeader,
   DrawerFooter,
   DrawerContent,
@@ -60,8 +61,8 @@ type FluigSchema = z.infer<typeof fluigSchema>
 type FluigInput = Omit<FluigSchema, 'date'> & { date: Date | string }
 
 interface FormUpdateFluigProps {
-  defaultValues?: FluigInput | null
   open: boolean
+  defaultValues?: FluigInput | null
   onSubmit: (data: FluigSchema) => void
   onOpenChange: (open: boolean) => void
 }
@@ -319,11 +320,11 @@ export function FormUpdateFluig({
                 )}
                 {!form.formState.isSubmitting && 'Salvar alterações'}
               </Button>
-              <DialogClose asChild>
+              <DrawerClose asChild>
                 <Button variant="outline" className="cursor-pointer">
                   Cancelar
                 </Button>
-              </DialogClose>
+              </DrawerClose>
             </DrawerFooter>
           </form>
         </DrawerContent>
