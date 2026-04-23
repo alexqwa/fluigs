@@ -16,5 +16,6 @@ export async function Delete(id: string) {
     where: { id },
   })
 
+  updateTag('orgs')
   updateTag('stores')
 }

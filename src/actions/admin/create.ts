@@ -52,6 +52,7 @@ export async function Create(data: UserInputSchema) {
     throw new Error('Erro ao criar usuário')
   }
 
+  updateTag('orgs')
   updateTag('stores')
   return result.user
 }

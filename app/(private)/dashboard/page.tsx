@@ -4,8 +4,8 @@ import { cacheLife, cacheTag } from 'next/cache'
 import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
+import { DashboardSkeleton } from '@/components/skeletons/tables-skeleton'
 import { DashboardClient } from '@/components/data-display/dashboard-client'
-import { DataTableSkeleton } from '@/components/data-display/data-table-skeleton'
 
 export const metadata = {
   title: 'Dashboard',
@@ -39,7 +39,7 @@ export default async function Dashboard() {
           Tenha uma visão completa e em tempo real dos seus fluigs
         </p>
       </div>
-      <Suspense fallback={<DataTableSkeleton />}>
+      <Suspense fallback={<DashboardSkeleton />}>
         <DashboardData userId={session.user.id} />
       </Suspense>
     </main>

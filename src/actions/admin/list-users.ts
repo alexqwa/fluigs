@@ -25,3 +25,21 @@ export async function ListUsers() {
 
   return users
 }
+
+export async function ListOrganizations() {
+  const orgs = await prisma.user.findMany({
+    where: {
+      role: 'user',
+    },
+    select: {
+      name: true,
+      email: true,
+      branch: true,
+    },
+    orderBy: {
+      branch: 'asc',
+    },
+  })
+
+  return orgs
+}

@@ -3,7 +3,7 @@ import { cacheTag, cacheLife } from 'next/cache'
 
 import { ListUsers } from '@/actions/admin/list-users'
 
-import { Skeleton } from '@/components/ui/skeleton'
+import { ReportSkeleton } from '@/components/skeletons/tables-skeleton'
 import { StoresClient } from '@/components/data-display/stores-client'
 
 export const metadata = {
@@ -21,30 +21,6 @@ async function StoreData() {
   return <StoresClient users={users} />
 }
 
-function DataTableSkeleton() {
-  return (
-    <div className="mt-10 space-y-5">
-      <div className="block space-y-3 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
-        <div className="flex flex-col gap-3 md:flex-row">
-          <Skeleton className="h-8 w-full md:w-42.5" />
-          <Skeleton className="h-8 w-full md:w-42.5" />
-        </div>
-        <Skeleton className="h-8 w-full md:w-42.5" />
-      </div>
-      <div className="border-border divide-border w-full flex-col divide-y overflow-hidden rounded-lg border">
-        <div className="h-10 w-full" />
-        <div className="bg-card divide-border grid grid-cols-8 divide-x divide-y">
-          {Array.from({ length: 96 }).map((_, i) => (
-            <div key={i} className="p-2">
-              <Skeleton className="h-6 w-full" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function Stores() {
   return (
     <main>
@@ -54,7 +30,7 @@ export default function Stores() {
           Gerencie todas as suas lojas com praticidade
         </p>
       </div>
-      <Suspense fallback={<DataTableSkeleton />}>
+      <Suspense fallback={<ReportSkeleton />}>
         <StoreData />
       </Suspense>
     </main>

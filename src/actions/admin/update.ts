@@ -43,6 +43,7 @@ export async function Update(id: string, data: UserInputSchema) {
     headers: await headers(),
   })
 
+  updateTag('orgs')
   updateTag('stores')
   return updated
 }

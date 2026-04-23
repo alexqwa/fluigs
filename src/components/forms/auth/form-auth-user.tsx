@@ -23,7 +23,7 @@ import {
   CardHeader,
   CardContent,
   CardDescription,
-} from '../../ui/card'
+} from '@/components/ui/card'
 import {
   InputOTP,
   InputOTPSlot,
@@ -38,10 +38,15 @@ import {
   FieldContent,
 } from '@/components/ui/field'
 
-import data from '@/hooks/data.json'
 import { useFormLogin } from '@/hooks/auth/use-form-login'
 
-export function FormAuthUser() {
+type FormAuthUserProps = {
+  name: string
+  email: string
+  branch: number
+}[]
+
+export function FormAuthUser({ data }: { data: FormAuthUserProps }) {
   const { form, error, reset, sendCode, cooldown, onSubmit, codeHasSend } =
     useFormLogin()
 
@@ -75,9 +80,7 @@ export function FormAuthUser() {
                       onValueChange={(value) => {
                         field.onChange(value)
 
-                        const selected = data.stores.find(
-                          (store) => store.email === value
-                        )
+                        const selected = data.find((org) => org.email === value)
 
                         if (selected) {
                           form.setValue('email', selected.email)
@@ -95,13 +98,11 @@ export function FormAuthUser() {
                       <SelectContent className="dark:bg-card border-border border">
                         <SelectGroup>
                           <SelectLabel>Selecionar Filial</SelectLabel>
-                          {data.stores
-                            .sort((a, b) => Number(a.value) - Number(b.value))
-                            .map((store) => (
-                              <SelectItem key={store.value} value={store.email}>
-                                Filial {store.value} - {store.label}
-                              </SelectItem>
-                            ))}
+                          {data.map((org) => (
+                            <SelectItem key={org.branch} value={org.email}>
+                              Filial {org.branch} - {org.name}
+                            </SelectItem>
+                          ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>

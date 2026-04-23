@@ -4,36 +4,12 @@ import { cacheLife, cacheTag } from 'next/cache'
 import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
-import { Skeleton } from '@/components/ui/skeleton'
+import { ReportSkeleton } from '@/components/skeletons/tables-skeleton'
 import { ReportDataTable } from '@/components/data-display/report-data-table'
 
 export const metadata = {
   title: 'Relatórios',
   description: 'Simplifique a gestão dos seus relatórios em um só lugar',
-}
-
-function DataTableSkeleton() {
-  return (
-    <div className="mt-10 space-y-5">
-      <div className="block space-y-3 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
-        <div className="flex flex-col gap-3 md:flex-row">
-          <Skeleton className="bg-muted h-8 w-full md:w-42.5" />
-          <Skeleton className="bg-muted h-8 w-full md:w-42.5" />
-        </div>
-        <Skeleton className="bg-muted h-8 w-full md:w-42.5" />
-      </div>
-      <div className="border-border divide-border w-full flex-col divide-y overflow-hidden rounded-lg border">
-        <div className="bg-muted h-10 w-full" />
-        <div className="bg-card divide-border grid grid-cols-8 divide-x divide-y">
-          {Array.from({ length: 96 }).map((_, i) => (
-            <div key={i} className="p-2">
-              <Skeleton className="bg-muted h-6 w-full" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
 }
 
 async function ReportData({ userId }: { userId: string }) {
@@ -63,7 +39,7 @@ export default async function Reports() {
           Simplifique a gestão dos seus relatórios em um só lugar
         </p>
       </div>
-      <Suspense fallback={<DataTableSkeleton />}>
+      <Suspense fallback={<ReportSkeleton />}>
         <ReportData userId={session.user.id} />
       </Suspense>
     </main>
