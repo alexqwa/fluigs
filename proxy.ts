@@ -60,11 +60,9 @@ function matchRoute(
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl
 
-  const [isAuthenticated, publicRoute, adminRoute] = await Promise.all([
-    isValidSession(request),
-    Promise.resolve(matchRoute(PUBLIC_ROUTES, pathname)),
-    Promise.resolve(matchRoute(ADMIN_ROUTES, pathname)),
-  ])
+  const isAuthenticated = await isValidSession(request)
+  const publicRoute = matchRoute(PUBLIC_ROUTES, pathname)
+  const adminRoute = matchRoute(ADMIN_ROUTES, pathname)
 
   const isKnownRoute = !!publicRoute || !!adminRoute
 
