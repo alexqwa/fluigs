@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { jwtVerify } from 'jose'
 import { getSessionCookie } from 'better-auth/cookies'
+import { NextRequest, NextResponse } from 'next/server'
 
 type PublicRoute = {
   path: string
@@ -22,24 +23,30 @@ const adminRoutes: readonly AdminRoute[] = [
   { path: '/admin/upload', whenAuthenticated: 'next' },
   { path: '/admin/settings', whenAuthenticated: 'next' },
   { path: '/admin/stores', whenAuthenticated: 'next' },
-]
+] as const
+
+async function isValidSession(request: NextRequest): Promise<boolean> {
+  const sessionCookie = getSessionCookie(request)
+  if (!sessionCookie) return false
+
+  try {
+    const secret = new TextEncoder().encode(process.env.BETTER_AUTH_SECRET)
+    await jwtVerify(sessionCookie, secret)
+    return true
+  } catch (error) {
+    return false
+  }
+}
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
 
-  // valida sessão usando Better Auth
-  const session = getSessionCookie(request)
-
-  const isAuthenticated = !!session
+  const isAuthenticated = await isValidSession(request)
 
   const publicRoute = publicRoutes.find((route) => route.path === path)
   const adminRoute = adminRoutes.find((route) => route.path === path)
-
-  if (!isAuthenticated && publicRoute && adminRoute) {
-    return NextResponse.next()
-  }
 
   if (!isAuthenticated && !publicRoute && !adminRoute) {
     const redirectUrl = request.nextUrl.clone()
@@ -47,21 +54,13 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl)
   }
 
-  if (
-    isAuthenticated &&
-    publicRoute &&
-    publicRoute.whenAuthenticated === 'redirect'
-  ) {
+  if (isAuthenticated && publicRoute?.whenAuthenticated === 'redirect') {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/dashboard'
     return NextResponse.redirect(redirectUrl)
   }
 
-  if (
-    isAuthenticated &&
-    adminRoute &&
-    adminRoute.whenAuthenticated === 'redirect'
-  ) {
+  if (isAuthenticated && adminRoute?.whenAuthenticated === 'redirect') {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/admin/upload'
     return NextResponse.redirect(redirectUrl)
