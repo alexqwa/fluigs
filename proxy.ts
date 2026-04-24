@@ -1,69 +1,85 @@
-import { jwtVerify } from 'jose'
 import { getSessionCookie } from 'better-auth/cookies'
 import { NextRequest, NextResponse } from 'next/server'
 
-type PublicRoute = {
+type RouteConfig = {
   path: string
   whenAuthenticated: 'redirect' | 'next'
 }
 
-type AdminRoute = {
-  path: string
-  whenAuthenticated: 'redirect' | 'next'
-}
-
-const publicRoutes: readonly PublicRoute[] = [
+const PUBLIC_ROUTES: readonly RouteConfig[] = [
   { path: '/', whenAuthenticated: 'redirect' },
-  { path: '/dashboard', whenAuthenticated: 'next' },
   { path: '/reports', whenAuthenticated: 'next' },
+  { path: '/dashboard', whenAuthenticated: 'next' },
 ] as const
 
-const adminRoutes: readonly AdminRoute[] = [
+const ADMIN_ROUTES: readonly RouteConfig[] = [
   { path: '/admin', whenAuthenticated: 'redirect' },
   { path: '/admin/upload', whenAuthenticated: 'next' },
   { path: '/admin/settings', whenAuthenticated: 'next' },
   { path: '/admin/stores', whenAuthenticated: 'next' },
 ] as const
 
+const UNAUTHENTICATED_FALLBACK = '/'
+const AUTHENTICATED_PUBLIC_FALLBACK = '/dashboard'
+const AUTHENTICATED_ADMIN_FALLBACK = '/admin/upload'
+
 async function isValidSession(request: NextRequest): Promise<boolean> {
   const sessionCookie = getSessionCookie(request)
   if (!sessionCookie) return false
 
   try {
-    const secret = new TextEncoder().encode(process.env.BETTER_AUTH_SECRET)
-    await jwtVerify(sessionCookie, secret)
-    return true
-  } catch (error) {
+    const response = await fetch(
+      new URL('/api/auth/get-session', request.nextUrl.origin),
+      {
+        headers: {
+          cookie: request.headers.get('cookie') ?? '',
+        },
+      }
+    )
+
+    const session = await response.json()
+    return !!session?.user
+  } catch {
     return false
   }
 }
 
-const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/'
+function redirect(request: NextRequest, pathname: string): NextResponse {
+  const url = request.nextUrl.clone()
+  url.pathname = pathname
+  return NextResponse.redirect(url)
+}
 
-export async function proxy(request: NextRequest) {
-  const path = request.nextUrl.pathname
+function matchRoute(
+  routes: readonly RouteConfig[],
+  path: string
+): RouteConfig | undefined {
+  return routes.find((route) => route.path === path)
+}
 
-  const isAuthenticated = await isValidSession(request)
+export async function proxy(request: NextRequest): Promise<NextResponse> {
+  const { pathname } = request.nextUrl
 
-  const publicRoute = publicRoutes.find((route) => route.path === path)
-  const adminRoute = adminRoutes.find((route) => route.path === path)
+  const [isAuthenticated, publicRoute, adminRoute] = await Promise.all([
+    isValidSession(request),
+    Promise.resolve(matchRoute(PUBLIC_ROUTES, pathname)),
+    Promise.resolve(matchRoute(ADMIN_ROUTES, pathname)),
+  ])
 
-  if (!isAuthenticated && !publicRoute && !adminRoute) {
-    const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE
-    return NextResponse.redirect(redirectUrl)
+  const isKnownRoute = !!publicRoute || !!adminRoute
+
+  if (!isAuthenticated) {
+    return isKnownRoute
+      ? NextResponse.next()
+      : redirect(request, UNAUTHENTICATED_FALLBACK)
   }
 
-  if (isAuthenticated && publicRoute?.whenAuthenticated === 'redirect') {
-    const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = '/dashboard'
-    return NextResponse.redirect(redirectUrl)
+  if (publicRoute?.whenAuthenticated === 'redirect') {
+    return redirect(request, AUTHENTICATED_PUBLIC_FALLBACK)
   }
 
-  if (isAuthenticated && adminRoute?.whenAuthenticated === 'redirect') {
-    const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = '/admin/upload'
-    return NextResponse.redirect(redirectUrl)
+  if (adminRoute?.whenAuthenticated === 'redirect') {
+    return redirect(request, AUTHENTICATED_ADMIN_FALLBACK)
   }
 
   return NextResponse.next()
