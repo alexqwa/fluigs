@@ -14,13 +14,11 @@ export default function Forbidden() {
             Você não tem permissão para acessar esta página
           </p>
         </div>
-        <div>
-          <Button asChild variant={'default'} className="cursor-pointer">
-            <Link href="/">
-              <span>Voltar para o login</span>
-            </Link>
-          </Button>
-        </div>
+        <Button asChild variant={'default'} className="cursor-pointer">
+          <Link href="/">
+            <span>Voltar para o login</span>
+          </Link>
+        </Button>
       </div>
     </main>
   )

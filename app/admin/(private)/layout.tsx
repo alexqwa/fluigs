@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import { unauthorized, forbidden } from 'next/navigation'
 import { IconLoader } from '@tabler/icons-react'
+import { unauthorized, forbidden } from 'next/navigation'
 
 import { getServerSession } from '@/actions/auth/session'
 
