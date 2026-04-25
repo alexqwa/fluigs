@@ -1,10 +1,13 @@
 'use client'
 
 import z from 'zod'
-import { useState, useMemo } from 'react'
+import dayjs from 'dayjs'
+import { useState, useMemo, ElementType } from 'react'
 
+import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { FormUpdateFluig } from '@/components/forms/form-update-fluig'
 import {
   flexRender,
   useReactTable,
@@ -21,12 +24,15 @@ import {
 } from '@tanstack/react-table'
 import {
   IconTrashX,
+  IconReload,
   IconChevronLeft,
   IconPencilMinus,
   IconDotsVertical,
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
+  IconCircleCheckFilled,
+  IconExclamationCircleFilled,
 } from '@tabler/icons-react'
 import {
   DropdownMenu,
@@ -51,39 +57,64 @@ import {
   TableHeader,
 } from '@/components/ui/table'
 
-import { Delete } from '@/actions/admin/delete'
-import { Update } from '@/actions/admin/update'
+import { Delete } from '@/actions/fluig/delete'
+import { Update } from '@/actions/fluig/update'
 
-import { UserInputSchema } from '@/generated/zod/schemas'
+import { FluigInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
-import { FormUpdateBranch } from '@/components/forms/branch/form-update-branch'
 
-const userSchema = UserInputSchema.omit({
-  role: true,
-  image: true,
-  banned: true,
-  sessions: true,
-  accounts: true,
-  banReason: true,
-  updatedAt: true,
+const fluigSchema = FluigInputSchema.omit({
+  user: true,
+  userId: true,
   createdAt: true,
-  banExpires: true,
-  emailVerified: true,
+}).extend({
+  date: z.date(),
+  code: z.string().min(1, 'Código é obrigatório.'),
+  product: z.string().min(1, 'Produto é obrigatório.'),
+  quantity: z.string().min(1, 'Quantidade é obrigatório.'),
+  nFluig: z.number().min(1, 'Número do fluig é obrigatório.'),
+  cost: z.string().min(1, 'Custo do produto é obrigatório.'),
+  status: z.enum(['Approved', 'Pending', 'Not_Approved']),
 })
 
-type UserSchema = z.infer<typeof userSchema>
-type UserInputSchema = Omit<UserSchema, 'id'>
+type FluigSchema = z.infer<typeof fluigSchema>
+type FluigStatus = 'Approved' | 'Pending' | 'Not_Approved'
 
 type FluigDataTableProps = {
-  data: UserSchema[]
-  optimistic: ReturnType<typeof useDataOptimistic<UserSchema>>
+  data: FluigSchema[]
+  optimistic: ReturnType<typeof useDataOptimistic<FluigSchema>>
 }
 
-export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
+const statusMap: Record<
+  FluigStatus,
+  {
+    label: string
+    icon: ElementType
+    color: string
+  }
+> = {
+  Approved: {
+    label: 'Aprovado',
+    icon: IconCircleCheckFilled,
+    color: 'text-green-500',
+  },
+  Pending: {
+    label: 'Aguardando',
+    icon: IconReload,
+    color: 'text-yellow-400 animate-spin duration-300',
+  },
+  Not_Approved: {
+    label: 'Não Aprovado',
+    icon: IconExclamationCircleFilled,
+    color: 'text-red-400',
+  },
+}
+
+export function FluigDataTable({ data, optimistic }: FluigDataTableProps) {
   const { update, remove, rollback, confirmUpdate, confirmDelete } = optimistic
 
   const [rowSelection, setRowSelection] = useState({})
-  const [editingRow, setEditingRow] = useState<UserSchema | null>(null)
+  const [editingRow, setEditingRow] = useState<FluigSchema | null>(null)
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
@@ -92,26 +123,16 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
     pageSize: 10,
   })
 
-  function toUserSchema(
-    updatedUser: Awaited<ReturnType<typeof Update>>,
-    input: UserInputSchema
+  async function handleUpdate(
+    id: string,
+    formData: Omit<FluigSchema, 'id' | 'costTotal'>
   ) {
-    return {
-      id: updatedUser.id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      branch: input.branch,
-      fluigs: [],
-    }
-  }
-
-  async function handleUpdate(id: string, formData: UserInputSchema) {
     update(id, formData)
 
     try {
       const updated = await Update(id, formData)
 
-      confirmUpdate(id, toUserSchema(updated, formData))
+      confirmUpdate(id, updated)
     } catch {
       rollback()
     }
@@ -129,51 +150,102 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
     }
   }
 
-  const columns = useMemo<ColumnDef<UserSchema>[]>(
+  const columns = useMemo<ColumnDef<FluigSchema>[]>(
     () => [
       {
-        accessorKey: 'branch',
-        header: 'Filial',
+        accessorKey: 'code',
+        header: 'Código',
         cell: ({ row }) => (
-          <div className="w-fit pr-8 md:pr-0">
+          <div className="w-24 md:w-fit">
             <span className="text-muted-foreground pr-8 text-sm">
-              {row.original.branch}
+              {row.original.code}
             </span>
           </div>
         ),
       },
       {
-        accessorKey: 'store',
-        header: 'Loja',
+        accessorKey: 'product',
+        header: 'Produto',
         cell: ({ row }) => (
           <div className="w-fit pr-8 md:pr-0">
             <span className="text-muted-foreground text-sm">
-              {row.original.name}
+              {row.original.product}
+            </span>
+          </div>
+        ),
+
+        enableHiding: false,
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantidade',
+        cell: ({ row }) => {
+          const quantity = Intl.NumberFormat('pt-BR', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+          }).format(Number(row.original.quantity))
+
+          return (
+            <div className="w-32 md:w-fit">
+              <span className="text-muted-foreground text-sm">{quantity}</span>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'nFluig',
+        header: 'N Fluig',
+        cell: ({ row }) => (
+          <div className="w-28 md:w-fit">
+            <span className="text-muted-foreground text-sm">
+              {row.original.nFluig}
             </span>
           </div>
         ),
       },
       {
-        accessorKey: 'email',
-        header: 'E-mail',
+        accessorKey: 'date',
+        header: 'Data',
         cell: ({ row }) => (
-          <div className="w-fit pr-8 md:pr-0">
+          <div className="w-28 md:w-fit">
             <span className="text-muted-foreground text-sm">
-              {row.original.email}
+              {dayjs(row.original.date).format('DD/MM/YYYY')}
             </span>
           </div>
         ),
       },
       {
-        accessorKey: 'fluigs',
-        header: 'Fluigs',
-        cell: ({ row }) => (
-          <div className="w-fit pr-8 md:pr-0">
-            <span className="text-muted-foreground text-sm">
-              {row.original.fluigs.length}
-            </span>
-          </div>
-        ),
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = statusMap[row.original.status]
+          const Icon = status.icon
+
+          return (
+            <div className="w-32 md:w-fit">
+              <Badge variant="outline" className="text-muted-foreground px-1.5">
+                <Icon className={status.color} />
+                {status.label}
+              </Badge>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'costTotal',
+        header: 'Custo (R$)',
+        cell: ({ row }) => {
+          const costTotal = Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(Number(row.original.costTotal))
+
+          return (
+            <div className="w-28 md:w-fit">
+              <span className="text-muted-foreground text-sm">{costTotal}</span>
+            </div>
+          )
+        },
       },
       {
         id: 'actions',
@@ -208,8 +280,8 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     variant="destructive"
-                    className="cursor-pointer"
                     onClick={() => handleDelete(id)}
+                    className="cursor-pointer"
                   >
                     <IconTrashX />
                     Deletar
@@ -377,7 +449,7 @@ export function StoreDataTable({ data, optimistic }: FluigDataTableProps) {
           </div>
         </div>
       </div>
-      <FormUpdateBranch
+      <FormUpdateFluig
         defaultValues={editingRow}
         open={!!editingRow}
         onOpenChange={(open) => {

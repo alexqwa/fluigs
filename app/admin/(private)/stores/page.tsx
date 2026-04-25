@@ -3,8 +3,8 @@ import { cacheTag, cacheLife } from 'next/cache'
 
 import { ListUsers } from '@/actions/admin/list-users'
 
-import { StoresClient } from '@/components/data-display/stores-client'
-import { ReportSkeleton } from '@/components/skeletons/tables-skeleton'
+import { StoresView } from '@/features/stores/stores-view'
+import { ReportSkeleton } from '@/components/common/tables-skeleton'
 
 export const metadata = {
   title: 'Lojas',
@@ -18,7 +18,7 @@ async function StoreData() {
   cacheTag('stores')
   cacheLife('hours')
 
-  return <StoresClient users={users} />
+  return <StoresView users={users} />
 }
 
 export default function Stores() {

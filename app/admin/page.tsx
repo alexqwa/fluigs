@@ -1,4 +1,4 @@
-import { FormAuthAdmin } from '@/components/forms/auth/form-auth-admin'
+import { FormAuthAdmin } from '@/components/forms/form-auth-admin'
 
 export const metadata = {
   title: 'Autenticação - Controle de Fluigs',

@@ -3,8 +3,8 @@ import { cacheLife, cacheTag } from 'next/cache'
 
 import { ListOrganizations } from '@/actions/admin/list-users'
 
-import { AuthSkeleton } from '@/components/skeletons/auth-skeleton'
-import { FormAuthUser } from '@/components/forms/auth/form-auth-user'
+import { AuthSkeleton } from '@/components/common/auth-skeleton'
+import { FormAuthUser } from '@/components/forms/form-auth-user'
 
 export const metadata = {
   title: 'Autenticação - Controle de Fluigs',

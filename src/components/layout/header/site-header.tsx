@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/breadcrumb'
 
 import { useIsMobile } from '@/hooks/use-mobile'
-import { ThemeToggle } from '@/components/data-display/theme-toggle'
+import { ThemeToggle } from '@/components/common/theme-toggle'
 
 type NavItem = {
   title: string

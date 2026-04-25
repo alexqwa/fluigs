@@ -6,11 +6,11 @@ import { useMemo, useState } from 'react'
 import { type DateRange } from 'react-day-picker'
 
 import { Input } from '@/components/ui/input'
-import { DatePicker } from '@/components/data-display/date-picker'
+import { DatePicker } from '@/components/common/date-picker'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { AnalyticsCard } from '@/components/data-display/analytics-card'
-import { FluigDataTable } from '@/components/data-display/fluig-data-table'
-import { FormCreateFluig } from '@/components/forms/fluig/form-create-fluig'
+import { AnalyticsCard } from '@/components/common/analytics-card'
+import { FluigDataTable } from '@/components/tables/fluig-data-table'
+import { FormCreateFluig } from '@/components/forms/form-create-fluig'
 
 import { Create } from '@/actions/fluig/create'
 
@@ -52,7 +52,7 @@ const fluigSchema = FluigInputSchema.omit({
 type FluigCreateInput = z.infer<typeof fluigCreateSchema>
 type Fluig = z.infer<typeof fluigSchema>
 
-export function DashboardClient({ fluigs }: { fluigs: Fluig[] }) {
+export function DashboardView({ fluigs }: { fluigs: Fluig[] }) {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: dayjs().startOf('month').toDate(),
     to: dayjs().add(7, 'day').toDate(),

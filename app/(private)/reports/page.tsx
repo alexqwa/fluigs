@@ -4,8 +4,8 @@ import { cacheLife, cacheTag } from 'next/cache'
 import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
-import { ReportSkeleton } from '@/components/skeletons/tables-skeleton'
-import { ReportDataTable } from '@/components/data-display/report-data-table'
+import { ReportSkeleton } from '@/components/common/tables-skeleton'
+import { ReportDataTable } from '@/components/tables/report-data-table'
 
 export const metadata = {
   title: 'Relatórios',

@@ -4,8 +4,8 @@ import { cacheLife, cacheTag } from 'next/cache'
 import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
-import { DashboardSkeleton } from '@/components/skeletons/tables-skeleton'
-import { DashboardClient } from '@/components/data-display/dashboard-client'
+import { DashboardSkeleton } from '@/components/common/tables-skeleton'
+import { DashboardView } from '@/features/dashboard/dashboard-view'
 
 export const metadata = {
   title: 'Dashboard',
@@ -19,7 +19,7 @@ async function DashboardData({ userId }: { userId: string }) {
   cacheTag(`fluigs-${userId}`)
   cacheLife('hours')
 
-  return <DashboardClient fluigs={fluigs} />
+  return <DashboardView fluigs={fluigs} />
 }
 
 export default async function Dashboard() {

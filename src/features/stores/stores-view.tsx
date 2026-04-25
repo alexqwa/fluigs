@@ -9,8 +9,8 @@ import { useDataOptimistic } from '@/hooks/use-data-optimistic'
 
 import { Input } from '@/components/ui/input'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { StoreDataTable } from '@/components/data-display/store-data-table'
-import { FormCreateBranch } from '@/components/forms/branch/form-create-branch'
+import { StoreDataTable } from '@/components/tables/store-data-table'
+import { FormCreateBranch } from '@/components/forms/form-create-branch'
 
 const userSchemaInput = UserInputSchema.omit({
   id: true,
@@ -43,7 +43,7 @@ const userSchema = UserInputSchema.omit({
 type UserSchema = z.infer<typeof userSchema>
 type UserSchemaInput = z.infer<typeof userSchemaInput>
 
-export function StoresClient({ users }: { users: UserSchema[] }) {
+export function StoresView({ users }: { users: UserSchema[] }) {
   const [store, setStore] = useState('')
 
   const optimistic = useDataOptimistic<UserSchema>(users)
