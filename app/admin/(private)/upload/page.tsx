@@ -12,6 +12,7 @@ export default function Upload() {
           Todos os dados do seu sistema em um só lugar
         </p>
       </div>
+      
     </main>
   )
 }

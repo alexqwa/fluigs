@@ -26,13 +26,12 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 
-import { UserInputSchema } from '@/generated/zod/schemas'
+import { UserInputSchema, FluigInputSchema } from '@/generated/zod/schemas'
 
 const userSchema = UserInputSchema.omit({
   id: true,
   role: true,
   image: true,
-  fluigs: true,
   banned: true,
   accounts: true,
   sessions: true,
@@ -45,6 +44,10 @@ const userSchema = UserInputSchema.omit({
   branch: z.number().min(4, 'Deve conter 4 dígitos.'),
   name: z.string().min(1, 'Nome da filial é obrigatório.'),
   email: z.email('Digite um e-mail válido.'),
+  fluigs: FluigInputSchema.omit({
+    user: true,
+    userId: true,
+  }).optional(),
 })
 
 type UserSchema = z.infer<typeof userSchema>

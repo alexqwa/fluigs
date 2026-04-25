@@ -4,8 +4,8 @@ import z from 'zod'
 import { useMemo, useState } from 'react'
 
 import { Create } from '@/actions/admin/create'
-import { UserInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
+import { FluigInputSchema, UserInputSchema } from '@/generated/zod/schemas'
 
 import { Input } from '@/components/ui/input'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
@@ -16,7 +16,6 @@ const userSchemaInput = UserInputSchema.omit({
   id: true,
   role: true,
   image: true,
-  fluigs: true,
   banned: true,
   accounts: true,
   sessions: true,
@@ -25,6 +24,11 @@ const userSchemaInput = UserInputSchema.omit({
   createdAt: true,
   banExpires: true,
   emailVerified: true,
+}).extend({
+  fluigs: FluigInputSchema.omit({
+    user: true,
+    userId: true,
+  }).optional(),
 })
 
 const userSchema = UserInputSchema.omit({

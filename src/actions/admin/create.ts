@@ -5,15 +5,14 @@ import { updateTag } from 'next/cache'
 import { headers } from 'next/headers'
 
 import { auth } from '@/lib/auth'
-import { UserInputSchema } from '@/generated/zod/schemas'
 import { getServerSession } from '@/actions/auth/session'
+import { UserInputSchema, FluigInputSchema } from '@/generated/zod/schemas'
 
 const userInputSchema = UserInputSchema.omit({
   id: true,
   role: true,
   image: true,
   banned: true,
-  fluigs: true,
   sessions: true,
   accounts: true,
   banReason: true,
@@ -21,6 +20,11 @@ const userInputSchema = UserInputSchema.omit({
   updatedAt: true,
   banExpires: true,
   emailVerified: true,
+}).extend({
+  fluigs: FluigInputSchema.omit({
+    user: true,
+    userId: true,
+  }).optional(),
 })
 
 type UserInputSchema = z.infer<typeof userInputSchema>
@@ -43,7 +47,7 @@ export async function Create(data: UserInputSchema) {
       password: String(data.branch),
       name: data.name,
       role: 'user',
-      data: { branch: data.branch },
+      data: { branch: data.branch, fluigs: data.fluigs },
     },
     headers: await headers(),
   })
