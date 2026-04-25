@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import products from '@/hooks/products.json'
-import { formatProductName } from '@/hooks/format-product-name'
+import { formatProductName } from '@/lib/format-product-name'
 
 type Product = {
   code: string

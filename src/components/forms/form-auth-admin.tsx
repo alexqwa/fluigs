@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-import { useFormLoginAdmin } from '@/hooks/auth/use-form-login-admin'
+import { useFormLoginAdmin } from '@/hooks/use-form-login-admin'
 
 export function FormAuthAdmin() {
   const { error, form, onSubmit } = useFormLoginAdmin()

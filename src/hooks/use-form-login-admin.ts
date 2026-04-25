@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth/client'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { SignInSchemaAdmin, signInSchemaAdmin } from '@/hooks/auth/schemas'
+import { SignInSchemaAdmin, signInSchemaAdmin } from '@/schemas/auth'
 
 export function useFormLoginAdmin() {
   const router = useRouter()

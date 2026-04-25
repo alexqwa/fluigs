@@ -38,7 +38,7 @@ import {
   FieldContent,
 } from '@/components/ui/field'
 
-import { useFormLogin } from '@/hooks/auth/use-form-login'
+import { useFormLogin } from '@/hooks/use-form-login'
 
 type FormAuthUserProps = {
   name: string

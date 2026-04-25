@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { SignInSchema, signInSchema } from '@/hooks/auth/schemas'
+import { SignInSchema, signInSchema } from '@/schemas/auth'
 
 import { authClient } from '@/lib/auth/client'
 
