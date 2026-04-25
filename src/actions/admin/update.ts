@@ -4,7 +4,7 @@ import z from 'zod'
 import { updateTag } from 'next/cache'
 import { headers } from 'next/headers'
 
-import { auth } from '@/lib/auth'
+import { auth } from '@/lib/auth/server'
 import { UserInputSchema } from '@/generated/zod/schemas'
 import { getServerSession } from '@/actions/auth/session'
 

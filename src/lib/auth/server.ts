@@ -4,8 +4,8 @@ import { i18n } from '@better-auth/i18n'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { emailOTP, admin as adminPlugin } from 'better-auth/plugins'
 
-import { prisma } from '@/lib/prisma'
-import { ac, admin, user } from '@/lib/permissions'
+import { prisma } from '@/lib/db/prisma'
+import { ac, admin, user } from '@/lib/auth/permissions'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 

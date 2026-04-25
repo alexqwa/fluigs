@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { SignInSchema, signInSchema } from '@/hooks/auth/schemas'
 
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/lib/auth/client'
 
 export function useFormLogin() {
   const router = useRouter()

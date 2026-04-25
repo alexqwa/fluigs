@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/lib/auth/client'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { SignInSchemaAdmin, signInSchemaAdmin } from '@/hooks/auth/schemas'
