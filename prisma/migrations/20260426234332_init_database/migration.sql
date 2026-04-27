@@ -19,6 +19,43 @@ CREATE TABLE "fluig" (
 );
 
 -- CreateTable
+CREATE TABLE "product" (
+    "id" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "complement" TEXT NOT NULL,
+    "stock" INTEGER NOT NULL,
+    "stockUnavailable" INTEGER NOT NULL,
+    "daysWithoutSale" INTEGER NOT NULL,
+    "lastSaleDate" TEXT NOT NULL,
+    "lastSaleHour" TEXT NOT NULL,
+    "lastPurchaseDate" TEXT NOT NULL,
+    "lastPurchaseHour" TEXT NOT NULL,
+    "productClass" TEXT NOT NULL,
+    "rootProductClass" TEXT NOT NULL,
+    "buyer" TEXT NOT NULL,
+    "abcCurve" TEXT NOT NULL,
+    "sellingPrice" INTEGER NOT NULL,
+    "quantitySoldDay" INTEGER NOT NULL,
+    "shelfLife" INTEGER NOT NULL,
+    "chain" TEXT NOT NULL,
+    "sector" TEXT NOT NULL,
+    "legacySector" TEXT NOT NULL,
+    "supplier" TEXT NOT NULL,
+    "managed" TEXT NOT NULL,
+    "active" TEXT NOT NULL,
+    "residual" TEXT NOT NULL,
+    "variableWeight" TEXT NOT NULL,
+    "cost" DECIMAL(65,30) NOT NULL,
+    "priceChangeDate" TEXT NOT NULL,
+    "priceChangeHour" TEXT NOT NULL,
+    "verifier" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "product_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -27,6 +64,11 @@ CREATE TABLE "user" (
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "branch" INTEGER,
+    "role" TEXT,
+    "banned" BOOLEAN DEFAULT false,
+    "banReason" TEXT,
+    "banExpires" TIMESTAMP(3),
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -41,6 +83,7 @@ CREATE TABLE "session" (
     "ipAddress" TEXT,
     "userAgent" TEXT,
     "userId" TEXT NOT NULL,
+    "impersonatedBy" TEXT,
 
     CONSTRAINT "session_pkey" PRIMARY KEY ("id")
 );
@@ -86,22 +129,14 @@ CREATE TABLE "rateLimit" (
     CONSTRAINT "rateLimit_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "jwks" (
-    "id" TEXT NOT NULL,
-    "publicKey" TEXT NOT NULL,
-    "privateKey" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
-    "expiresAt" TIMESTAMP(3),
-
-    CONSTRAINT "jwks_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE INDEX "fluig_userId_idx" ON "fluig"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_branch_key" ON "user"("branch");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "session_token_key" ON "session"("token");

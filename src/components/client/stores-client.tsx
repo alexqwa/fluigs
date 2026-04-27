@@ -3,7 +3,7 @@
 import z from 'zod'
 import { useMemo, useState } from 'react'
 
-import { Create } from '@/actions/admin/create'
+import { Create } from '@/actions/admin'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
 import { FluigInputSchema, UserInputSchema } from '@/generated/zod/schemas'
 

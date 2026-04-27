@@ -57,8 +57,7 @@ import {
   TableHeader,
 } from '@/components/ui/table'
 
-import { Delete } from '@/actions/fluig/delete'
-import { Update } from '@/actions/fluig/update'
+import { Update, Delete } from '@/actions/fluig'
 
 import { FluigInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'

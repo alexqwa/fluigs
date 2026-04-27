@@ -3,7 +3,7 @@ import { cacheTag, cacheLife } from 'next/cache'
 
 import { ListUsers } from '@/actions/admin/list-users'
 
-import { StoresClient } from '@/components/data-display/stores-client'
+import { StoresClient } from '@/components/client/stores-client'
 import { ReportSkeleton } from '@/components/skeletons/tables-skeleton'
 
 export const metadata = {

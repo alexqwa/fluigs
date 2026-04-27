@@ -8,11 +8,11 @@ import { type DateRange } from 'react-day-picker'
 import { Input } from '@/components/ui/input'
 import { DatePicker } from '@/components/data-display/date-picker'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { AnalyticsCard } from '@/components/data-display/analytics-card'
+import { AnalyticsCard } from '@/components/data-display/metrics-card'
 import { FluigDataTable } from '@/components/data-display/fluig-data-table'
 import { FormCreateFluig } from '@/components/forms/fluig/form-create-fluig'
 
-import { Create } from '@/actions/fluig/create'
+import { Create } from '@/actions/fluig'
 
 import { FluigInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'

@@ -142,7 +142,7 @@ export function FormUpdateBranch({
               )}
             </Field>
           </div>
-          <DialogFooter className="border-border/50 bg-ring/15 border-t px-6 py-5">
+          <DialogFooter className="bg-ring/15 px-6 py-5">
             <DialogClose asChild>
               <Button
                 variant={'outline'}

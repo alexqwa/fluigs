@@ -300,7 +300,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                 )}
               </Field>
             </div>
-            <DrawerFooter className="bg-muted">
+            <DrawerFooter className="bg-ring/15 px-6 py-5">
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
@@ -529,7 +529,7 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
               )}
             </Field>
           </div>
-          <DialogFooter className="bg-muted p-4">
+          <DialogFooter className="bg-ring/15 px-6 py-5">
             <DialogClose asChild>
               <Button
                 variant="outline"

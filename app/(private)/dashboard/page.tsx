@@ -4,8 +4,8 @@ import { cacheLife, cacheTag } from 'next/cache'
 import { ListFluigs } from '@/actions/fluig/list-fluigs'
 import { getServerSession } from '@/actions/auth/session'
 
+import { DashboardClient } from '@/components/client/dashboard-client'
 import { DashboardSkeleton } from '@/components/skeletons/tables-skeleton'
-import { DashboardClient } from '@/components/data-display/dashboard-client'
 
 export const metadata = {
   title: 'Dashboard',

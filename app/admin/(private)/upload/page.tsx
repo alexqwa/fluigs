@@ -1,3 +1,5 @@
+import { UploadClient } from '@/components/client/upload-client'
+
 export const metadata = {
   title: 'Dados',
   description: 'Todos os dados do seu sistema em um só lugar',
@@ -12,7 +14,7 @@ export default function Upload() {
           Todos os dados do seu sistema em um só lugar
         </p>
       </div>
-      
+      <UploadClient />
     </main>
   )
 }
