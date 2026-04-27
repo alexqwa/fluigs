@@ -4,6 +4,8 @@
  */
 
 export { FluigResultSchema } from './Fluig.result';
+export { ProductResultSchema } from './Product.result';
+export { ImportLogResultSchema } from './ImportLog.result';
 export { UserResultSchema } from './User.result';
 export { SessionResultSchema } from './Session.result';
 export { AccountResultSchema } from './Account.result';

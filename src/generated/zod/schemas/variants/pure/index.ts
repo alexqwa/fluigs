@@ -4,6 +4,8 @@
  */
 
 export { FluigModelSchema } from './Fluig.pure';
+export { ProductModelSchema } from './Product.pure';
+export { ImportLogModelSchema } from './ImportLog.pure';
 export { UserModelSchema } from './User.pure';
 export { SessionModelSchema } from './Session.pure';
 export { AccountModelSchema } from './Account.pure';

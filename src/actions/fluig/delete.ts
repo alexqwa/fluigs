@@ -17,4 +17,5 @@ export async function Delete(id: string) {
   })
 
   updateTag(`fluigs-${session.user.id}`)
+  updateTag('stores')
 }

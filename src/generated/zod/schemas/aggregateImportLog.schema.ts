@@ -1,0 +1,14 @@
+import type { Prisma } from '../../prisma/client';
+import * as z from 'zod';
+import { ImportLogOrderByWithRelationInputObjectSchema as ImportLogOrderByWithRelationInputObjectSchema } from './objects/ImportLogOrderByWithRelationInput.schema';
+import { ImportLogWhereInputObjectSchema as ImportLogWhereInputObjectSchema } from './objects/ImportLogWhereInput.schema';
+import { ImportLogWhereUniqueInputObjectSchema as ImportLogWhereUniqueInputObjectSchema } from './objects/ImportLogWhereUniqueInput.schema';
+import { ImportLogCountAggregateInputObjectSchema as ImportLogCountAggregateInputObjectSchema } from './objects/ImportLogCountAggregateInput.schema';
+import { ImportLogMinAggregateInputObjectSchema as ImportLogMinAggregateInputObjectSchema } from './objects/ImportLogMinAggregateInput.schema';
+import { ImportLogMaxAggregateInputObjectSchema as ImportLogMaxAggregateInputObjectSchema } from './objects/ImportLogMaxAggregateInput.schema';
+import { ImportLogAvgAggregateInputObjectSchema as ImportLogAvgAggregateInputObjectSchema } from './objects/ImportLogAvgAggregateInput.schema';
+import { ImportLogSumAggregateInputObjectSchema as ImportLogSumAggregateInputObjectSchema } from './objects/ImportLogSumAggregateInput.schema';
+
+export const ImportLogAggregateSchema: z.ZodType<Prisma.ImportLogAggregateArgs> = z.object({ orderBy: z.union([ImportLogOrderByWithRelationInputObjectSchema, ImportLogOrderByWithRelationInputObjectSchema.array()]).optional(), where: ImportLogWhereInputObjectSchema.optional(), cursor: ImportLogWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ImportLogCountAggregateInputObjectSchema ]).optional(), _min: ImportLogMinAggregateInputObjectSchema.optional(), _max: ImportLogMaxAggregateInputObjectSchema.optional(), _avg: ImportLogAvgAggregateInputObjectSchema.optional(), _sum: ImportLogSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ImportLogAggregateArgs>;
+
+export const ImportLogAggregateZodSchema = z.object({ orderBy: z.union([ImportLogOrderByWithRelationInputObjectSchema, ImportLogOrderByWithRelationInputObjectSchema.array()]).optional(), where: ImportLogWhereInputObjectSchema.optional(), cursor: ImportLogWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ImportLogCountAggregateInputObjectSchema ]).optional(), _min: ImportLogMinAggregateInputObjectSchema.optional(), _max: ImportLogMaxAggregateInputObjectSchema.optional(), _avg: ImportLogAvgAggregateInputObjectSchema.optional(), _sum: ImportLogSumAggregateInputObjectSchema.optional() }).strict();

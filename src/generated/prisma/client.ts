@@ -47,6 +47,16 @@ export { Prisma }
  */
 export type Fluig = Prisma.FluigModel
 /**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model ImportLog
+ * 
+ */
+export type ImportLog = Prisma.ImportLogModel
+/**
  * Model User
  * 
  */

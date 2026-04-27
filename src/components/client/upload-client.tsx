@@ -145,6 +145,7 @@ export function UploadClient() {
           transition: 'background 0.15s, border-color 0.15s',
         }}
         className="col-span-1 flex items-center justify-center py-10! md:col-span-2 lg:col-span-4"
+        onClick={() => !file && fileInputRef.current?.click()}
       >
         <input
           ref={fileInputRef}
