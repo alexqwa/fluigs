@@ -33,7 +33,7 @@ export function SiteHeader({ children, navMain }: SiteHeaderProps) {
   const isAdminRoute = pathname.startsWith('/admin')
   const pageTitle = navMain.find((item) => item.url === pathname)
 
-  const baseURL = isAdminRoute ? '/admin/data' : '/dashboard'
+  const baseURL = isAdminRoute ? '/admin' : '/dashboard'
   const baseLABEL = isAdminRoute ? 'Admin' : 'Principal'
 
   return (

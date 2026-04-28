@@ -10,12 +10,12 @@ import { AppSidebar } from '@/components/layout/sidebar/app-sidebar'
 
 const data = [
   {
-    title: 'Dados',
-    url: '/admin/upload',
+    title: 'Dashboard',
+    url: '/admin/dashboard',
     icon: 'database-zap',
   },
   {
-    title: 'Lojas',
+    title: 'Gerenciar Lojas',
     url: '/admin/stores',
     icon: 'store',
   },
