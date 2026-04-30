@@ -7,6 +7,7 @@ import { UploadIcon, File, X, CloudCheck, RotateCw } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { DataCard } from '@/components/ui/metrics-card'
 import {
   Card,
   CardTitle,
@@ -14,18 +15,13 @@ import {
   CardFooter,
   CardContent,
 } from '@/components/ui/card'
+import { HistoryDataTable } from '@/components/tables'
 
-import { ImportLogInputSchema } from '@/generated/zod/schemas'
-import { DataCard } from '@/components/data-display/metrics-card'
-import { HistoryDataTable } from '@/components/data-display/history-data-table'
-
-const COMPRADORES = [
-  { name: 'Limpeza / Higiene', count: '2.283' },
-  { name: 'Lidiane Braga', count: '2.216' },
-  { name: 'Gustavo', count: '1.445' },
-  { name: 'Luciria Melo', count: '1.229' },
-  { name: 'Maisa Sousa', count: '1.025' },
-]
+import {
+  ProductInputSchema,
+  ImportLogInputSchema,
+} from '@/generated/zod/schemas'
+import { useProductsAnalytics } from '@/hooks/use-dashboard'
 
 const C = {
   green: {
@@ -60,7 +56,14 @@ const importLogInputSchema = ImportLogInputSchema.omit({
   errorDetail: true,
 })
 
+const productInputSchema = ProductInputSchema.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+})
+
 type Status = 'idle' | 'uploading' | 'done' | 'error'
+type ProductType = z.infer<typeof productInputSchema>
 type HistoryType = z.infer<typeof importLogInputSchema>
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -76,7 +79,7 @@ function getExt(name: string) {
   return name.split('.').pop()?.toLowerCase() ?? ''
 }
 
-export function UploadClient() {
+export function UploadClient({ products }: { products: ProductType[] }) {
   const [dragover, setDragover] = useState<boolean>(false)
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string>('')
@@ -92,6 +95,8 @@ export function UploadClient() {
 
   const progressRef = useRef<NodeJS.Timeout | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const { curves, topBuyers, formatQuantity } = useProductsAnalytics(products)
 
   // ── Derivados de UI ──────────────────────────────────────────────────────────
   const isDone = uploadState === 'done'
@@ -226,27 +231,27 @@ export function UploadClient() {
     <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <DataCard
         title="Total de Itens"
-        value="23.938"
+        value={formatQuantity(products.length)}
         description="Na base de dados atual"
         subdescription="14,8% dos itens"
       />
       <DataCard
         title="Curva A"
-        value="3.430"
+        value={curves.A.formatted}
         description="Itens de alta relevância"
-        subdescription="14,8% dos itens"
+        subdescription={`Representando ${curves.A.formattedPercentage} do total de itens`}
       />
       <DataCard
         title="Curva B"
-        value="2.459"
+        value={curves.B.formatted}
         description="Itens de média relevância"
-        subdescription="10,6% dos itens"
+        subdescription={`Representando ${curves.B.formattedPercentage} do total de itens`}
       />
       <DataCard
         title="Curva C"
-        value="12.437"
+        value={curves.C.formatted}
         description="Itens de baixa relevância"
-        subdescription="53,7% dos itens"
+        subdescription={`Representando ${curves.C.formattedPercentage} do total de itens`}
       />
       <Card className="col-span-1 rounded-lg! p-4! md:col-span-2">
         <CardHeader>
@@ -256,21 +261,39 @@ export function UploadClient() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {CURVA.map((c, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <div className="w-4">
-                  <span className="text-muted-foreground text-sm">
-                    {c.label}
-                  </span>
-                </div>
-                <Progress value={c.pct} />
-                <div className="min-w-12 text-right">
-                  <span className="text-muted-foreground text-sm">
-                    {c.count}
-                  </span>
-                </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4">
+                <span className="text-muted-foreground text-sm">A</span>
               </div>
-            ))}
+              <Progress value={curves.A.percentage} />
+              <div className="min-w-12 text-right">
+                <span className="text-muted-foreground text-sm">
+                  {curves.A.formatted}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4">
+                <span className="text-muted-foreground text-sm">B</span>
+              </div>
+              <Progress value={curves.B.percentage} />
+              <div className="min-w-12 text-right">
+                <span className="text-muted-foreground text-sm">
+                  {curves.B.formatted}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4">
+                <span className="text-muted-foreground text-sm">C</span>
+              </div>
+              <Progress value={curves.C.percentage} />
+              <div className="min-w-12 text-right">
+                <span className="text-muted-foreground text-sm">
+                  {curves.C.formatted}
+                </span>
+              </div>
+            </div>
           </div>
         </CardContent>
         <CardFooter>
@@ -291,12 +314,14 @@ export function UploadClient() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {COMPRADORES.map((item, i) => (
+          {topBuyers.map((item, i) => (
             <div
               key={i}
               className="odd:bg-ring/15 flex flex-row items-center justify-between rounded-sm px-3 py-2"
             >
-              <span className="text-muted-foreground text-xs">{item.name}</span>
+              <span className="text-muted-foreground text-xs uppercase">
+                {item.buyer}
+              </span>
               <span className="text-muted-foreground text-xs">
                 {item.count}
               </span>
@@ -313,10 +338,11 @@ export function UploadClient() {
         onDragLeave={() => setDragover(false)}
         onClick={() => !file && fileInputRef.current?.click()}
         className={clsx(
-          'col-span-1 flex cursor-default items-center justify-center rounded-lg! border-[1.5px] border-dashed border-[#c8c6be] py-10! transition-colors md:col-span-2 lg:col-span-4',
+          'border-border col-span-1 flex cursor-pointer items-center justify-center rounded-lg! border-[1.5px] border-dashed py-10! transition-colors md:col-span-2 lg:col-span-4',
           {
-            ['border-[#3B6D11] bg-[#EAF3DE]']: dragover,
-            ['cursor-pointer']: file,
+            ['dark:bg-ring/15 bg-ring/20 border-muted-foreground dark:border-border']:
+              dragover,
+            ['cursor-default']: file,
           }
         )}
       >
@@ -447,10 +473,6 @@ export function UploadClient() {
         {loadingHistory ? (
           <div className="text-muted-foreground flex items-center justify-center py-10 text-sm">
             Carregando informações...
-          </div>
-        ) : history.length === 0 ? (
-          <div className="text-muted-foreground flex items-center justify-center py-10 text-sm">
-            Nenhuma importação registrada.
           </div>
         ) : (
           <HistoryDataTable data={history} />

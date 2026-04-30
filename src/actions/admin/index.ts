@@ -1,4 +1,5 @@
 export { Create } from './create'
 export { Update } from './update'
 export { Delete } from './delete'
+export { ListProducts } from './list-products'
 export { ListUsers, ListOrganizations } from './list-users'

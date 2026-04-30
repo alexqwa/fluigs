@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Separator } from '@/components/ui/separator'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import {
   Breadcrumb,
@@ -13,7 +14,6 @@ import {
 } from '@/components/ui/breadcrumb'
 
 import { useIsMobile } from '@/hooks/use-mobile'
-import { ThemeToggle } from '@/components/data-display/theme-toggle'
 
 type NavItem = {
   title: string

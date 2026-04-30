@@ -19,11 +19,6 @@ const data = [
     url: '/admin/stores',
     icon: 'store',
   },
-  {
-    title: 'Configurações',
-    url: '/admin/settings',
-    icon: 'settings',
-  },
 ]
 
 async function Sidebar({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -220,7 +220,7 @@ export function HistoryDataTable({ data }: HistoryDataTableProps) {
     <div className="relative flex flex-1 flex-col gap-4 overflow-auto">
       <div className="border-border overflow-hidden rounded-lg border shadow-md">
         <Table>
-          <TableHeader className="bg-card border-border sticky top-0 border-b">
+          <TableHeader className="bg-muted border-border sticky top-0 border-b">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -238,7 +238,7 @@ export function HistoryDataTable({ data }: HistoryDataTableProps) {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="bg-card **:data-[slot=table-cell]:first:w-8">
+          <TableBody className="**:data-[slot=table-cell]:first:w-8">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
@@ -258,7 +258,7 @@ export function HistoryDataTable({ data }: HistoryDataTableProps) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Sem resultados.
+                  Nenhuma importação registrada.
                 </TableCell>
               </TableRow>
             )}

@@ -6,17 +6,17 @@ import { useMemo, useState } from 'react'
 import { type DateRange } from 'react-day-picker'
 
 import { Input } from '@/components/ui/input'
-import { DatePicker } from '@/components/data-display/date-picker'
+import { FluigDataTable } from '@/components/tables'
+import { DatePicker } from '@/components/ui/date-picker'
+import { AnalyticsCard } from '@/components/ui/metrics-card'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { AnalyticsCard } from '@/components/data-display/metrics-card'
-import { FluigDataTable } from '@/components/data-display/fluig-data-table'
 import { FormCreateFluig } from '@/components/forms/fluig/form-create-fluig'
 
 import { Create } from '@/actions/fluig'
 
 import { FluigInputSchema } from '@/generated/zod/schemas'
+import { useDashboardAnalytics } from '@/hooks/use-dashboard'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
-import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
 
 function calculateCostTotal(cost: string, quantity: string): string {
   const costNumber = Number(cost)

@@ -14,14 +14,14 @@ const PUBLIC_ROUTES: readonly RouteConfig[] = [
 
 const ADMIN_ROUTES: readonly RouteConfig[] = [
   { path: '/admin', whenAuthenticated: 'redirect' },
-  { path: '/admin/upload', whenAuthenticated: 'next' },
   { path: '/admin/stores', whenAuthenticated: 'next' },
   { path: '/admin/settings', whenAuthenticated: 'next' },
+  { path: '/admin/dashboard', whenAuthenticated: 'next' },
 ] as const
 
 const UNAUTHENTICATED_FALLBACK = '/'
 const AUTHENTICATED_PUBLIC_FALLBACK = '/dashboard'
-const AUTHENTICATED_ADMIN_FALLBACK = '/admin/upload'
+const AUTHENTICATED_ADMIN_FALLBACK = '/admin/dashboard'
 
 function redirect(request: NextRequest, pathname: string): NextResponse {
   const url = request.nextUrl.clone()

@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
-import { ListFluigs } from '@/actions/fluig/list-fluigs'
+import { ListFluigs } from '@/actions/fluig'
 import { getServerSession } from '@/actions/auth/session'
 
 import { DashboardClient } from '@/components/client/dashboard-client'

@@ -22,7 +22,7 @@ export function useFormLoginAdmin() {
       const { error } = await authClient.signIn.email({
         email,
         password,
-        callbackURL: '/admin/upload',
+        callbackURL: '/admin',
       })
 
       if (error) {
