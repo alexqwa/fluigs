@@ -146,10 +146,12 @@ export function FormUpdateFluig({
                         return
                       }
 
-                      form.setValue('product', product.product, {
+                      form.setValue('product', product.name, {
                         shouldDirty: true,
                       })
-                      form.setValue('cost', product.cost, { shouldDirty: true })
+                      form.setValue('cost', product.cost || '', {
+                        shouldDirty: true,
+                      })
                     }}
                   />
                   {form.getFieldState('code').invalid && (
@@ -376,10 +378,12 @@ export function FormUpdateFluig({
                       return
                     }
 
-                    form.setValue('product', product.product, {
+                    form.setValue('product', product.name, {
                       shouldDirty: true,
                     })
-                    form.setValue('cost', product.cost, { shouldDirty: true })
+                    form.setValue('cost', product.cost || '', {
+                      shouldDirty: true,
+                    })
                   }}
                 />
                 {form.getFieldState('code').invalid && (

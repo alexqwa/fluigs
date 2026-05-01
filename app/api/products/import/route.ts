@@ -1,13 +1,22 @@
+import { revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma } from '@/lib/prisma'
 import { upsertProducts } from '@/lib/import/upsert'
 import { parseProductFile } from '@/lib/import/parser'
+import { getServerSession } from '@/actions/auth/session'
 
-const MAX_SIZE_BYTES = 10 * 1024 * 1024 // 20MB
+const MAX_SIZE_BYTES = 10 * 1024 * 1024
 const ALLOWED_EXT = ['xlsx', 'xls', 'csv']
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession()
+  const user = session?.user
+
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   // ── 1. Recebe e valida o arquivo ───────────────────────────────────────────
   let formData: FormData
   try {
@@ -34,7 +43,7 @@ export async function POST(request: NextRequest) {
 
   if (file.size > MAX_SIZE_BYTES) {
     return NextResponse.json(
-      { error: 'Arquivo muito grande. Limite: 20MB' },
+      { error: 'Arquivo muito grande. Limite: 10MB' },
       { status: 413 }
     )
   }
@@ -85,6 +94,7 @@ export async function POST(request: NextRequest) {
     })
 
     // ── 5. Resposta ──────────────────────────────────────────────────────────
+    revalidateTag('products', 'max')
     return NextResponse.json({
       logId: log.id,
       status: finalStatus,

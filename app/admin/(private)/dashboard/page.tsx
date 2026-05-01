@@ -1,10 +1,11 @@
 import { Suspense } from 'react'
 import { cacheTag, cacheLife } from 'next/cache'
 
-import { ListProducts } from '@/actions/admin'
+import { ListProductsAndLogs } from '@/actions/admin/products'
 
+import { CardLogs } from '@/components/ui/card-logs'
 import { UploadClient } from '@/components/client/upload-client'
-import { DashboardSkeleton } from '@/components/skeletons/tables-skeleton'
+import { AdminDashboardSkeleton } from '@/components/skeletons/tables-skeleton'
 
 export const metadata = {
   title: 'Dashboard',
@@ -13,12 +14,16 @@ export const metadata = {
 
 async function DashboardData() {
   'use cache'
-  const products = await ListProducts()
+  const { products, logs } = await ListProductsAndLogs()
 
   cacheTag('products')
   cacheLife('hours')
 
-  return <UploadClient products={products} />
+  return (
+    <UploadClient products={products}>
+      <CardLogs logs={logs} />
+    </UploadClient>
+  )
 }
 
 export default function Dashboard() {
@@ -32,7 +37,7 @@ export default function Dashboard() {
           Todos os dados do seu sistema em um só lugar
         </p>
       </div>
-      <Suspense fallback={<DashboardSkeleton />}>
+      <Suspense fallback={<AdminDashboardSkeleton />}>
         <DashboardData />
       </Suspense>
     </main>

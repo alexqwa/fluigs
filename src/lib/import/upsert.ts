@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import type { ParsedProduct, RowError } from './parser'
+import type { ParsedProduct } from './parser'
 
 const BATCH_SIZE = 500
 
@@ -43,19 +43,39 @@ export async function upsertProducts(
       inserted += toInsert.length
     }
 
-    for (const row of toUpdate) {
-      await prisma.product.update({
-        where: { code: row.code },
-        data: {
-          name: row.name,
-          stock: row.stock,
-          cost: row.cost,
-          curveAbc: row.curveAbc,
-          buyer: row.buyer,
-          updatedAt: new Date(),
-        },
-      })
-      updated++
+    //Overhead de rede: Alto
+    // for (const row of toUpdate) {
+    //   await prisma.product.update({
+    //     where: { code: row.code },
+    //     data: {
+    //       name: row.name,
+    //       stock: row.stock,
+    //       cost: row.cost,
+    //       curveAbc: row.curveAbc,
+    //       buyer: row.buyer,
+    //       updatedAt: new Date(),
+    //     },
+    //   })
+    //   updated++
+    // }
+
+    if (toUpdate.length > 0) {
+      await prisma.$transaction(
+        toUpdate.map((row) =>
+          prisma.product.update({
+            where: { code: row.code },
+            data: {
+              name: row.name,
+              cost: row.cost,
+              stock: row.stock,
+              buyer: row.buyer,
+              curveAbc: row.curveAbc,
+              updatedAt: new Date(),
+            },
+          })
+        )
+      )
+      updated += toUpdate.length
     }
   }
 

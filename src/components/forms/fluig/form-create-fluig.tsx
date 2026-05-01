@@ -143,8 +143,8 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                         return
                       }
 
-                      form.setValue('product', product.product)
-                      form.setValue('cost', product.cost)
+                      form.setValue('product', product.name)
+                      form.setValue('cost', product.cost || '')
                     }}
                   />
                   {form.getFieldState('code').invalid && (
@@ -372,8 +372,8 @@ export function FormCreateFluig({ onSubmit }: FormCreateFluigProps) {
                       return
                     }
 
-                    form.setValue('product', product.product)
-                    form.setValue('cost', product.cost)
+                    form.setValue('product', product.name)
+                    form.setValue('cost', product.cost || '')
                   }}
                 />
                 {form.getFieldState('code').invalid && (

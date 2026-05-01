@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { cacheTag, cacheLife } from 'next/cache'
 
-import { ListUsers } from '@/actions/admin/list-users'
+import { ListUsers } from '@/actions/admin/orgs'
 
 import { StoresClient } from '@/components/client/stores-client'
 import { ReportSkeleton } from '@/components/skeletons/tables-skeleton'

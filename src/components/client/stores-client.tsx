@@ -8,7 +8,7 @@ import { StoreDataTable } from '@/components/tables'
 import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
 import { FormCreateBranch } from '@/components/forms/branch/form-create-branch'
 
-import { Create } from '@/actions/admin'
+import { Create } from '@/actions/admin/orgs'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'
 import { FluigInputSchema, UserInputSchema } from '@/generated/zod/schemas'
 

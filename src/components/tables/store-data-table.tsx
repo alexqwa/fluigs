@@ -51,7 +51,7 @@ import {
   TableHeader,
 } from '@/components/ui/table'
 
-import { Update, Delete } from '@/actions/admin'
+import { Update, Delete } from '@/actions/admin/orgs'
 
 import { UserInputSchema } from '@/generated/zod/schemas'
 import { useDataOptimistic } from '@/hooks/use-data-optimistic'

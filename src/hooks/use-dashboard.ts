@@ -74,6 +74,14 @@ export function useDashboardAnalytics(fluigs: any) {
 }
 
 export function useProductsAnalytics(products: ProductType[]) {
+  let totalCost = 0
+
+  for (const p of products) {
+    const cost = Number(p.cost)
+
+    totalCost += cost
+  }
+
   const formatQuantity = (value: number) =>
     new Intl.NumberFormat('pt-BR', {
       style: 'decimal',
@@ -86,6 +94,12 @@ export function useProductsAnalytics(products: ProductType[]) {
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     }).format(value / 100)
+
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(value)
 
   const curves = (['A', 'B', 'C'] as const).reduce(
     (acc, curve) => {
@@ -125,5 +139,5 @@ export function useProductsAnalytics(products: ProductType[]) {
     .slice(0, 5)
     .map(([buyer, count]) => ({ buyer, count }))
 
-  return { formatQuantity, topBuyers, curves }
+  return { formatQuantity, formatCurrency, topBuyers, curves, totalCost }
 }
