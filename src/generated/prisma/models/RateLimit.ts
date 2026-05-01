@@ -189,7 +189,7 @@ export type RateLimitGroupByOutputType = {
   _max: RateLimitMaxAggregateOutputType | null
 }
 
-type GetRateLimitGroupByPayload<T extends RateLimitGroupByArgs> = Prisma.PrismaPromise<
+export type GetRateLimitGroupByPayload<T extends RateLimitGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<RateLimitGroupByOutputType, T['by']> &
       {

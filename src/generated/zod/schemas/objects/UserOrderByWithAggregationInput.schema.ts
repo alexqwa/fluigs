@@ -16,7 +16,7 @@ const makeSchema = () => z.object({
   image: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   createdAt: SortOrderSchema.optional(),
   updatedAt: SortOrderSchema.optional(),
-  branch: SortOrderSchema.optional(),
+  branch: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   role: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   banned: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   banReason: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),

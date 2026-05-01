@@ -5,7 +5,7 @@ import 'dayjs/locale/pt-br'
 dayjs.locale('pt-br')
 
 import { FluigInputSchema } from '@/generated/zod/schemas'
-import { useDashboardAnalytics } from '@/hooks/use-dashboard-analytics'
+import { useDashboardAnalytics } from '@/hooks/use-dashboard'
 
 const fluigSchema = FluigInputSchema.omit({
   user: true,

@@ -5,7 +5,6 @@ import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { emailOTP, admin as adminPlugin } from 'better-auth/plugins'
 
 import { prisma } from '@/lib/prisma'
-import { ac, admin, user } from '@/lib/permissions'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
@@ -47,16 +46,14 @@ export const auth = betterAuth({
   plugins: [
     adminPlugin({
       adminRoles: ['admin'],
-      adminUserIds: ['JTcCPD9CRTOg5jDG5ggAUdbB2DhCFmE9'],
-      ac,
-      roles: {
-        user,
-        admin,
-      },
+      adminUserIds: ['bpAtV4Nay29XRLt38KcgDttCU58TsD9E'],
     }),
     i18n({
       translations: {
         pt: {
+          USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL:
+            'O usuário já existe. Utilize outro e-mail.',
+          FAILED_TO_CREATE_USER: 'Falha ao criar usuário.',
           YOU_ARE_NOT_ALLOWED_TO_LIST_USERS:
             'Você não tem permissão para listar usuários',
           INVALID_EMAIL_OR_PASSWORD: 'E-mail ou senha inválidos',

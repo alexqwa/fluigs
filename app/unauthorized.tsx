@@ -1,10 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { authClient } from '@/lib/auth-client'
 
 import { Button } from '@/components/ui/button'
 
 export default function Unauthorized() {
+  useEffect(() => {
+    authClient.signOut()
+  }, [])
+
   return (
     <main className="bg-ring/15 flex min-h-svh w-full items-center justify-center px-4 text-center">
       <div className="space-y-6">

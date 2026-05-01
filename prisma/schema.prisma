@@ -30,6 +30,38 @@ model Fluig {
   @@map("fluig")
 }
 
+model Product {
+  id       String  @id @default(cuid())
+  code     String  @unique
+  name     String
+  cost     String?
+  stock    String?
+  buyer    String?
+  curveAbc String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("product")
+}
+
+model ImportLog {
+  id          String       @id @default(cuid())
+  filename    String
+  status      ImportStatus @default(PENDING)
+  totalRows   Int          @default(0)
+  inserted    Int          @default(0)
+  updated     Int          @default(0)
+  skipped     Int          @default(0)
+  errors      Int          @default(0)
+  errorDetail Json?
+
+  createdAt  DateTime @default(now())
+  finishedAt DateTime
+
+  @@map("import_log")
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String
@@ -38,10 +70,10 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  branch        Int?
   fluigs        Fluig[]
   accounts      Account[]
   sessions      Session[]
-  branch        Int       @unique
 
   role       String?
   banned     Boolean?  @default(false)
@@ -100,12 +132,6 @@ model Verification {
   @@map("verification")
 }
 
-enum Status {
-  Approved     @map("approved")
-  Not_Approved @map("not_approved")
-  Pending      @map("pending")
-}
-
 model RateLimit {
   id          String @id
   key         String
@@ -114,4 +140,18 @@ model RateLimit {
 
   @@unique([key])
   @@map("rateLimit")
+}
+
+enum Status {
+  Approved     @map("approved")
+  Not_Approved @map("not_approved")
+  Pending      @map("pending")
+}
+
+enum ImportStatus {
+  PENDING
+  PROCESSING
+  DONE
+  DONE_WITH_WARNINGS
+  FAILED
 }

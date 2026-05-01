@@ -52,6 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Fluig: 'Fluig',
+  Product: 'Product',
+  ImportLog: 'ImportLog',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -90,6 +92,38 @@ export const FluigScalarFieldEnum = {
 } as const
 
 export type FluigScalarFieldEnum = (typeof FluigScalarFieldEnum)[keyof typeof FluigScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  cost: 'cost',
+  stock: 'stock',
+  buyer: 'buyer',
+  curveAbc: 'curveAbc',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ImportLogScalarFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  status: 'status',
+  totalRows: 'totalRows',
+  inserted: 'inserted',
+  updated: 'updated',
+  skipped: 'skipped',
+  errors: 'errors',
+  errorDetail: 'errorDetail',
+  createdAt: 'createdAt',
+  finishedAt: 'finishedAt'
+} as const
+
+export type ImportLogScalarFieldEnum = (typeof ImportLogScalarFieldEnum)[keyof typeof ImportLogScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -174,6 +208,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -188,4 +230,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

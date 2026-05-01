@@ -43,7 +43,7 @@ import { useFormLogin } from '@/hooks/auth/use-form-login'
 type FormAuthUserProps = {
   name: string
   email: string
-  branch: number
+  branch: number | null
 }[]
 
 export function FormAuthUser({ data }: { data: FormAuthUserProps }) {

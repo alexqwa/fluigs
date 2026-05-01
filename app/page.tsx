@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
-import { ListOrganizations } from '@/actions/admin/list-users'
+import { ListOrganizations } from '@/actions/admin/orgs'
 
 import { AuthSkeleton } from '@/components/skeletons/auth-skeleton'
 import { FormAuthUser } from '@/components/forms/auth/form-auth-user'

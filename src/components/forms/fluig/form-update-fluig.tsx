@@ -146,10 +146,12 @@ export function FormUpdateFluig({
                         return
                       }
 
-                      form.setValue('product', product.product, {
+                      form.setValue('product', product.name, {
                         shouldDirty: true,
                       })
-                      form.setValue('cost', product.cost, { shouldDirty: true })
+                      form.setValue('cost', product.cost || '', {
+                        shouldDirty: true,
+                      })
                     }}
                   />
                   {form.getFieldState('code').invalid && (
@@ -307,7 +309,7 @@ export function FormUpdateFluig({
                 )}
               </Field>
             </div>
-            <DrawerFooter className="bg-muted">
+            <DrawerFooter className="bg-ring/15 px-6 py-5">
               <Button
                 type="submit"
                 disabled={
@@ -376,10 +378,12 @@ export function FormUpdateFluig({
                       return
                     }
 
-                    form.setValue('product', product.product, {
+                    form.setValue('product', product.name, {
                       shouldDirty: true,
                     })
-                    form.setValue('cost', product.cost, { shouldDirty: true })
+                    form.setValue('cost', product.cost || '', {
+                      shouldDirty: true,
+                    })
                   }}
                 />
                 {form.getFieldState('code').invalid && (
@@ -534,7 +538,7 @@ export function FormUpdateFluig({
               )}
             </Field>
           </div>
-          <DialogFooter className="bg-muted p-4">
+          <DialogFooter className="bg-ring/15 px-6 py-5">
             <DialogClose asChild>
               <Button variant="outline" className="cursor-pointer">
                 Cancelar

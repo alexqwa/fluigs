@@ -22,6 +22,7 @@ export function useFormLoginAdmin() {
       const { error } = await authClient.signIn.email({
         email,
         password,
+        callbackURL: '/admin',
       })
 
       if (error) {
@@ -29,7 +30,6 @@ export function useFormLoginAdmin() {
         return
       }
 
-      router.replace('/admin/upload')
       router.refresh()
       reset()
     } catch (error) {

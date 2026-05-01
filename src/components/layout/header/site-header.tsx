@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Separator } from '@/components/ui/separator'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import {
   Breadcrumb,
@@ -13,7 +14,6 @@ import {
 } from '@/components/ui/breadcrumb'
 
 import { useIsMobile } from '@/hooks/use-mobile'
-import { ThemeToggle } from '@/components/data-display/theme-toggle'
 
 type NavItem = {
   title: string
@@ -33,7 +33,7 @@ export function SiteHeader({ children, navMain }: SiteHeaderProps) {
   const isAdminRoute = pathname.startsWith('/admin')
   const pageTitle = navMain.find((item) => item.url === pathname)
 
-  const baseURL = isAdminRoute ? '/admin/data' : '/dashboard'
+  const baseURL = isAdminRoute ? '/admin' : '/dashboard'
   const baseLABEL = isAdminRoute ? 'Admin' : 'Principal'
 
   return (

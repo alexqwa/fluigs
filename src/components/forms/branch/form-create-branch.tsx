@@ -26,13 +26,12 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 
-import { UserInputSchema } from '@/generated/zod/schemas'
+import { UserInputSchema, FluigInputSchema } from '@/generated/zod/schemas'
 
 const userSchema = UserInputSchema.omit({
   id: true,
   role: true,
   image: true,
-  fluigs: true,
   banned: true,
   accounts: true,
   sessions: true,
@@ -42,9 +41,13 @@ const userSchema = UserInputSchema.omit({
   banExpires: true,
   emailVerified: true,
 }).extend({
-  branch: z.number().min(4, 'Deve conter 4 dígitos.'),
+  branch: z.number().min(4, 'Filial deve conter 4 dígitos.'),
   name: z.string().min(1, 'Nome da filial é obrigatório.'),
   email: z.email('Digite um e-mail válido.'),
+  fluigs: FluigInputSchema.omit({
+    user: true,
+    userId: true,
+  }).optional(),
 })
 
 type UserSchema = z.infer<typeof userSchema>
@@ -146,7 +149,7 @@ export function FormCreateBranch({ onSubmit }: FormCreateBranchProps) {
               )}
             </Field>
           </div>
-          <DialogFooter className="border-border/50 bg-ring/15 border-t px-6 py-5">
+          <DialogFooter className="bg-ring/15 px-6 py-5">
             <DialogClose asChild>
               <Button
                 variant={'outline'}
