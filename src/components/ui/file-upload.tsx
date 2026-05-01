@@ -6,7 +6,9 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+import { type RowError } from '@/lib/import/parser'
+import { importProducts } from '@/actions/admin/products'
+
 function fmtSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
@@ -21,21 +23,35 @@ function getExt(name: string) {
 
 type Status = 'idle' | 'uploading' | 'done' | 'error'
 
+type ImportResult =
+  | {
+      success: true
+      imported: number
+      inserted: number
+      updated: number
+      skipped: number
+      errors: RowError[]
+    }
+  | {
+      success: false
+      error: string
+      errors?: RowError[]
+      skipped?: number
+    }
+
 export function FileUpload() {
   const [dragover, setDragover] = useState<boolean>(false)
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string>('')
 
-  // upload state: idle | uploading | done | error
   const [uploadState, setUploadState] = useState<Status>('idle')
   const [progress, setProgress] = useState<number>(0)
   const [progressLabel, setProgressLabel] = useState('')
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState<ImportResult | null>(null)
 
   const progressRef = useRef<NodeJS.Timeout | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // ── Derivados de UI ──────────────────────────────────────────────────────────
   const isDone = uploadState === 'done'
   const isError = uploadState === 'error'
   const isUploading = uploadState === 'uploading'
@@ -48,7 +64,6 @@ export function FileUpload() {
         ? 'Tentar novamente'
         : 'Importar e atualizar sistema'
 
-  // ── Seleção de arquivo ───────────────────────────────────────────────────────
   const handleFile = useCallback((f: File | undefined) => {
     if (!f) return
     setFileError('')
@@ -87,7 +102,6 @@ export function FileUpload() {
     setFileError('')
   }, [])
 
-  // ── Simulação de progresso visual (feedback enquanto aguarda API) ─────────
   function startFakeProgress(onDone?: () => void) {
     let pct = 0
     if (progressRef.current) clearInterval(progressRef.current)
@@ -107,7 +121,6 @@ export function FileUpload() {
     }
   }
 
-  // ── Upload real para a API ──────────────────────────────────────────────────
   const handleUpload = useCallback(async () => {
     if (!file || uploadState === 'uploading' || uploadState === 'done') return
 
@@ -120,16 +133,12 @@ export function FileUpload() {
     form.append('file', file)
 
     try {
-      const res = await fetch('/api/products/import', {
-        method: 'POST',
-        body: form,
-      })
-      const data = await res.json()
+      const data = await importProducts(form)
 
       if (progressRef.current) clearInterval(progressRef.current)
       setProgress(100)
 
-      if (!res.ok) {
+      if (!data.success) {
         setUploadState('error')
         setProgressLabel(data.error ?? 'Erro ao processar o arquivo')
         setResult(data)

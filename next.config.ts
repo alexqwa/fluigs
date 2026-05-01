@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   experimental: {
     authInterrupts: true,
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
   serverExternalPackages: ['@sparticuz/chromium', 'puppeteer-core'],
   outputFileTracingIncludes: {
