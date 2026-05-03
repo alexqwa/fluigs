@@ -100,13 +100,11 @@ export function FormCreateBranch({ onSubmit }: FormCreateBranchProps) {
                 <FieldLabel htmlFor="branch">Filial</FieldLabel>
                 <Input
                   id="branch"
+                  type="number"
                   placeholder="Número da filial"
                   aria-invalid={form.getFieldState('branch').invalid}
                   {...form.register('branch', { valueAsNumber: true })}
-                  className="border-border bg-muted trucate border aria-invalid:border-red-400"
-                  onChange={(e) => {
-                    e.target.value.replaceAll(/[^0-9]/g, '')
-                  }}
+                  className="border-border bg-muted no-spinner trucate border aria-invalid:border-red-400"
                 />
                 {form.getFieldState('branch').invalid && (
                   <FieldError
