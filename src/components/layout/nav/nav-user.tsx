@@ -60,9 +60,9 @@ export function NavUser({ user, navMain }: NavUserProps) {
               size="lg"
               className="data-[state=open]:bg-ring/15 ring-offset-background focus-visible:ring-ring hover:bg-ring/15 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              <Avatar className="h-8 w-10 rounded-lg">
+              <Avatar className="size-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">
-                  {user.name.toUpperCase().slice(0, 3)}
+                  {user.name.toUpperCase().charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -84,9 +84,9 @@ export function NavUser({ user, navMain }: NavUserProps) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-10 rounded-lg">
+                <Avatar className="size-8 rounded-lg">
                   <AvatarFallback className="rounded-lg">
-                    {user.name.toUpperCase().slice(0, 3)}
+                    {user.name.toUpperCase().charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
