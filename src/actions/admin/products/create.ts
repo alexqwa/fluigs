@@ -48,34 +48,26 @@ async function upsertBatch(
   const toInsert = batch.filter((r) => !existing.has(r.code))
   const toUpdate = batch.filter((r) => existing.has(r.code))
 
-  await Promise.all([
-    toInsert.length > 0
-      ? prisma.product.createMany({ data: toInsert, skipDuplicates: true })
-      : Promise.resolve(),
+  await prisma.$transaction([
+    ...(toInsert.length > 0
+      ? [prisma.product.createMany({ data: toInsert, skipDuplicates: true })]
+      : []),
 
-    toUpdate.length > 0
-      ? (() => {
-          const values = toUpdate
-            .map(
-              (r) =>
-                `(${sanitize(r.code)}, ${sanitize(r.name)}, ${sanitize(r.cost)}, ${sanitize(r.stock)}, ${sanitize(r.buyer)}, ${sanitize(r.curveAbc)})`
-            )
-            .join(', ')
-
-          return prisma.$executeRawUnsafe(`
-            UPDATE products AS p
-            SET
-              name       = v.name,
-              cost       = v.cost,
-              stock      = v.stock,
-              buyer      = v.buyer,
-              curve_abc  = v.curve_abc,
-              updated_at = NOW()
-            FROM (VALUES ${values}) AS v(code, name, cost, stock, buyer, curve_abc)
-            WHERE p.code = v.code
-          `)
-        })()
-      : Promise.resolve(),
+    ...toUpdate.map((r) =>
+      prisma.product.update({
+        where: {
+          code: r.code,
+        },
+        data: {
+          name: r.name,
+          cost: r.cost,
+          stock: r.stock,
+          buyer: r.buyer,
+          curveAbc: r.curveAbc,
+          updatedAt: new Date(),
+        },
+      })
+    ),
   ])
 
   return { inserted: toInsert.length, updated: toUpdate.length }
@@ -152,12 +144,17 @@ export async function importProducts(
       errors,
     }
   } catch (err) {
-    console.error('[importProducts]', err)
+    if (err instanceof Error) {
+      console.error('[importProducts]', err)
+      console.error('[importProducts] message:', err.message)
+    }
 
     await prisma.importLog.update({
       where: { id: log.id },
       data: { status: 'FAILED', finishedAt: new Date() },
     })
+
+    updateTag('products')
 
     return { success: false, error: 'Erro interno ao processar o arquivo' }
   }
