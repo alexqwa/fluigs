@@ -1,5 +1,4 @@
 import z from 'zod'
-import { Suspense } from 'react'
 import { HistoryDataTable } from '@/components/tables'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 

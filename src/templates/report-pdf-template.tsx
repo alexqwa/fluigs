@@ -336,9 +336,13 @@ export function ReportPDFTemplate({
               </tr>
             </thead>
             <tbody>
-              ${data
-                .map(
-                  (item) => `
+             ${data
+               .sort(
+                 (a, b) =>
+                   new Date(a.date).getTime() - new Date(b.date).getTime()
+               )
+               .map(
+                 (item) => `
                 <tr>
                   <td>${item.code}</td>
                   <td>${item.product}</td>
@@ -353,8 +357,8 @@ export function ReportPDFTemplate({
                   <td class="text-right">${formatCurrency(Number(item.costTotal))}</td>
                 </tr>
               `
-                )
-                .join('')}
+               )
+               .join('')}
             </tbody>
           </table>
         </div>
