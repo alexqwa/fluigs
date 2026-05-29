@@ -43,22 +43,6 @@ export async function upsertProducts(
       inserted += toInsert.length
     }
 
-    //Overhead de rede: Alto
-    // for (const row of toUpdate) {
-    //   await prisma.product.update({
-    //     where: { code: row.code },
-    //     data: {
-    //       name: row.name,
-    //       stock: row.stock,
-    //       cost: row.cost,
-    //       curveAbc: row.curveAbc,
-    //       buyer: row.buyer,
-    //       updatedAt: new Date(),
-    //     },
-    //   })
-    //   updated++
-    // }
-
     if (toUpdate.length > 0) {
       await prisma.$transaction(
         toUpdate.map((row) =>
@@ -73,7 +57,11 @@ export async function upsertProducts(
               updatedAt: new Date(),
             },
           })
-        )
+        ),
+        {
+          maxWait: 15000,
+          timeout: 20000,
+        }
       )
       updated += toUpdate.length
     }
