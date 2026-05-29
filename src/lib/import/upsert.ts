@@ -44,25 +44,32 @@ export async function upsertProducts(
     }
 
     if (toUpdate.length > 0) {
-      await prisma.$transaction(
-        toUpdate.map((row) =>
-          prisma.product.update({
-            where: { code: row.code },
-            data: {
-              name: row.name,
-              cost: row.cost,
-              stock: row.stock,
-              buyer: row.buyer,
-              curveAbc: row.curveAbc,
-              updatedAt: new Date(),
-            },
-          })
-        ),
-        {
-          maxWait: 15000,
-          timeout: 20000,
-        }
-      )
+      for (let i = 0; i < toUpdate.length; i += BATCH_SIZE) {
+        const batch = toUpdate.slice(i, i + BATCH_SIZE)
+
+        await prisma.$transaction(
+          async (tx) => {
+            for (const row of batch) {
+              await tx.product.update({
+                where: { code: row.code },
+                data: {
+                  name: row.name,
+                  cost: row.cost,
+                  stock: row.stock,
+                  buyer: row.buyer,
+                  curveAbc: row.curveAbc,
+                  updatedAt: new Date(),
+                },
+              })
+            }
+          },
+          {
+            maxWait: 10000,
+            timeout: 20000,
+          }
+        )
+      }
+
       updated += toUpdate.length
     }
   }
